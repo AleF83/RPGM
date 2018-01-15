@@ -1,0 +1,27 @@
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const APP_PATH = path.resolve(__dirname, 'src');
+const DIST_PATH = path.resolve(__dirname, 'public');
+
+module.exports = {
+  entry: APP_PATH + '/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: DIST_PATH,
+  },
+  module: {
+    loaders: [{
+      test: /\.jsx?$/,
+      include: APP_PATH,
+      loader: 'babel-loader',
+    }],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: APP_PATH + '/index.html',
+      filename: 'index.html',
+      inject: 'body',
+    }),
+  ],
+};
