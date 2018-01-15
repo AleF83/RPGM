@@ -5,9 +5,17 @@
 	"license": "MIT",
 	"private": false,
 	"scripts": {
-		"start": "node server.js"
+		"build": "babel server.js -d dist",
+
+		"start:dev": "nodemon --exec babel-node -- server.js",
+		"start": "yarn build && node dist/server.js"
 	},
 	"dependencies": {
 		"express": "^4.16.2"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"nodemon": "^1.14.11"
 	}
 }
