@@ -1,0 +1,13 @@
+{
+	"name": "rpgm-frontend",
+	"version": "0.0.1",
+	"author": "AleF83",
+	"license": "MIT",
+	"private": false,
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "^4.16.2"
+	}
+}
