@@ -1,7 +1,10 @@
 {
-    "extends": "airbnb",
+    "extends": ["airbnb"],
+    "parser": "babel-eslint",
     "plugins": [
-        "react"
+        "react",
+        "jsx-a11y",
+        "import"
     ],
     "rules": {
     }
