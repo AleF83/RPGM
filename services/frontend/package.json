@@ -6,7 +6,6 @@
 	"private": false,
 	"scripts": {
 		"build": "babel server.js -d dist",
-
 		"start:dev": "nodemon --exec babel-node -- server.js",
 		"start": "yarn build && node dist/server.js"
 	},
@@ -16,6 +15,11 @@
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
+		"eslint": "^4.15.0",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-jsx-a11y": "^6.0.3",
+		"eslint-plugin-react": "^7.5.1",
 		"nodemon": "^1.14.11"
 	}
 }
