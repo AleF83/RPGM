@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const APP_PATH = path.resolve(__dirname, 'src');
 const DIST_PATH = path.resolve(__dirname, 'public');
@@ -28,7 +29,9 @@ module.exports = {
       template: APP_PATH + '/index.html',
       filename: 'index.html',
       inject: 'body',
+      inlineSource: '.jsx?$',
     }),
+    new HtmlWebpackInlineSourcePlugin(),
   ],
   resolve: {
     extensions: [
@@ -36,5 +39,14 @@ module.exports = {
       '.jsx',
       '.json',
     ],
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:3000',
+        secure: false,
+      },
+    },
   },
 };
