@@ -13,6 +13,8 @@
 		"dev:start": "concurrently \"yarn dev:start:server\" \"yarn dev:start:client\"",
 		"dev:start:server": "nodemon --exec babel-node -- server.js",
 		"dev:start:client": "webpack-dev-server",
+		"docker:build": "docker build -t rpgm-frontend .",
+		"docker:start": "docker run --rm -p 80:3000  rpgm-frontend",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
