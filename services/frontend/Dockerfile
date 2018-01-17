@@ -2,7 +2,7 @@ FROM node:8.9.4-alpine AS baseImage
 
 FROM baseImage AS nodeModulesImage
 WORKDIR /artifacts/
-COPY package.json ./
+COPY package.json yarn.lock ./
 RUN yarn --prod
 
 FROM baseImage AS bundleImage
@@ -18,7 +18,10 @@ COPY --from=bundleImage artifacts/public ./public
 COPY --from=bundleImage artifacts/dist ./dist
 
 ENV NODE_ENV=production
+ENV PORT=3000
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
-CMD ["yarn", "start:server"]
+HEALTHCHECK --interval=10s --timeout=1s --start-period=2s --retries=3 CMD curl http://127.0.0.1:${PORT}/api/health || exit 1
+
+ENTRYPOINT ["yarn", "start:server"]
