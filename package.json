@@ -1,0 +1,15 @@
+{
+  "name": "rpgm",
+  "version": "0.0.1",
+  "description": "Role Playing Game Mastery",
+  "repository": "http://github.com/AleF83/RPGM",
+  "author": "AleF83",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dc": "docker-compose -f deployment/docker-compose.yml",
+    "start": "yarn dc up -d",
+    "stop": "yarn dc down",
+    "logs": "yarn dc logs -f -t"
+  }
+}
