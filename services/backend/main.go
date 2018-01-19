@@ -21,6 +21,7 @@ func main() {
 	if err != nil {
 		log.Fatalln("Failed to load configuration:", err)
 	}
+	log.Printf("Configuration: %#v", config)
 	log.Println("Configuration loaded.")
 
 	rootRouter := chi.NewRouter()
@@ -32,6 +33,9 @@ func main() {
 
 	proxyController := controllers.NewProxyController(config)
 	rootRouter.Mount("/api/*", proxyController)
+
+	authRouter := controllers.NewAuthRouter(config.Security.Auth.Providers)
+	rootRouter.Mount("/auth/*", authRouter)
 
 	app := cors.AllowAll().Handler(rootRouter)
 

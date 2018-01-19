@@ -1,3 +1,14 @@
 {
-    
+    "security": {
+        "auth": {
+            "providers": [{
+                "id": "google",
+                "name": "Sign in with Google",
+                "authority": "https://accounts.google.com",
+                "scope": "profile email"
+            }
+
+            ]
+        }
+    }
 }

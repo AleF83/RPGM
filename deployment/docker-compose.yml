@@ -25,6 +25,7 @@ services:
     environment:
       - RPGM_COREAPIURL=http://core
       - RPGM_PORT=80
+      - CONFIG_FILE_PATH=/config/config.json
   
   core:
     container_name: rpgm-core

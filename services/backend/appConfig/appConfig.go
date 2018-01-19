@@ -6,10 +6,29 @@ import (
 	"github.com/jinzhu/configor"
 )
 
+// AuthProvider - struct for store OpenId connect provider configuration
+type AuthProvider struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Authority string `json:"authority"`
+	Scope     string `json:"scope"`
+}
+
+// Auth stores configuration about OpenId Connect Providers and etc.
+type Auth struct {
+	Providers []AuthProvider
+}
+
+// Security - stores security configuration
+type Security struct {
+	Auth Auth
+}
+
 // Configuration stores all app configuration
 type Configuration struct {
 	CoreAPIURL string
 	Port       string
+	Security   Security
 }
 
 // LoadConfiguration loads configuration from config files and env variables

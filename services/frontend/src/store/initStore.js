@@ -3,6 +3,9 @@ import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import browserHistory from './initHistory';
 
+import authEpic from '../pages/login/state/epics/authEpic';
+import authReducer, { initialState as authInitialState } from '../pages/login/state/authReducer';
+
 import entityEpic from '../pages/entity/state/epics/entityEpic';
 import entityReducer, { initialState as entityInitialState } from '../pages/entity/state/entityReducer';
 
@@ -11,15 +14,20 @@ import metadataReducer, { initialState as metadataInitialState } from '../pages/
 
 import imageUploadEpic from '../pages/entity/state/epics/imageUploadEpic';
 
-const rootEpic = combineEpics(entityEpic, metadataEpic, imageUploadEpic);
+const rootEpic = combineEpics(entityEpic, metadataEpic, imageUploadEpic, authEpic);
 
 const rootReducer = combineReducers({
   router: routerReducer,
   entity: entityReducer,
   metadata: metadataReducer,
+  auth: authReducer,
 });
 
-const initialState = { entity: entityInitialState, metadata: metadataInitialState };
+const initialState = {
+  entity: entityInitialState,
+  metadata: metadataInitialState,
+  auth: authInitialState,
+};
 
 const initStore = () =>
   createStore(
