@@ -1,24 +1,12 @@
 import React from 'react';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import {
-	ConnectedRouter,
-	routerReducer,
-	routerMiddleware
-} from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
-const history = createHistory();
-export const store = createStore(
-	combineReducers({ router: routerReducer }),
-	{},
-	applyMiddleware(routerMiddleware(history))
-);
+import initStore from '../store/initStore';
 
 const App = () => (
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
+	<Provider store={initStore()}>
+		<HashRouter>
 			<Switch>
 				<Route
 					exact
@@ -31,7 +19,7 @@ const App = () => (
 					render={() => <h2>You need to login</h2>}
 				/>
 			</Switch>
-		</ConnectedRouter>
+		</HashRouter>
 	</Provider>
 );
 
