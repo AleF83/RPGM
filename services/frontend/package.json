@@ -17,14 +17,17 @@
 		"docker:build": "docker build -t alef83/rpgm-frontend .",
 		"docker:start": "docker run --rm -p 80:3000  rpgm-frontend",
 		"test": "echo \"Error: no test specified\" && exit 1",
-
 		"precommit": "pretty-quick --staged"
 	},
 	"dependencies": {
 		"express": "^4.16.2",
+		"history": "^4.7.2",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0",
-		"react-router-dom": "^4.2.2"
+		"react-redux": "^5.0.6",
+		"react-router": "^4.2.0",
+		"react-router-dom": "^4.2.2",
+		"redux": "^3.7.2"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
