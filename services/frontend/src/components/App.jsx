@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 
 import initStore from '../store/initStore';
+import browserHistory from '../store/initHistory';
 
 const App = () => (
 	<Provider store={initStore()}>
-		<HashRouter>
+		<ConnectedRouter history={browserHistory}>
 			<Switch>
 				<Route
 					exact
@@ -19,7 +21,7 @@ const App = () => (
 					render={() => <h2>You need to login</h2>}
 				/>
 			</Switch>
-		</HashRouter>
+		</ConnectedRouter>
 	</Provider>
 );
 
