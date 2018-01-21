@@ -6,8 +6,8 @@ import nconf from 'nconf';
 import App from './components/App';
 
 nconf
-	.argv()
-	.env()
-	.file('./configuration.json');
+  .argv()
+  .env()
+  .file('./configuration.json');
 
 render(<App />, document.getElementById('root'));
