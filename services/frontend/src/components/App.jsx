@@ -7,22 +7,22 @@ import initStore from '../store/initStore';
 import browserHistory from '../store/initHistory';
 
 const App = () => (
-	<Provider store={initStore()}>
-		<ConnectedRouter history={browserHistory}>
-			<Switch>
-				<Route
-					exact
-					path="/"
-					render={() => <h1>Welcome to RPGM Frontend!</h1>}
-				/>
-				<Route
-					exact
-					path="/login"
-					render={() => <h2>You need to login</h2>}
-				/>
-			</Switch>
-		</ConnectedRouter>
-	</Provider>
+  <Provider store={initStore()}>
+    <ConnectedRouter history={browserHistory}>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => <h1>Welcome to RPGM Frontend!</h1>}
+        />
+        <Route
+          exact
+          path="/login"
+          render={() => <h2>You need to login</h2>}
+        />
+      </Switch>
+    </ConnectedRouter>
+  </Provider>
 );
 
 export default App;
