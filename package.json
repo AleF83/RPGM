@@ -14,7 +14,7 @@
 
     "precommit": "lint-staged",
     "format:js": "prettier-eslint --trailing-comma all --print-width 100 --single-quote --write",
-    "format:go": "go fmt"
+    "format:go": "gofmt -l -w"
   },
   "devDependencies": {
     "husky": "^0.14.3",
