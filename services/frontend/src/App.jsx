@@ -3,8 +3,12 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux';
 
-import initStore from '../store/initStore';
-import browserHistory from '../store/initHistory';
+import initStore from './store/initStore';
+import browserHistory from './store/initHistory';
+
+import LoginPage from './pages/login/LoginPage';
+import EntityPage from './pages/entity/EntityPage';
+import UserProfilePage from './pages/userProfile/UserProfilePage';
 
 const App = () => (
   <Provider store={initStore()}>
@@ -18,7 +22,15 @@ const App = () => (
         <Route
           exact
           path="/login"
-          render={() => <h2>You need to login</h2>}
+          component={LoginPage}
+        />
+        <Route
+          path="/user"
+          component={UserProfilePage}
+        />
+        <Route
+          path="/entity"
+          component={EntityPage}
         />
       </Switch>
     </ConnectedRouter>
