@@ -18,11 +18,13 @@ services:
       - "8080:80"
   
   minio:
-    container_name:  minio/minio
+    container_name:  minio
+    image: minio/minio
     ports:
       - "9000:9000"
   
   solr:
     container_name: solr
+    image: solr
     ports:
       - "8983:8983"
