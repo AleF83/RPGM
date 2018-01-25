@@ -21,6 +21,8 @@ func InitMinio(config *appConfig.Minio) MinioAgent {
 	initAccessKey(config)
 	initSecretKey(config)
 
+	log.Printf("Config: %#v", config)
+
 	client, err := minio.New(config.Endpoint, config.AccessKey, config.SecretKey, config.UseSSL)
 	if err != nil {
 		log.Panicln("Error creating minio client:", err)

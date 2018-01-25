@@ -16,7 +16,6 @@ import (
 
 func main() {
 	config := appConfig.LoadConfiguration()
-	log.Printf("CONFIG: %#v", config)
 	agents.InitMinio(&config.Connections.Minio)
 
 	app := chi.NewRouter()
