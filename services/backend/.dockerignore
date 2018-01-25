@@ -5,3 +5,6 @@ LICENSE
 .dockerignore
 .git
 .gitignore
+
+backend
+vendor
