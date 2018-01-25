@@ -25,6 +25,15 @@ func InitMinio(config *appConfig.Minio) MinioAgent {
 	if err != nil {
 		log.Panicln("Error creating minio client:", err)
 	}
+
+	exists, err := client.BucketExists(config.BucketName)
+	if err != nil {
+		log.Panicln("Error checking minio bucket", err)
+	}
+	if !exists {
+		log.Panicln("Minio bucket doesn't exist")
+	}
+
 	return &minioAgentStruct{
 		client: client,
 	}
