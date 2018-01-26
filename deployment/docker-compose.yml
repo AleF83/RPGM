@@ -24,6 +24,9 @@ services:
       - RPGM_CONNECTIONS_MINIO_BUCKETNAME=rpgm-bucket
       - RPGM_CONNECTIONS_MINIO_ACCESSKEYPATH=/run/secrets/minio_access_key
       - RPGM_CONNECTIONS_MINIO_SECRETKEYPATH=/run/secrets/minio_secret_key
+      - RPGM_CONNECTIONS_SOLR_HOST=solr
+      - RPGM_CONNECTIONS_SOLR_PORT=8983
+      - PRMG_CONNECTIONS_SOLR_COLLECTIONAME=rpgm-collection
     secrets:
       - minio_access_key
       - minio_secret_key

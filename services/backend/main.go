@@ -17,6 +17,7 @@ import (
 func main() {
 	config := appConfig.LoadConfiguration()
 	agents.InitMinio(&config.Connections.Minio)
+	agents.InitSolr(&config.Connections.Solr)
 
 	app := chi.NewRouter()
 

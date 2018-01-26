@@ -13,9 +13,17 @@ type Minio struct {
 	BucketName    string
 }
 
+// Solr stores connection config to solr
+type Solr struct {
+	Host           string
+	Port           string
+	CollectionName string
+}
+
 // Connections stores connection configuration to services
 type Connections struct {
 	Minio Minio
+	Solr  Solr
 }
 
 // Configuration stores all app configuration
