@@ -1,6 +1,12 @@
 import React from 'react';
 
-const EntityPage = () =>
-  <div>This is Entity Page</div>;
+import Character from './components/character/Character';
+
+const EntityPage = () => (
+  <div>
+    <span>This is Entity Page</span>
+    <Character />
+  </div>
+);
 
 export default EntityPage;
