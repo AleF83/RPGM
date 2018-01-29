@@ -24,6 +24,7 @@ export default (state = initialState, action) => {
         ...state,
         [action.propName]: action.propValue,
       };
+
     default:
       return state;
   }
