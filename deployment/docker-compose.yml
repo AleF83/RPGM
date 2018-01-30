@@ -19,9 +19,11 @@ services:
     depends_on:
       - minio
       - solr
+      - redis
     ports:
       - "8080:80"
     environment:
+      - RPGM_CONNECTIONS_REDIS_ENDPOINT=redis:6379
       - RPGM_CONNECTIONS_MINIO_ENDPOINT=minio:9000
       - RPGM_CONNECTIONS_MINIO_BUCKETNAME=rpgm-bucket
       - RPGM_CONNECTIONS_MINIO_ACCESSKEYPATH=/run/secrets/minio_access_key
@@ -33,6 +35,12 @@ services:
       - minio_access_key
       - minio_secret_key
   
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
   minio:
     container_name:  minio
     image: minio/minio
