@@ -15,6 +15,6 @@ app.get('/api/*', (req, res) =>
   axios
     .get(`${backendUrl}${req.path}`)
     .then(r => res.send(r.data))
-    .catch(e => res.send(e)));
+    .catch(() => res.status(500).send('Error')));
 
 app.listen(3001, () => console.log('RPGM Frontend is listening on port 3000'));

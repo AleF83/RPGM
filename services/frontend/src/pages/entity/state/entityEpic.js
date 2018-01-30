@@ -2,7 +2,6 @@ import 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
 import { ENTITY_SAVE_REQUEST } from './entityActionTypes';
-
 import { entitySavedSuccess } from './entityActionCreators';
 
 export const entitySaveEpic = actions$ =>
