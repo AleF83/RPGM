@@ -12,6 +12,7 @@ import (
 
 	"github.com/AleF83/RPGM/services/backend/agents"
 	"github.com/AleF83/RPGM/services/backend/appConfig"
+	"github.com/AleF83/RPGM/services/backend/controllers"
 )
 
 func main() {
@@ -24,8 +25,10 @@ func main() {
 	app.Use(middleware.Logger)
 	app.Use(middleware.Recoverer)
 
-	app.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "Hello, World!") })
-	app.HandleFunc("/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
+	app.HandleFunc("/api/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
+
+	entityController := controllers.NewEntityController()
+	app.Mount("/api/entity", entityController)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), app)
 
