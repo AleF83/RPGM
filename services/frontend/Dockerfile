@@ -3,6 +3,7 @@ FROM node:8.9.4-alpine AS baseImage
 FROM baseImage AS nodeModulesImage
 WORKDIR /artifacts/
 COPY package.json ./
+COPY yarn.lock ./
 RUN yarn --prod
 
 FROM baseImage AS bundleImage
