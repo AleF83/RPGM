@@ -8,6 +8,7 @@ import (
 	"github.com/rtt/Go-Solr"
 )
 
+// SolrAgent contains all functionality for store and retrieve data from solr
 type SolrAgent interface {
 }
 

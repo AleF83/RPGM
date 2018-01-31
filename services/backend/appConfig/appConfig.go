@@ -2,6 +2,11 @@ package appConfig
 
 import "github.com/jinzhu/configor"
 
+// Redis stores connection config to redis
+type Redis struct {
+	Endpoint string
+}
+
 // Minio stores connection config to minio
 type Minio struct {
 	Endpoint      string
@@ -22,6 +27,7 @@ type Solr struct {
 
 // Connections stores connection configuration to services
 type Connections struct {
+	Redis Redis
 	Minio Minio
 	Solr  Solr
 }
