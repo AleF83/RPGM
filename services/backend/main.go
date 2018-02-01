@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/rs/cors"
 
 	"github.com/AleF83/RPGM/services/backend/agents"
 	"github.com/AleF83/RPGM/services/backend/appConfig"
@@ -21,15 +22,17 @@ func main() {
 	agents.InitMinio(&config.Connections.Minio)
 	agents.InitSolr(&config.Connections.Solr)
 
-	app := chi.NewRouter()
+	rootRouter := chi.NewRouter()
 
-	app.Use(middleware.Logger)
-	app.Use(middleware.Recoverer)
+	rootRouter.Use(middleware.Logger)
+	rootRouter.Use(middleware.Recoverer)
 
-	app.HandleFunc("/api/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
+	rootRouter.HandleFunc("/api/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
 
 	entityController := controllers.NewEntityController()
-	app.Mount("/api/entity", entityController)
+	rootRouter.Mount("/api/entity", entityController)
+
+	app := cors.AllowAll().Handler(rootRouter)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), app)
 

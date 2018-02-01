@@ -24,3 +24,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/rtt/Go-Solr"
+
+[[constraint]]
+  name = "github.com/rs/cors"
+  version = "1.2.0"
