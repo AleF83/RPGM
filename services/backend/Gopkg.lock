@@ -50,6 +50,12 @@
   revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
 
 [[projects]]
+  name = "github.com/rs/cors"
+  packages = ["."]
+  revision = "7af7a1e09ba336d2ea14b1ce73bf693c6837dbf6"
+  version = "v1.2"
+
+[[projects]]
   branch = "master"
   name = "github.com/rtt/Go-Solr"
   packages = ["."]
@@ -94,6 +100,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "bd9a7b70fc3bf8374f8962b2c7c5a939b97abda4f0a39a52d57b1a0869a7da5c"
+  inputs-digest = "760b1f8b93ed4ec826f20767f19c9a21829daaaaf49d79f9ce9a32e01994bb29"
   solver-name = "gps-cdcl"
   solver-version = 1

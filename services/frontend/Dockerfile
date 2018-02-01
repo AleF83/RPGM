@@ -1,25 +1,19 @@
-FROM node:8.9.4-alpine AS baseImage
-
-FROM baseImage AS nodeModulesImage
-WORKDIR /artifacts/
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn --prod
-
-FROM baseImage AS bundleImage
-WORKDIR /artifacts/
-COPY . ./
+# Stage 1: Build
+FROM node:8.9.4-alpine AS buildImage
+WORKDIR /src
+COPY package.json yarn.lock ./
 RUN yarn
+COPY . ./
+
+ARG REACT_APP_BACKEND_URL
+ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL:-http://backend.localtest.me:8080}
+
 RUN yarn build
 
-FROM baseImage AS releaseImage
-COPY --from=nodeModulesImage artifacts/package.json ./package.json
-COPY --from=nodeModulesImage artifacts/node_modules ./node_modules
-COPY --from=bundleImage artifacts/build ./build
-COPY --from=bundleImage artifacts/dist ./dist
+# Stage 2: Release
+FROM nginx:alpine AS releaseImage
+COPY --from=buildImage /src/build /usr/share/nginx/html
 
-ENV NODE_ENV=production
+EXPOSE 80
 
-EXPOSE 3000
-
-CMD ["yarn", "start:release"]
+CMD ["nginx", "-g", "daemon off;"]
