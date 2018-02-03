@@ -6,7 +6,7 @@ services:
     build:
       context: ../services/frontend
       args:
-        - REACT_APP_BACKEND_URL=http://backend.localtest.me:8080 
+        - REACT_APP_BACKEND_URL=http://backend.localtest.me:8080
     image: alef83/rpgm-frontend
     depends_on:
       - backend

@@ -1,5 +1,9 @@
 version: '3.4'
 services:
+  frontend:
+    build:
+      args:
+        - REACT_APP_BACKEND_URL=http://backend
   test_frontend:
     build: ../tests/test_frontend
     depends_on:
