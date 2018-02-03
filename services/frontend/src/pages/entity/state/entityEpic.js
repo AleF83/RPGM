@@ -9,6 +9,6 @@ export const entitySaveEpic = actions$ =>
     ajax
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/entity`, {})
       .map(e => entitySavedSuccess(e.response))
-      .catch(() => Observable.of(entitySavedFailure())));
+      .catch(err => Observable.of(entitySavedFailure(err.xhr.response))));
 
 export const a = 3;

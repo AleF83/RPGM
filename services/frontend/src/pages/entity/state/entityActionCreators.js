@@ -33,6 +33,7 @@ export const entitySavedSuccess = message => ({
   message,
 });
 
-export const entitySavedFailure = () => ({
+export const entitySavedFailure = message => ({
   type: ENTITY_SAVE_FAILURE,
+  message,
 });

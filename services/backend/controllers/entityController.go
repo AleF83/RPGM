@@ -18,8 +18,22 @@ func NewEntityController() http.Handler {
 	return router
 }
 
+// Entity contains entity data
+type Entity struct {
+	Name string
+}
+
 func getEntityHandler(rw http.ResponseWriter, r *http.Request) {
-	rw.Write([]byte("This is the entity"))
+	response := Entity{
+		Name: "Alex",
+	}
+	js, err := json.Marshal(response)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	rw.Header().Set("Content-Type", "application/json")
+	rw.Write(js)
 }
 
 func createNewEntityHandler(rw http.ResponseWriter, r *http.Request) {

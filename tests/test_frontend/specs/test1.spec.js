@@ -26,8 +26,6 @@ describe('Test suite', () => {
 
     await page.goto(`${nconf.get('FRONTEND_URL')}/entity`);
 
-    const text = await page.evaluate(() => document.body.innerHTML);
-
     const saveButtonSelector = '[data-id=btnSave]';
     await page.waitForSelector(saveButtonSelector);
     await page.click(saveButtonSelector);
