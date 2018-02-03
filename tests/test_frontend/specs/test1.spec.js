@@ -10,7 +10,11 @@ nconf
 
 describe('Test suite', () => {
   before(async () => {
-    global.browser = await puppeteer.launch();
+    const executablePath = nconf.get('CHROMIUM_BROWSER_PATH');
+    const args = ['--disable-dev-shm-usage'];
+    const launchOptions = executablePath ? { executablePath, args } : {};
+
+    global.browser = await puppeteer.launch(launchOptions);
   });
 
   after(async () => {

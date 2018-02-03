@@ -6,3 +6,4 @@ services:
       - frontend
     environment:
       - FRONTEND_URL=http://frontend
+      - CHROMIUM_BROWSER_PATH=/usr/bin/chromium-browser

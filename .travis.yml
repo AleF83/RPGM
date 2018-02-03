@@ -1,0 +1,10 @@
+sudo: required
+
+before_script:
+  - yarn test:build
+
+script:
+  - yarn test
+
+after_script:
+  - yarn test:stop
