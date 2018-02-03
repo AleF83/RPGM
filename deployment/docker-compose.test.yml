@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  frontend:
+    build:
+      args:
+        - REACT_APP_BACKEND_URL=http://backend
+  test_frontend:
+    build: ../tests/test_frontend
+    depends_on:
+      - frontend
+    environment:
+      - FRONTEND_URL=http://frontend
+      - CHROMIUM_BROWSER_PATH=/usr/bin/chromium-browser
+    cap_add:
+      - SYS_ADMIN

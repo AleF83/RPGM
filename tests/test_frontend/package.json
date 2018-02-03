@@ -1,0 +1,16 @@
+{
+  "name": "test_frontend",
+  "version": "0.0.1",
+  "description": "Test suites for frontend service or RPGM",
+  "author": "AleF83",
+  "license": "MIT",
+  "scripts": {
+    "start": "mocha --recursive -t 10000 \"specs/**/*.spec.js\""
+  },
+  "dependencies": {
+    "chai": "4.1.2",
+    "mocha": "5.0.0",
+    "nconf": "0.10.0",
+    "puppeteer": "0.12.0"
+  }
+}

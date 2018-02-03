@@ -7,8 +7,8 @@ import { entitySavedSuccess, entitySavedFailure } from './entityActionCreators';
 export const entitySaveEpic = actions$ =>
   actions$.ofType(ENTITY_SAVE_REQUEST).switchMap(() =>
     ajax
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/entity/1`)
-      .map(() => entitySavedSuccess())
-      .catch(() => Observable.of(entitySavedFailure())));
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/entity`, {})
+      .map(e => entitySavedSuccess(e.response))
+      .catch(err => Observable.of(entitySavedFailure(err.xhr.response))));
 
 export const a = 3;

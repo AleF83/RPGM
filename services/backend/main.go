@@ -19,7 +19,6 @@ import (
 func main() {
 	config := appConfig.LoadConfiguration()
 	agents.InitRedis(&config.Connections.Redis)
-	agents.InitMinio(&config.Connections.Minio)
 	agents.InitSolr(&config.Connections.Solr)
 
 	rootRouter := chi.NewRouter()
