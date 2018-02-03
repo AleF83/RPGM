@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -22,7 +23,14 @@ func getEntityHandler(rw http.ResponseWriter, r *http.Request) {
 }
 
 func createNewEntityHandler(rw http.ResponseWriter, r *http.Request) {
-	rw.Write([]byte("The entity was created"))
+	message := "The entity was created"
+	js, err := json.Marshal(message)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	rw.Header().Set("Content-Type", "application/json")
+	rw.Write(js)
 }
 
 func replaceEntityHandler(rw http.ResponseWriter, r *http.Request) {

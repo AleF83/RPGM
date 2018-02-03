@@ -18,7 +18,6 @@ services:
     build: ../services/backend
     image: alef83/rpgm-backend
     depends_on:
-      - minio
       - solr
       - redis
     ports:
@@ -41,18 +40,6 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-
-  minio:
-    container_name:  minio
-    image: minio/minio
-    ports:
-      - "9000:9000"
-    command: server /data
-    secrets:
-      - source: minio_access_key
-        target: access_key
-      - source: minio_secret_key
-        target: secret_key
   
   solr:
     container_name: solr

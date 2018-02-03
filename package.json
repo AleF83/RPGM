@@ -8,6 +8,8 @@
   "private": false,
   "scripts": {
     "dc": "docker-compose -f deployment/docker-compose.yml",
+    "dc:test": "yarn dc -f deployment/docker-compose.test.yml",
+
     "build": "yarn dc build",
     "start": "yarn dc up -d",
     "stop": "yarn dc down",

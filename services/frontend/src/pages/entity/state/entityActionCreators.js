@@ -28,8 +28,9 @@ export const entitySavedRequest = () => ({
   type: ENTITY_SAVE_REQUEST,
 });
 
-export const entitySavedSuccess = () => ({
+export const entitySavedSuccess = message => ({
   type: ENTITY_SAVE_SUCCESS,
+  message,
 });
 
 export const entitySavedFailure = () => ({

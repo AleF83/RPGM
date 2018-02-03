@@ -17,26 +17,38 @@ const Save = styled('input')`
   display: block;
 `;
 
-const Character = ({ name, onChange, onSave }) => (
+const Message = styled('span')`
+`;
+
+const Character = ({
+  name,
+  message,
+  onChange,
+  onSave,
+}) => (
   <MainElement>
     Character Sheet
     <Name type="text" placeholder="Name..." value={name} onChange={onChange('name')} />
-    <Save type="button" value="Save" onClick={onSave} />
+    <Save type="button" value="Save" data-id="btnSave" onClick={onSave} />
+    <Message data-id="message">{message}</Message>
   </MainElement>
 );
 
 Character.propTypes = {
   name: PropTypes.string,
+  message: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
 Character.defaultProps = {
   name: 'Unnamed Hero',
+  message: 'Not saved',
 };
 
 const mapStateToProps = state => ({
   name: state.entity.name,
+  message: state.entity.message,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,0 +1,8 @@
+version: '3.4'
+services:
+  test_frontend:
+    build: ../tests/test_frontend
+    depends_on:
+      - frontend
+    environment:
+      - FRONTEND_URL=http://frontend
