@@ -1,4 +1,22 @@
 version: '3.4'
 services:
-  e2e_test:
-    build:
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "4444:4444"
+
+  test_frontend:
+    container_name: test_frontend
+    build: ../tests/test_frontend
+    depends_on:
+      - selenium
+      - frontend
+    links:
+      - selenium
+    environment:
+      - SELENIUM_HOST=selenium
+      - SELENIUM_PORT=4444
+      - SELENIUM_BROWSER=chrome
