@@ -16,9 +16,10 @@
     "logs": "yarn dc logs -f -t",
 
     "test:build": "yarn dc:test build",
-    "test:start": "yarn dc:test up --exit-code-from test_frontend test_frontend",
+    "test:frontend": "yarn dc:test up --exit-code-from test_frontend test_frontend",
+    "test:core": "yarn dc:test up --exit-code-from test_core test_core",
     "test:stop": "yarn dc:test down",
-    "test": "yarn test:start",
+    "test": "yarn test:frontend && yarn test:core",
 
 
     "precommit": "lint-staged",

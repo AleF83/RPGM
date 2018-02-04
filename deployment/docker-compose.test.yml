@@ -4,8 +4,10 @@ services:
     build:
       args:
         - REACT_APP_BACKEND_URL=http://backend
+
   test_frontend:
-    build: ../tests/test_frontend
+    container_name: test_frontend
+    build: ../services/frontend/test
     depends_on:
       - frontend
     environment:
@@ -13,3 +15,13 @@ services:
       - CHROMIUM_BROWSER_PATH=/usr/bin/chromium-browser
     cap_add:
       - SYS_ADMIN
+
+  test_core:
+    container_name: test_core
+    build:
+      context: ../services/core/
+      dockerfile: Tests.Dockerfile
+    depends_on:
+      - core
+    environment:
+      - CORE_API_URL=http://core
