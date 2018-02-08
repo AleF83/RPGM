@@ -6,6 +6,11 @@
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/AleF83/RPGM.svg?columns=all)](https://waffle.io/AleF83/RPGM)
 
+## Purpose
+
+RPGM (Role Playing Game Mastery) is a tool for GM/DM (Game/Dangeon Master) in D&D-like games.
+Now it's at its very beginning level and it supposed to grow.
+
 ## Installation
 
 ```bash
