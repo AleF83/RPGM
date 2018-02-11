@@ -14,7 +14,6 @@ namespace RPGM.Core.Tests.Integration
     public class EntityControllerTest : IDisposable
     {
         private readonly HttpClient _client;
-        private static string _entityId;
 
         private readonly string BASE_URL;
 
@@ -34,49 +33,68 @@ namespace RPGM.Core.Tests.Integration
             }
         }
 
-        [Fact]
-        public async Task CreateEntity()
+        [Theory]
+        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
+        public async Task CreateEntity(string name, string description)
         {
-            var properties = new Dictionary<string,string> {
-                { "name", "Aragorn" },
-            };
-            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(properties)))
+            var newEntity  = await CreateNewEntity(name, description);
+            Assert.NotNull(newEntity);
+            Assert.False(string.IsNullOrEmpty(newEntity.Id));
+            Assert.Equal(name, newEntity.Name);
+            Assert.Equal(description, newEntity.Description); 
+        }
+
+        [Theory]
+        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
+
+        public async Task GetEntity(string name, string description)
+        {
+            var newEntity  = await CreateNewEntity(name, description);
+            using (var response = await _client.GetAsync($"{BASE_URL}/{newEntity.Id}"))
             {
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
-                var newEntity = JsonConvert.DeserializeObject<Entity>(json);
+                var entity = JsonConvert.DeserializeObject<Entity>(json);
                 Assert.NotNull(newEntity);
-                Assert.False(string.IsNullOrEmpty(newEntity.Id));
-                Assert.Equal("Aragorn", newEntity.Name);
-                _entityId = newEntity.Id;
-                Console.WriteLine($"ENTITY_ID:{_entityId}");
+                Assert.Equal(newEntity.Id, entity.Id);
+                Assert.Equal(name, entity.Name);
+                Assert.Equal(description, entity.Description);
             }
         }
 
-        [Fact]
-        public async Task GetEntity()
-        {
-            Console.WriteLine($"ENTITY_ID:{_entityId}");
-            using (var response = await _client.GetAsync($"{BASE_URL}/{_entityId}"))
-            {
-                response.EnsureSuccessStatusCode();
-                var json = await response.Content.ReadAsStringAsync();
-                var newEntity = JsonConvert.DeserializeObject<Entity>(json);
-                Assert.NotNull(newEntity);
-                Assert.Equal("Aragorn", newEntity.Name);
+        [Theory]
+        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
 
-            }
-        }
-
-        [Fact]
-        public async Task DeleteEntity()
+        public async Task DeleteEntity(string name, string description)
         {
-            using (var response = await _client.DeleteAsync($"{BASE_URL}/{_entityId}"))
+            var newEntity  = await CreateNewEntity(name, description);
+            using (var response = await _client.DeleteAsync($"{BASE_URL}/{newEntity.Id}"))
             {
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
                 var wasDeleted = JsonConvert.DeserializeObject<bool>(json);
                 Assert.True(wasDeleted);
+            }
+        }
+
+
+        private async Task<Entity> CreateNewEntity(string name, string description)
+        {
+            var properties = new Dictionary<string, string>
+            {
+                ["name"] = name,
+                ["description"] = description
+            };
+
+            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(properties)))
+            {
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var newEntity = JsonConvert.DeserializeObject<Entity>(json);
+                return newEntity;
             }
         }
     }
