@@ -58,4 +58,5 @@ typings/
 .env
 
 #ide
+.vs
 .vscode

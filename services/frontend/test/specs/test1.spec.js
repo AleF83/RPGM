@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const { expect } = require('chai');
 const nconf = require('nconf');
+
 nconf
   .argv()
   .env()

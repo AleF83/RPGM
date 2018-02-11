@@ -18,37 +18,15 @@ services:
     build: ../services/backend
     image: alef83/rpgm-backend
     depends_on:
-      - solr
-      - redis
+      - core
     ports:
       - "8080:80"
+  
+  core:
+    container_name: rpgm-core
+    build: ../services/core
+    image: alef83/rpgm-core
+    ports:
+      - "5000:5000"
     environment:
-      - RPGM_CONNECTIONS_REDIS_ENDPOINT=redis:6379
-      - RPGM_CONNECTIONS_MINIO_ENDPOINT=minio:9000
-      - RPGM_CONNECTIONS_MINIO_BUCKETNAME=rpgm-bucket
-      - RPGM_CONNECTIONS_MINIO_ACCESSKEYPATH=/run/secrets/minio_access_key
-      - RPGM_CONNECTIONS_MINIO_SECRETKEYPATH=/run/secrets/minio_secret_key
-      - RPGM_CONNECTIONS_SOLR_HOST=solr
-      - RPGM_CONNECTIONS_SOLR_PORT=8983
-      - PRMG_CONNECTIONS_SOLR_COLLECTIONAME=rpgm-collection
-    secrets:
-      - minio_access_key
-      - minio_secret_key
-  
-  redis:
-    container_name: redis
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-  
-  solr:
-    container_name: solr
-    image: solr
-    ports:
-      - "8983:8983"
-
-secrets:
-  minio_access_key:
-    file: ./secrets/minio/access_key.txt
-  minio_secret_key:
-    file: ./secrets/minio/secret_key.txt
+      - PORT=5000
