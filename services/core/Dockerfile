@@ -4,7 +4,7 @@ COPY . ./
 RUN mkdir csproj && cp --parent ./src/**/*.csproj /csproj
 
 # Stage 1: Build
-FROM microsoft/aspnetcore-build:latest AS buildImage
+FROM microsoft/aspnetcore-build:2.0.4-2.1.3 AS buildImage
 
 COPY  --from=csprojImage /csproj /build
 COPY . /build
@@ -13,12 +13,12 @@ RUN dotnet restore
 RUN dotnet publish --output /dist/ --configuration Release
 
 # Stage 2: Release
-FROM microsoft/aspnetcore:latest AS releaseImage
+FROM microsoft/aspnetcore:2.0.4 AS releaseImage
 
 WORKDIR /app
 COPY --from=buildImage /dist .
 
-ENV PORT=80
+ENV PORT=5000
 EXPOSE ${PORT}
 
 HEALTHCHECK --interval=30s \

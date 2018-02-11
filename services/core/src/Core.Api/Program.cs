@@ -17,10 +17,11 @@ namespace RPGM.Core.Api
         {
             BuildWebHost(args).Run();
         }
+
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls($"http://localhost:{Environment.GetEnvironmentVariable("PORT") ?? "8081"}")
+                .UseUrls($"http://*:{Environment.GetEnvironmentVariable("PORT") ?? "8081"}")
                 .Build();
     }
 }
