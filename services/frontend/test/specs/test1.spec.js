@@ -26,6 +26,29 @@ describe('Test suite', () => {
   it('Test', async () => {
     const page = await browser.newPage();
 
+    page.on('console', msg => console.log('PAGE LOG:', msg.text));
+    page.on('pageerror', (error) => {
+      console.log('pageerror:', error.message);
+    });
+    page.on('request', (request) => {
+      console.log('request:', request.url, request.method, request.headers, request.postData);
+      console.log('============================================');
+    });
+    page.on('response', async (response) => {
+      console.log(
+        'response:',
+        response.status,
+        response.url,
+        response.headers,
+        await response.json(),
+        await response.text(),
+      );
+      console.log('============================================');
+    });
+    page.on('requestfailed', (request) => {
+      console.log(request.failure().errorText, request.url);
+    });
+
     await page.goto(`${nconf.get('FRONTEND_URL')}/entity`);
 
     const saveButtonSelector = '[data-id=btnSave]';
