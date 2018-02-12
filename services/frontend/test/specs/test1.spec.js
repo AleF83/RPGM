@@ -35,17 +35,19 @@ describe('Test suite', () => {
       console.log('============================================');
     });
     page.on('response', async (response) => {
-      console.log(
-        'response:',
-        response.status,
-        response.url,
-        response.headers,
-        await response.text(),
-      );
-      console.log('============================================');
+      try {
+        if (response.url !== 'http://backend/api/entities') {
+          return;
+        }
+        const resText = await response.text();
+        console.log('response:', response.status, response.url, response.headers, resText);
+        console.log('============================================');
+      } catch (e) {
+        console.log('EX', e);
+      }
     });
     page.on('requestfailed', (request) => {
-      console.log(request.failure().errorText, request.url);
+      console.log('REQUEST FAILED:', request.url, request);
     });
 
     await page.goto(`${nconf.get('FRONTEND_URL')}/entity`);
@@ -58,6 +60,7 @@ describe('Test suite', () => {
     await page.waitForSelector(messageSelector);
     const message = await page.$eval(messageSelector, element => element.innerHTML);
 
+    await page.waitFor(3000);
     await page.close();
 
     expect(message).to.equal('Aragorn');
