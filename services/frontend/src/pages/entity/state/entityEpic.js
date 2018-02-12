@@ -1,3 +1,4 @@
+/* global XMLHttpRequest */
 import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
@@ -10,6 +11,7 @@ export const entitySaveEpic = actions$ =>
       url: `${process.env.REACT_APP_BACKEND_URL}/api/entities`,
       method: 'POST',
       crossDomain: true,
+      createXHR: () => new XMLHttpRequest(),
       body: {
         name: 'Aragorn',
         description:
