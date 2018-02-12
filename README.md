@@ -33,7 +33,7 @@ Open `http://localhost` in browser
 yarn test:build
 
 # Run tests
-yarn test:start
+yarn test
 
 # Tear down
 yarn test:stop
