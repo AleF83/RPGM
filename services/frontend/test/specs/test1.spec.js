@@ -40,7 +40,6 @@ describe('Test suite', () => {
         response.status,
         response.url,
         response.headers,
-        await response.json(),
         await response.text(),
       );
       console.log('============================================');
