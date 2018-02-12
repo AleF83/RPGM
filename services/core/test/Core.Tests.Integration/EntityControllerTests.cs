@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,7 +23,7 @@ namespace RPGM.Core.Tests.Integration
             _client = new HttpClient();
 
             string coreApiUrl = Environment.GetEnvironmentVariable("CORE_API_URL");
-            BASE_URL = $"{coreApiUrl}/api/entity";
+            BASE_URL = $"{coreApiUrl}/api/entities";
         }
 
         public void Dispose()
@@ -42,7 +43,9 @@ namespace RPGM.Core.Tests.Integration
             Assert.NotNull(newEntity);
             Assert.False(string.IsNullOrEmpty(newEntity.Id));
             Assert.Equal(name, newEntity.Name);
-            Assert.Equal(description, newEntity.Description); 
+            Assert.Equal(description, newEntity.Description);
+
+            await DeleteAllEntities();
         }
 
         [Theory]
@@ -62,6 +65,26 @@ namespace RPGM.Core.Tests.Integration
                 Assert.Equal(name, entity.Name);
                 Assert.Equal(description, entity.Description);
             }
+            await DeleteAllEntities();
+        }
+
+        [Fact]        
+        public async Task GetAllEntities()
+        {
+            var data = new List<Tuple<string, string>> {
+                new Tuple<string, string>("Frodo", "Frodo Baggins is a fictional character in J. R. R. Tolkien's legendarium, and one of the main protagonists of The Lord of the Rings."),
+                new Tuple<string,string>("Sam", "Samwise is one of the main characters of The Lord of the Rings, in which he fills an archetypal role as the sidekick of the primary protagonist, Frodo Baggins.")
+            };
+            await Task.WhenAll(data.Select(async d => await CreateNewEntity(d.Item1, d.Item2)));
+            using (var response = await _client.GetAsync(BASE_URL))
+            {
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var entities = JsonConvert.DeserializeObject<IEnumerable<Entity>>(json);
+                Assert.NotNull(entities);
+                Assert.Equal(2, entities.Count());
+            }
+            await DeleteAllEntities();
         }
 
         [Theory]
@@ -95,6 +118,14 @@ namespace RPGM.Core.Tests.Integration
                 var json = await response.Content.ReadAsStringAsync();
                 var newEntity = JsonConvert.DeserializeObject<Entity>(json);
                 return newEntity;
+            }
+        }
+
+        private async Task DeleteAllEntities()
+        {
+            using (var response = await _client.DeleteAsync(BASE_URL))
+            {
+                response.EnsureSuccessStatusCode();                
             }
         }
     }

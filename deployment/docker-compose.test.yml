@@ -24,4 +24,4 @@ services:
     depends_on:
       - core
     environment:
-      - CORE_API_URL=http://core:5000
+      - CORE_API_URL=http://core

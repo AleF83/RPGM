@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RPGM.Core.Api.Controllers
 {
-    [Route("api")]
+    [Route("api/entities")]
     public class EntityController : Controller
     {
         private readonly IEntityRepository _repository;
@@ -16,15 +16,13 @@ namespace RPGM.Core.Api.Controllers
         }
 
         [HttpGet]
-        [Route("entity/{entityId}")]
-        public Entity Get([FromRoute]string entityId)
-        {
-            Console.WriteLine($"E_id:{entityId}, Path: {Request.Path}");
-            return _repository.GetEntity(entityId);
-        }
+        public IEnumerable<Entity> GetAll() => _repository.GetAll();
 
-        [HttpPost]
-        [Route("entity")]
+        [HttpGet]
+        [Route("{entityId}")]
+        public Entity Get([FromRoute]string entityId) => _repository.GetEntity(entityId);
+
+        [HttpPost]        
         public Entity Create([FromBody]Dictionary<string, string> properties){
             Entity entity = new Entity{
                 Id = Guid.NewGuid().ToString(),
@@ -32,20 +30,22 @@ namespace RPGM.Core.Api.Controllers
                 Description = properties.ContainsKey("description") ? properties["description"] : "No description",
             };
             _repository.AddEntity(entity);
-            Console.WriteLine($"{entity}");
             return entity;
         }
 
         [HttpPut]
-        [Route("entity/{entityId}")]
+        [Route("{entityId}")]
         public Entity Replace([FromRoute]string entityId, [FromBody]Entity entity) => _repository.UpdateEntity(entity);
 
         [HttpPatch]
-        [Route("entity/{entityId}")]
+        [Route("{entityId}")]
         public Entity Update([FromBody]Dictionary<string, object> propertiesToUpdate) => new Entity();
 
         [HttpDelete]
-        [Route("entity/{entityId}")]
+        public void DeleteAll() => _repository.RemoveAll();
+
+        [HttpDelete]
+        [Route("{entityId}")]
         public bool Delete([FromRoute]string entityId) => _repository.RemoveEntity(entityId);
     }
 }
