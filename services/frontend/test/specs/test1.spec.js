@@ -1,3 +1,4 @@
+/* global describe before after it browser */
 const puppeteer = require('puppeteer');
 const { expect } = require('chai');
 const nconf = require('nconf');
@@ -37,6 +38,6 @@ describe('Test suite', () => {
 
     await page.close();
 
-    expect(message).to.equal('The entity was created');
+    expect(message).to.equal('Aragorn');
   });
 });

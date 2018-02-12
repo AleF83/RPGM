@@ -18,7 +18,7 @@ FROM microsoft/aspnetcore:2.0.4 AS releaseImage
 WORKDIR /app
 COPY --from=buildImage /dist .
 
-ENV PORT=5000
+ENV PORT=80
 EXPOSE ${PORT}
 
 HEALTHCHECK --interval=30s \

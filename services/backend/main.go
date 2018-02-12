@@ -5,7 +5,6 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -16,10 +15,13 @@ import (
 )
 
 func main() {
-	_, err := appConfig.LoadConfiguration()
+	log.Println("Starting server...")
+
+	config, err := appConfig.LoadConfiguration()
 	if err != nil {
 		log.Fatalln("Failed to load configuration:", err)
 	}
+	log.Println("Configuration loaded.")
 
 	rootRouter := chi.NewRouter()
 
@@ -28,12 +30,12 @@ func main() {
 
 	rootRouter.HandleFunc("/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
 
-	entityController := controllers.NewEntityController()
-	rootRouter.Mount("/api/entity", entityController)
+	proxyController := controllers.NewProxyController(config)
+	rootRouter.Mount("/api/*", proxyController)
 
 	app := cors.AllowAll().Handler(rootRouter)
 
-	err = http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), app)
+	err = http.ListenAndServe(fmt.Sprintf(":%s", config.Port), app)
 
 	log.Fatal(err)
 }
