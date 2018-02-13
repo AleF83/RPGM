@@ -1,11 +1,13 @@
 import React from 'react';
 
-import Character from './components/character/Character';
+import EntityList from './components/EntityList';
+import EntityView from './components/EntityView';
 
 const EntityPage = () => (
   <div>
     <span>This is Entity Page</span>
-    <Character />
+    <EntityList />
+    <EntityView />
   </div>
 );
 

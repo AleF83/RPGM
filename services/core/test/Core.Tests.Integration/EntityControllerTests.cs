@@ -80,7 +80,7 @@ namespace RPGM.Core.Tests.Integration
             {
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
-                var entities = JsonConvert.DeserializeObject<IEnumerable<Entity>>(json);
+                var entities = JsonConvert.DeserializeObject<IEnumerable<EntitySummary>>(json);
                 Assert.NotNull(entities);
                 Assert.Equal(2, entities.Count());
             }
@@ -106,13 +106,13 @@ namespace RPGM.Core.Tests.Integration
 
         private async Task<Entity> CreateNewEntity(string name, string description)
         {
-            var properties = new Dictionary<string, string>
+            var entityCreationParams = new EntityCreationParams
             {
-                ["name"] = name,
-                ["description"] = description
+                Name = name,
+                Description = description
             };
 
-            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(properties)))
+            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(entityCreationParams)))
             {
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();

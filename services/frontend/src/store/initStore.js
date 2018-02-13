@@ -3,20 +3,26 @@ import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import browserHistory from './initHistory';
 
-import { entitySaveEpic } from '../pages/entity/state/entityEpic';
-import entityReducer from '../pages/entity/state/entityReducer';
+import entityEpic from '../pages/entity/state/epics/entityEpic';
+import entityReducer, {
+  initialState as entityInitialState,
+} from '../pages/entity/state/entityReducer';
 
-const rootEpic = combineEpics(entitySaveEpic);
+const rootEpic = combineEpics(entityEpic);
 
 const rootReducer = combineReducers({
   router: routerReducer,
   entity: entityReducer,
 });
 
+const initialState = {
+  entity: entityInitialState,
+};
+
 const initStore = () =>
   createStore(
     rootReducer,
-    {},
+    initialState,
     applyMiddleware(routerMiddleware(browserHistory), createEpicMiddleware(rootEpic)),
   );
 
