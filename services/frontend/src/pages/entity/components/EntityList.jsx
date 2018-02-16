@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 
 import PropTypes from 'prop-types';
+import { EntitySummaryPropType } from './EntityPropTypes';
 
 import EntityListItem from './EntityListItem';
-import { entityListRequest, entityLoadRequest, entityDeleteRequest } from '../state/entityActionCreators';
+import { entityListRequest, entityLoadRequest, entityDeleteRequest, entityModeChange } from '../state/entityActionCreators';
 
 const EntityList = ({
-  entities, current, selectEntity, deleteEntity,
+  entities, current, message, onSelect, onDelete, onCreate,
 }) => (
   <div>
     <button>Load</button>
@@ -19,42 +20,43 @@ const EntityList = ({
             (<EntityListItem
               key={entity.id}
               entity={entity}
-              isSelected={entity.id === current.id}
-              selectEntity={selectEntity}
-              deleteEntity={deleteEntity}
+              isSelected={current != null && entity.id === current.id}
+              onSelect={onSelect}
+              onDelete={onDelete}
             />))
         }
       </tbody>
     </table>
+    <button onClick={onCreate}>New Entity</button>
+    <span>{message}</span>
   </div>
 );
 
 EntityList.propTypes = {
-  entities: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    summary: PropTypes.string,
-  }).isRequired).isRequired,
-  current: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    summary: PropTypes.string,
-  }),
-  selectEntity: PropTypes.func.isRequired,
-  deleteEntity: PropTypes.func.isRequired,
+  entities: PropTypes.arrayOf(EntitySummaryPropType).isRequired,
+  current: EntitySummaryPropType,
+  message: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 EntityList.defaultProps = {
   current: null,
+  message: null,
 };
 
 const mapStateToProps = state => ({
   entities: state.entity.list,
   current: state.entity.current,
+  message: state.entity.message,
 });
 
 const mapDispatchToProps = dispatch => ({
   loadEntities: () => dispatch(entityListRequest()),
-  selectEntity: entityId => () => dispatch(entityLoadRequest(entityId)),
-  deleteEntity: entityId => () => dispatch(entityDeleteRequest(entityId)),
+  onSelect: entityId => () => dispatch(entityLoadRequest(entityId)),
+  onCreate: () => dispatch(entityModeChange('NEW')),
+  onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });
 
 const enhance = compose(

@@ -3,7 +3,11 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
 import { ENTITY_DELETE_REQUEST } from '../entityActionTypes';
-import { entityDeleteSuccess, entityDeleteFailure } from '../entityActionCreators';
+import {
+  entityDeleteSuccess,
+  entityDeleteFailure,
+  entityListRequest,
+} from '../entityActionCreators';
 
 const entityDeleteEpic = actions$ =>
   actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ entityId }) =>
@@ -18,6 +22,7 @@ const entityDeleteEpic = actions$ =>
       },
     })
       .map(() => entityDeleteSuccess(entityId))
+      .map(() => entityListRequest())
       .catch(err => Observable.of(entityDeleteFailure(err.xhr.response))));
 
 export default entityDeleteEpic;

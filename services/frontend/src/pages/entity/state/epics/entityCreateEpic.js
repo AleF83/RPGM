@@ -3,7 +3,12 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
 import { ENTITY_CREATE_REQUEST } from '../entityActionTypes';
-import { entityCreateSuccess, entityCreateFailure } from '../entityActionCreators';
+import {
+  entityCreateSuccess,
+  entityCreateFailure,
+  entityListRequest,
+  entityModeChange,
+} from '../entityActionCreators';
 
 const entityCreateEpic = actions$ =>
   actions$.ofType(ENTITY_CREATE_REQUEST).switchMap(({ entityCreationParams }) =>
@@ -19,6 +24,8 @@ const entityCreateEpic = actions$ =>
       },
     })
       .map(e => entityCreateSuccess(e.response))
+      .map(() => entityModeChange('VIEW'))
+      .map(() => entityListRequest())
       .catch(err => Observable.of(entityCreateFailure(err.xhr.response))));
 
 export default entityCreateEpic;

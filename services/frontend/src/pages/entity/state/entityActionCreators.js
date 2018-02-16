@@ -14,6 +14,8 @@ import {
   ENTITY_DELETE_REQUEST,
   ENTITY_DELETE_SUCCESS,
   ENTITY_DELETE_FAILURE,
+  ENTITY_MODE_CHANGE,
+  ENTITY_PROPERTY_CHANGE,
 } from './entityActionTypes';
 
 export const entityListRequest = () => ({
@@ -60,8 +62,9 @@ export const entityCreateFailure = message => ({
   message,
 });
 
-export const entityUpdateRequest = () => ({
+export const entityUpdateRequest = entity => ({
   type: ENTITY_UPDATE_REQUEST,
+  entity,
 });
 
 export const entityUpdateSuccess = entity => ({
@@ -87,4 +90,15 @@ export const entityDeleteSuccess = entityId => ({
 export const entityDeleteFailure = message => ({
   type: ENTITY_DELETE_FAILURE,
   message,
+});
+
+export const entityModeChange = mode => ({
+  type: ENTITY_MODE_CHANGE,
+  mode,
+});
+
+export const entityPropertyChange = (propName, propValue) => ({
+  type: ENTITY_PROPERTY_CHANGE,
+  propName,
+  propValue,
 });

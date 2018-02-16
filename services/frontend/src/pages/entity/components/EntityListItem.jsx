@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EntityListItem = ({
-  entity, isSelected, selectEntity, deleteEntity,
+  entity, isSelected, onSelect, onDelete,
 }) => (
   <tr>
     <td>
-      <div role="presentation" onClick={selectEntity(entity.id)}>
+      <div role="presentation" onClick={onSelect(entity.id)}>
         Entity List Item<br />
         Name: {entity.name} <br />
         Summary: {entity.summary} <br />
       </div>
-      <button onClick={deleteEntity(entity.id)}>Delete</button>
+      <button onClick={onDelete(entity.id)}>Delete</button>
       {isSelected && <span>Selected</span>}
     </td>
   </tr>
@@ -23,8 +23,8 @@ EntityListItem.propTypes = {
     summary: PropTypes.string,
   }).isRequired,
   isSelected: PropTypes.bool.isRequired,
-  selectEntity: PropTypes.func.isRequired,
-  deleteEntity: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default EntityListItem;

@@ -14,11 +14,14 @@ import {
   ENTITY_DELETE_REQUEST,
   ENTITY_DELETE_SUCCESS,
   ENTITY_DELETE_FAILURE,
+  ENTITY_MODE_CHANGE,
+  ENTITY_PROPERTY_CHANGE,
 } from './entityActionTypes';
 
 export const initialState = {
   current: null,
   list: [],
+  mode: 'VIEW',
   message: null,
 };
 
@@ -94,16 +97,24 @@ export default (state = initialState, action) => {
       return state;
 
     case ENTITY_DELETE_SUCCESS:
-      return {
-        ...state,
-        list: state.list.filter(e => e.id !== action.entityId),
-        current: state.current.id === action.entityId ? null : state.current,
-      };
+      return state;
 
     case ENTITY_DELETE_FAILURE:
       return {
         ...state,
         message: action.message,
+      };
+
+    case ENTITY_MODE_CHANGE:
+      return {
+        ...state,
+        mode: action.mode,
+      };
+
+    case ENTITY_PROPERTY_CHANGE:
+      return {
+        ...state,
+        current: { ...state.current, [action.propName]: [action.propValue] },
       };
 
     default:

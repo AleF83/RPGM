@@ -3,7 +3,12 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 
 import { ENTITY_UPDATE_REQUEST } from '../entityActionTypes';
-import { entityUpdateSuccess, entityUpdateFailure } from '../entityActionCreators';
+import {
+  entityUpdateSuccess,
+  entityUpdateFailure,
+  entityListRequest,
+  entityModeChange,
+} from '../entityActionCreators';
 
 const entityUpdateEpic = actions$ =>
   actions$.ofType(ENTITY_UPDATE_REQUEST).switchMap(({ entity }) =>
@@ -19,6 +24,8 @@ const entityUpdateEpic = actions$ =>
       },
     })
       .map(e => entityUpdateSuccess(e.response))
+      .map(() => entityModeChange('VIEW'))
+      .map(() => entityListRequest())
       .catch(err => Observable.of(entityUpdateFailure(err.xhr.response))));
 
 export default entityUpdateEpic;
