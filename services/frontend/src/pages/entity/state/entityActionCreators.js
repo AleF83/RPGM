@@ -25,7 +25,11 @@ export const entityListSuccess = entities => ({ type: ENTITY_LIST_SUCCESS, entit
 
 export const entityListFailure = message => ({ type: ENTITY_LIST_FAILURE, message });
 
-export const entityLoadRequest = entityId => ({ type: ENTITY_LOAD_REQUEST, entityId });
+export const entityLoadRequest = (entityId, mode = 'VIEW') => ({
+  type: ENTITY_LOAD_REQUEST,
+  entityId,
+  mode,
+});
 
 export const entityLoadSuccess = entity => ({ type: ENTITY_LOAD_SUCCESS, entity });
 

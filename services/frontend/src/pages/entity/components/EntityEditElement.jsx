@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { Button } from 'material-ui';
+import { Save, Cancel, Delete } from 'material-ui-icons';
+
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
@@ -26,9 +29,15 @@ const EntityEditElement = ({
     <input type="text" placeholder="Summary" name="summary" value={entity.summary} onChange={onChange} />
     <input type="text" placeholder="Description" name="description" value={entity.description} onChange={onChange} />
     <ButtonRow>
-      <button onClick={onSave}>Save</button>
-      <button onClick={onCancel}>Cancel</button>
-      <button onClick={onDelete}>Delete</button>
+      <Button onClick={onSave}>
+        <Save />
+      </Button>
+      <Button onClick={onCancel}>
+        <Cancel />
+      </Button>
+      <Button onClick={onDelete}>
+        <Delete />
+      </Button>
     </ButtonRow>
   </MainElement>
 );

@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'react-emotion';
+import { Button } from 'material-ui';
+import { Save, Cancel } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
-import { entityCreateRequest, entityUpdateReset, entityPropertyChange } from '../state/entityActionCreators';
+import { entityCreateRequest, entityPropertyChange, entityModeChange } from '../state/entityActionCreators';
 
 const MainElement = styled('div')`
   display: flex;
@@ -28,8 +30,12 @@ const EntityCreate = ({
     <input type="text" data-id="txtSummary" name="summary" placeholder="Summary" value={entity.summary} onChange={onChange} />
     <input type="text" data-id="txtDescription" name="description" placeholder="Description" value={entity.description} onChange={onChange} />
     <ButtonsRow>
-      <button data-id="btnSave" onClick={onSave}>Save</button>
-      <button onClick={onCancel}>Cancel</button>
+      <Button data-id="btnSave" onClick={onSave}>
+        <Save />
+      </Button>
+      <Button onClick={onCancel}>
+        <Cancel />
+      </Button>
     </ButtonsRow>
   </MainElement>
 );
@@ -48,7 +54,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
   onSave: entity => () => dispatch(entityCreateRequest(entity)),
-  onCancel: () => dispatch(entityUpdateReset()),
+  onCancel: () => dispatch(entityModeChange('LIST')),
 });
 
 const mergeProps = (stateProps, dispatchProps) => ({

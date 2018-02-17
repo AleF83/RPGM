@@ -120,7 +120,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mode: action.mode,
-        ...({ NEW: { current: createEmptyEntity() } })[action.mode],
+        ...({ NEW: { current: createEmptyEntity() }, LIST: { current: null } })[action.mode],
       };
 
     case ENTITY_PROPERTY_CHANGE:
