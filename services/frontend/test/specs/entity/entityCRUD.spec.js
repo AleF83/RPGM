@@ -4,6 +4,8 @@ const puppeteer = require('puppeteer');
 const nconf = require('nconf');
 const { setPageListeners } = require('../utils');
 
+const testData = require('./testData.json');
+
 nconf.argv().env().defaults({ FRONTEND_URL: 'http://localhost' });
 
 describe('Entity CRUD flows', () => {
@@ -28,8 +30,19 @@ describe('Entity CRUD flows', () => {
     await page.waitForSelector(createButtonSelector);
     await page.click(createButtonSelector);
 
-    //     const messageSelector = '[data-id=message]';
-    //     await page.waitForSelector(messageSelector);
+    const nameSelector = '[data-id=txtName]';
+    await page.waitForSelector(nameSelector);
+    await page.type(nameSelector, testData.create.name);
+
+    const summarySelector = '[data-id=txtSummary]';
+    await page.type(summarySelector, testData.create.summary);
+
+    const descriptionSelector = '[data-id=txtDescription]';
+    await page.type(descriptionSelector, testData.create.description);
+
+    const saveButtonSelector = '[data-id=btnSave]';
+    await page.click(saveButtonSelector);
+
     //     const message = await page.$eval(messageSelector, element => element.innerHTML);
     await page.waitFor(3000);
     await page.close();

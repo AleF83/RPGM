@@ -24,11 +24,11 @@ const EntityCreate = ({
 }) => (
   <MainElement>
     <span>Create Entity</span>
-    <input type="text" id="name" name="name" placeholder="Name" value={entity.name} onChange={onChange} />
-    <input type="text" id="summary" name="summary" placeholder="Summary" value={entity.summary} onChange={onChange} />
-    <input type="text" id="description" name="description" placeholder="Description" value={entity.description} onChange={onChange} />
+    <input type="text" data-id="txtName" name="name" placeholder="Name" value={entity.name} onChange={onChange} />
+    <input type="text" data-id="txtSummary" name="summary" placeholder="Summary" value={entity.summary} onChange={onChange} />
+    <input type="text" data-id="txtDescription" name="description" placeholder="Description" value={entity.description} onChange={onChange} />
     <ButtonsRow>
-      <button onClick={onSave}>Save</button>
+      <button data-id="btnSave" onClick={onSave}>Save</button>
       <button onClick={onCancel}>Cancel</button>
     </ButtonsRow>
   </MainElement>
