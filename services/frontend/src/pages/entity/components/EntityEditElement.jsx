@@ -22,9 +22,9 @@ const EntityEditElement = ({
 }) => (
   <MainElement>
     <h4>Entity Edit</h4>
-    <input type="text" placeholder="Name" value={entity.name} onChange={onChange} />
-    <input type="text" placeholder="Summary" value={entity.summary} onChange={onChange} />
-    <input type="text" placeholder="Description" value={entity.description} onChange={onChange} />
+    <input type="text" placeholder="Name" name="name" value={entity.name} onChange={onChange} />
+    <input type="text" placeholder="Summary" name="summary" value={entity.summary} onChange={onChange} />
+    <input type="text" placeholder="Description" name="description" value={entity.description} onChange={onChange} />
     <ButtonRow>
       <button onClick={onSave}>Save</button>
       <button onClick={onCancel}>Cancel</button>

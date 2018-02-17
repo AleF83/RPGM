@@ -16,10 +16,15 @@ import {
   ENTITY_DELETE_FAILURE,
   ENTITY_MODE_CHANGE,
   ENTITY_PROPERTY_CHANGE,
+  ENTITY_UPDATE_RESET,
 } from './entityActionTypes';
 
 export const initialState = {
-  current: null, list: [], mode: 'VIEW', messages: [],
+  current: null,
+  currentOriginal: null,
+  list: [],
+  mode: 'VIEW',
+  messages: [],
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +53,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: action.entity,
+        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
         messages: [...state.messages, `Entity loaded: ${action.entity.name}`],
       };
 
@@ -55,6 +61,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: null,
+        currentOriginal: null,
         messages: [...state.messages, `Failed to load entity: ${action.message}`],
       };
 
@@ -68,6 +75,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: action.entity,
+        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
         messages: [...state.messages, `New entity created: ${action.entity.name}`],
       };
 
@@ -80,10 +88,14 @@ export default (state = initialState, action) => {
     case ENTITY_UPDATE_REQUEST:
       return { ...state, messages: [...state.messages, `Updating ${action.entity.name}...`] };
 
+    case ENTITY_UPDATE_RESET:
+      return { ...state, current: state.currentOriginal };
+
     case ENTITY_UPDATE_SUCCESS:
       return {
         ...state,
         current: action.entity,
+        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
         messages: [...state.messages, `The entity was updated: ${action.entity.name}`],
       };
 
@@ -109,7 +121,7 @@ export default (state = initialState, action) => {
       return { ...state, mode: action.mode };
 
     case ENTITY_PROPERTY_CHANGE:
-      return { ...state, current: { ...state.current, [action.propName]: [action.propValue] } };
+      return { ...state, current: { ...state.current, [action.propName]: action.propValue } };
 
     default:
       return state;

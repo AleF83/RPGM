@@ -3,7 +3,7 @@ import { compose, branch, renderComponent } from 'recompose';
 
 import EntityEditElement from './EntityEditElement';
 import EmptyEntityView from './EmptyEntityView';
-import { entityLoadRequest, entityUpdateRequest, entityDeleteRequest } from '../state/entityActionCreators';
+import { entityUpdateReset, entityUpdateRequest, entityDeleteRequest, entityPropertyChange } from '../state/entityActionCreators';
 
 const mapStateToProps = state => ({
   entity: state.entity.current,
@@ -11,12 +11,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSave: entity => () => dispatch(entityUpdateRequest(entity)),
-  onCancel: id => () => dispatch(entityLoadRequest(id)),
+  onCancel: id => () => dispatch(entityUpdateReset(id)),
   onDelete: id => () => dispatch(entityDeleteRequest(id)),
+  onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
 });
 
 const mergeProps = (stateProps, dispatchProps) => ({
   ...stateProps,
+  ...dispatchProps,
   onSave: dispatchProps.onSave(stateProps.entity),
   onCancel: dispatchProps.onCancel(stateProps.entity.id),
   onDelete: dispatchProps.onDelete(stateProps.entity.id),
