@@ -608,7 +608,7 @@ babel-plugin-dynamic-import-node@1.1.0:
     babel-template "^6.26.0"
     babel-types "^6.26.0"
 
-babel-plugin-emotion@^9.0.0:
+babel-plugin-emotion@9.0.1, babel-plugin-emotion@^9.0.0:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-9.0.1.tgz#1c1ec14a5d6f40c64bd68e805f074fea60a580a7"
   dependencies:

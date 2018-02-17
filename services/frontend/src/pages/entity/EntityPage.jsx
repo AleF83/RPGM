@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled, { css } from 'react-emotion';
 
 import PropTypes from 'prop-types';
 
@@ -7,25 +8,51 @@ import EntityList from './components/EntityList';
 import EntityView from './components/EntityView';
 import EntityEdit from './components/EntityEdit';
 import EntityCreate from './components/EntityCreate';
+import Messages from './components/Messages';
 
-const EntityPage = ({ mode }) => (
-  <div style={{ flex: 1, flexDirection: 'column' }}>
+const MainElement = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
+
+const EntitiesPane = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+`;
+
+const EntityListStyle = css({
+
+});
+
+const EntityStyle = css({
+
+});
+
+const EntityPage = ({ mode, messages }) => (
+  <MainElement>
     <span>This is Entity Page</span>
-    <EntityList />
-    {{
-      VIEW: (<EntityView />),
-      EDIT: (<EntityEdit />),
-      NEW: (<EntityCreate />),
-    }[mode]}
-  </div>
+    <EntitiesPane>
+      <EntityList className={EntityListStyle} />
+      {{
+        VIEW: (<EntityView className={EntityStyle} />),
+        EDIT: (<EntityEdit className={EntityStyle} />),
+        NEW: (<EntityCreate className={EntityStyle} />),
+      }[mode]}
+    </EntitiesPane>
+    <Messages messages={messages} />
+  </MainElement>
 );
 
 EntityPage.propTypes = {
   mode: PropTypes.string.isRequired,
+  messages: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = state => ({
   mode: state.entity.mode,
+  messages: state.entity.messages,
 });
 
 const enhance = connect(mapStateToProps);

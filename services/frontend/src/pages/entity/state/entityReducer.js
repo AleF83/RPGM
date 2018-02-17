@@ -19,103 +19,97 @@ import {
 } from './entityActionTypes';
 
 export const initialState = {
-  current: null,
-  list: [],
-  mode: 'VIEW',
-  message: null,
+  current: null, list: [], mode: 'VIEW', messages: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ENTITY_LIST_REQUEST:
-      return {
-        ...state,
-        current: null,
-        message: 'Loading...',
-      };
+      return { ...state, messages: [...state.messages, 'Loading entities...'] };
 
     case ENTITY_LIST_SUCCESS:
       return {
         ...state,
-        current: (action.entities.length > 0 && action.entities[0]) || null,
         list: action.entities,
-        message: `${action.entities.length} entities loaded.`,
+        messages: [...state.messages, `${action.entities.length} entities loaded.`],
       };
 
     case ENTITY_LIST_FAILURE:
       return {
         ...state,
-        current: null,
         list: [],
-        message: `Failed to load entity list: ${action.message}`,
+        messages: [...state.messages, `Failed to load entity list: ${action.message}`],
       };
 
     case ENTITY_LOAD_REQUEST:
-      return state;
+      return { ...state, messages: [...state.messages, `Loading ${action.entityId}`] };
 
     case ENTITY_LOAD_SUCCESS:
       return {
         ...state,
         current: action.entity,
+        messages: [...state.messages, `Entity loaded: ${action.entity.name}`],
       };
 
     case ENTITY_LOAD_FAILURE:
       return {
         ...state,
         current: null,
-        message: action.message,
+        messages: [...state.messages, `Failed to load entity: ${action.message}`],
       };
 
     case ENTITY_CREATE_REQUEST:
-      return state;
+      return {
+        ...state,
+        messages: [...state.messages, `Creating ${action.entityCreationParams.name}...`],
+      };
 
     case ENTITY_CREATE_SUCCESS:
       return {
         ...state,
-        message: action.message,
+        current: action.entity,
+        messages: [...state.messages, `New entity created: ${action.entity.name}`],
       };
 
     case ENTITY_CREATE_FAILURE:
       return {
         ...state,
-        message: action.message,
+        messages: [...state.messages, `Failed to create new entity: ${action.message}`],
       };
 
     case ENTITY_UPDATE_REQUEST:
-      return state;
+      return { ...state, messages: [...state.messages, `Updating ${action.entity.name}...`] };
 
     case ENTITY_UPDATE_SUCCESS:
-      return state;
+      return {
+        ...state,
+        current: action.entity,
+        messages: [...state.messages, `The entity was updated: ${action.entity.name}`],
+      };
 
     case ENTITY_UPDATE_FAILURE:
       return {
         ...state,
-        message: action.message,
+        messages: [...state.messages, `Failed to update entity: ${action.message}`],
       };
 
     case ENTITY_DELETE_REQUEST:
-      return state;
+      return { ...state, messages: [...state.messages, `Deleting ${action.entityId}...`] };
 
     case ENTITY_DELETE_SUCCESS:
-      return state;
+      return { ...state, messages: [...state.messages, 'The entity was deleted.'] };
 
     case ENTITY_DELETE_FAILURE:
       return {
         ...state,
-        message: action.message,
+        messages: [...state.messages, `Failed to delete entity: ${action.message}`],
       };
 
     case ENTITY_MODE_CHANGE:
-      return {
-        ...state,
-        mode: action.mode,
-      };
+      return { ...state, mode: action.mode };
 
     case ENTITY_PROPERTY_CHANGE:
-      return {
-        ...state,
-        current: { ...state.current, [action.propName]: [action.propValue] },
-      };
+      return { ...state, current: { ...state.current, [action.propName]: [action.propValue] } };
 
     default:
       return state;

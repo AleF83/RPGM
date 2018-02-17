@@ -1,43 +1,13 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { compose, branch, renderComponent } from 'recompose';
 
-import PropTypes from 'prop-types';
-import { EntityPropType } from './EntityPropTypes';
+import EntityViewElement from './EntityViewElement';
+import EmptyEntityView from './EmptyEntityView';
+
 import { entityModeChange, entityDeleteRequest } from '../state/entityActionCreators';
-
-const EmptyEntityView = () => (
-  <div>Nothing to show</div>
-);
-
-const EntityView = ({
-  entity, message, onEdit, onDelete,
-}) => (
-  <div style={{ flex: 1, flexDirection: 'column' }}>
-    Entity View<br />
-    Name: {entity.name} <br />
-    Summary: {entity.summary} <br />
-    Description: {entity.description}
-    <span>{message}</span>
-    <button onClick={onEdit}>Edit</button>
-    <button onClick={onDelete(entity.id)}>Delete</button>
-  </div>
-);
-
-EntityView.propTypes = {
-  entity: EntityPropType.isRequired,
-  message: PropTypes.string,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
-
-EntityView.defaultProps = {
-  message: null,
-};
 
 const mapStateToProps = state => ({
   entity: state.entity.current,
-  message: state.entity.message,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -45,13 +15,14 @@ const mapDispatchToProps = dispatch => ({
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });
 
-const enhance = Component => compose(
+const enhance = (Component, EmptyComponent) => compose(
   connect(mapStateToProps, mapDispatchToProps),
   branch(
     ({ entity }) => entity,
     renderComponent(Component),
-    renderComponent(EmptyEntityView),
+    renderComponent(EmptyComponent),
   ),
 )(Component);
 
-export default enhance(EntityView);
+export default enhance(EntityViewElement, EmptyEntityView);
+

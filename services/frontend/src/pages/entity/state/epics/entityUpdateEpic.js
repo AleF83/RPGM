@@ -10,22 +10,20 @@ import {
   entityModeChange,
 } from '../entityActionCreators';
 
-const entityUpdateEpic = actions$ =>
-  actions$.ofType(ENTITY_UPDATE_REQUEST).switchMap(({ entity }) =>
-    ajax({
-      url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entity.id}`,
-      method: 'PUT',
-      crossDomain: true,
-      createXHR: () => new XMLHttpRequest(),
-      body: entity,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .map(e => entityUpdateSuccess(e.response))
-      .map(() => entityModeChange('VIEW'))
-      .map(() => entityListRequest())
-      .catch(err => Observable.of(entityUpdateFailure(err.xhr.response))));
+const entityUpdateEpic = actions$ => actions$.ofType(ENTITY_UPDATE_REQUEST).switchMap(({ entity }) =>
+  ajax({
+    url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entity.id}`,
+    method: 'PUT',
+    crossDomain: true,
+    createXHR: () => new XMLHttpRequest(),
+    body: entity,
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+    .mergeMap(e => [
+      entityUpdateSuccess(e.response),
+      entityModeChange('VIEW'),
+      entityListRequest(),
+    ])
+    .catch(err => Observable.of(entityUpdateFailure(err.xhr.response))));
 
 export default entityUpdateEpic;

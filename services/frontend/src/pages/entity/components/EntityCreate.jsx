@@ -1,28 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withStateHandlers } from 'recompose';
+import styled from 'react-emotion';
 
 import PropTypes from 'prop-types';
 import { entityCreateRequest } from '../state/entityActionCreators';
 
+const MainElement = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
+
+const ButtonsRow = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+`;
+
 const EntityCreate = ({
-  name, summary, description, message, save, onChange,
+  name, summary, description, save, onChange,
 }) => (
-  <div style={{ flex: 1, flexDirection: 'column' }}>
+  <MainElement>
     <span>Create Entity</span>
     <input type="text" id="name" name="name" placeholder="Name" value={name} onChange={onChange} />
     <input type="text" id="summary" name="summary" placeholder="Summary" value={summary} onChange={onChange} />
     <input type="text" id="description" name="description" placeholder="Description" value={description} onChange={onChange} />
-    <button onClick={save({ name, summary, description })}>Save</button>
-    <span>{message}</span>
-  </div>
+    <ButtonsRow>
+      <button onClick={save({ name, summary, description })}>Save</button>
+      <button onClick={() => {}}>Cancel</button>
+    </ButtonsRow>
+  </MainElement>
 );
 
 EntityCreate.propTypes = {
   name: PropTypes.string,
   summary: PropTypes.string,
   description: PropTypes.string,
-  message: PropTypes.string,
   save: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };
@@ -31,19 +45,14 @@ EntityCreate.defaultProps = {
   name: '',
   summary: '',
   description: '',
-  message: null,
 };
-
-const mapStateToProps = state => ({
-  message: state.entity.message,
-});
 
 const mapDispatchToProps = dispatch => ({
   save: entityCreationParams => () => dispatch(entityCreateRequest(entityCreationParams)),
 });
 
 const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(null, mapDispatchToProps),
   withStateHandlers(() => ({
     name: '',
     summary: '',
