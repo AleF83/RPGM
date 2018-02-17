@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import styled from 'react-emotion';
+import { Button, List } from 'material-ui';
+import { Add, Refresh } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntitySummaryPropType } from './EntityPropTypes';
@@ -9,8 +11,10 @@ import { EntitySummaryPropType } from './EntityPropTypes';
 import EntityListItem from './EntityListItem';
 import { entityListRequest, entityLoadRequest, entityDeleteRequest, entityModeChange } from '../state/entityActionCreators';
 
-const List = styled('ul')`
-  list-style: none;
+const MainElement = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 `;
 
 const ButtonRow = styled('div')`
@@ -21,9 +25,9 @@ const ButtonRow = styled('div')`
 
 
 const EntityList = ({
-  entities, onSelect, onDelete, onCreate, onRefresh,
+  entities, onSelect, onEdit, onDelete, onCreate, onRefresh,
 }) => (
-  <div>
+  <MainElement>
     <List>
       {
         entities.map(entity =>
@@ -32,20 +36,26 @@ const EntityList = ({
             entity={entity}
             isSelected={false}
             onSelect={onSelect}
+            onEdit={onEdit}
             onDelete={onDelete}
           />))
       }
     </List>
     <ButtonRow>
-      <button onClick={onCreate} data-id="btnNew">New Entity</button>
-      <button onClick={onRefresh}>Refresh</button>
+      <Button onClick={onCreate} data-id="btnNew">
+        <Add />
+      </Button>
+      <Button onClick={onRefresh}>
+        <Refresh />
+      </Button>
     </ButtonRow>
-  </div>
+  </MainElement>
 );
 
 EntityList.propTypes = {
   entities: PropTypes.arrayOf(EntitySummaryPropType).isRequired,
   onSelect: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onRefresh: PropTypes.func.isRequired,
@@ -58,6 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadEntities: () => dispatch(entityListRequest()),
   onSelect: entityId => () => dispatch(entityLoadRequest(entityId)),
+  onEdit: entityId => () => dispatch(entityLoadRequest(entityId, 'EDIT')),
   onCreate: () => dispatch(entityModeChange('NEW')),
   onRefresh: () => dispatch(entityListRequest()),
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),

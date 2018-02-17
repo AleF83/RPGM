@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { Button } from 'material-ui';
+import { Delete, Edit } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
@@ -26,8 +28,12 @@ const EntityViewElement = ({
     Summary: {entity.summary} <br />
     Description: {entity.description}
     <ButtonRow>
-      <button onClick={onEdit}>Edit</button>
-      <button onClick={onDelete(entity.id)}>Delete</button>
+      <Button onClick={onEdit}>
+        <Edit />
+      </Button>
+      <Button onClick={onDelete(entity.id)}>
+        <Delete />
+      </Button>
     </ButtonRow>
   </MainElement>
 );
