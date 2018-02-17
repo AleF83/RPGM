@@ -106,13 +106,13 @@ namespace RPGM.Core.Tests.Integration
 
         private async Task<Entity> CreateNewEntity(string name, string description)
         {
-            var entityCreationParams = new EntityCreationParams
+            var entity = new Entity
             {
                 Name = name,
                 Description = description
             };
 
-            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(entityCreationParams)))
+            using (var response = await _client.PostAsync(BASE_URL, new JsonContent(entity)))
             {
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();

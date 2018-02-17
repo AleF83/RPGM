@@ -13,9 +13,15 @@ const List = styled('ul')`
   list-style: none;
 `;
 
+const ButtonRow = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direaction: row;
+`;
+
 
 const EntityList = ({
-  entities, current, onSelect, onDelete, onCreate,
+  entities, onSelect, onDelete, onCreate, onRefresh,
 }) => (
   <div>
     <List>
@@ -24,37 +30,36 @@ const EntityList = ({
           (<EntityListItem
             key={entity.id}
             entity={entity}
-            isSelected={current != null && entity.id === current.id}
+            isSelected={false}
             onSelect={onSelect}
             onDelete={onDelete}
           />))
       }
     </List>
-    <button onClick={onCreate}>New Entity</button>
+    <ButtonRow>
+      <button onClick={onCreate} data-id="btnNew">New Entity</button>
+      <button onClick={onRefresh}>Refresh</button>
+    </ButtonRow>
   </div>
 );
 
 EntityList.propTypes = {
   entities: PropTypes.arrayOf(EntitySummaryPropType).isRequired,
-  current: EntitySummaryPropType,
   onSelect: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-};
-
-EntityList.defaultProps = {
-  current: null,
+  onRefresh: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   entities: state.entity.list,
-  current: state.entity.current,
 });
 
 const mapDispatchToProps = dispatch => ({
   loadEntities: () => dispatch(entityListRequest()),
   onSelect: entityId => () => dispatch(entityLoadRequest(entityId)),
   onCreate: () => dispatch(entityModeChange('NEW')),
+  onRefresh: () => dispatch(entityListRequest()),
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });
 

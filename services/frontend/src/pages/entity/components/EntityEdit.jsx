@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSave: entity => () => dispatch(entityUpdateRequest(entity)),
-  onCancel: id => () => dispatch(entityUpdateReset(id)),
+  onCancel: () => dispatch(entityUpdateReset()),
   onDelete: id => () => dispatch(entityDeleteRequest(id)),
   onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
 });
@@ -20,7 +20,6 @@ const mergeProps = (stateProps, dispatchProps) => ({
   ...stateProps,
   ...dispatchProps,
   onSave: dispatchProps.onSave(stateProps.entity),
-  onCancel: dispatchProps.onCancel(stateProps.entity.id),
   onDelete: dispatchProps.onDelete(stateProps.entity.id),
 });
 

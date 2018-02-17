@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compose, withStateHandlers } from 'recompose';
 import styled from 'react-emotion';
 
 import PropTypes from 'prop-types';
-import { entityCreateRequest } from '../state/entityActionCreators';
+import { EntityPropType } from './EntityPropTypes';
+
+import { entityCreateRequest, entityUpdateReset, entityPropertyChange } from '../state/entityActionCreators';
 
 const MainElement = styled('div')`
   display: flex;
@@ -19,47 +20,43 @@ const ButtonsRow = styled('div')`
 `;
 
 const EntityCreate = ({
-  name, summary, description, save, onChange,
+  entity, onSave, onCancel, onChange,
 }) => (
   <MainElement>
     <span>Create Entity</span>
-    <input type="text" id="name" name="name" placeholder="Name" value={name} onChange={onChange} />
-    <input type="text" id="summary" name="summary" placeholder="Summary" value={summary} onChange={onChange} />
-    <input type="text" id="description" name="description" placeholder="Description" value={description} onChange={onChange} />
+    <input type="text" id="name" name="name" placeholder="Name" value={entity.name} onChange={onChange} />
+    <input type="text" id="summary" name="summary" placeholder="Summary" value={entity.summary} onChange={onChange} />
+    <input type="text" id="description" name="description" placeholder="Description" value={entity.description} onChange={onChange} />
     <ButtonsRow>
-      <button onClick={save({ name, summary, description })}>Save</button>
-      <button onClick={() => {}}>Cancel</button>
+      <button onClick={onSave}>Save</button>
+      <button onClick={onCancel}>Cancel</button>
     </ButtonsRow>
   </MainElement>
 );
 
 EntityCreate.propTypes = {
-  name: PropTypes.string,
-  summary: PropTypes.string,
-  description: PropTypes.string,
-  save: PropTypes.func.isRequired,
+  entity: EntityPropType.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-EntityCreate.defaultProps = {
-  name: '',
-  summary: '',
-  description: '',
-};
-
-const mapDispatchToProps = dispatch => ({
-  save: entityCreationParams => () => dispatch(entityCreateRequest(entityCreationParams)),
+const mapStateToProps = state => ({
+  entity: state.entity.current,
 });
 
-const enhance = compose(
-  connect(null, mapDispatchToProps),
-  withStateHandlers(() => ({
-    name: '',
-    summary: '',
-    description: '',
-  }), {
-    onChange: () => ({ target: { name, value } }) => ({ [name]: value }),
-  }),
-);
+const mapDispatchToProps = dispatch => ({
+  onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
+  onSave: entity => () => dispatch(entityCreateRequest(entity)),
+  onCancel: () => dispatch(entityUpdateReset()),
+});
+
+const mergeProps = (stateProps, dispatchProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  onSave: dispatchProps.onSave(stateProps.entity),
+});
+
+const enhance = connect(mapStateToProps, mapDispatchToProps, mergeProps);
 
 export default enhance(EntityCreate);

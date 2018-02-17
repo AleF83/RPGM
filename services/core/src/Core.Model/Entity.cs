@@ -5,21 +5,6 @@ namespace RPGM.Core.Model
 {
     public class Entity
     {
-
-        public Entity()
-        {
-
-        }
-
-        public Entity(EntityCreationParams entityCreationParams)
-        {
-            Id = Guid.NewGuid().ToString();
-            Name = entityCreationParams.Name;
-            Summary = entityCreationParams.Summary;
-            Description = entityCreationParams.Description;
-        }
-
-        [JsonRequired]
         [JsonProperty("id")]
         public string Id { get; set; }
 

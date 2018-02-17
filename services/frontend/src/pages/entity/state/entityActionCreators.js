@@ -31,10 +31,7 @@ export const entityLoadSuccess = entity => ({ type: ENTITY_LOAD_SUCCESS, entity 
 
 export const entityLoadFailure = message => ({ type: ENTITY_LOAD_FAILURE, message });
 
-export const entityCreateRequest = entityCreationParams => ({
-  type: ENTITY_CREATE_REQUEST,
-  entityCreationParams,
-});
+export const entityCreateRequest = entity => ({ type: ENTITY_CREATE_REQUEST, entity });
 
 export const entityCreateSuccess = entity => ({ type: ENTITY_CREATE_SUCCESS, entity });
 

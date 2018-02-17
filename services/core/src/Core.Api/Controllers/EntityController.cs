@@ -23,7 +23,7 @@ namespace RPGM.Core.Api.Controllers
         public Entity Get([FromRoute]string entityId) => _repository.GetEntity(entityId);
 
         [HttpPost]
-        public Entity Create([FromBody]EntityCreationParams entityCreationParams) => _repository.AddEntity(entityCreationParams);
+        public Entity Create([FromBody]Entity entity) => _repository.AddEntity(entity);
 
         [HttpPut]
         [Route("{entityId}")]

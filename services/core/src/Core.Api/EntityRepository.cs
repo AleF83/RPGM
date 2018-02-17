@@ -10,7 +10,7 @@ namespace RPGM.Core.Api
 
         Entity GetEntity(string entityId);
 
-        Entity AddEntity(EntityCreationParams entityCreationParams);
+        Entity AddEntity(Entity entity);
 
         Entity UpdateEntity(Entity entity);
 
@@ -38,9 +38,12 @@ namespace RPGM.Core.Api
 
         public Entity GetEntity(string entityId) =>  _entitites.ContainsKey(entityId) ? _entitites[entityId] : null;
 
-        public Entity AddEntity(EntityCreationParams entityCreationParams)
+        public Entity AddEntity(Entity entity)
         {
-            var entity = new Entity(entityCreationParams);
+            if(string.IsNullOrEmpty(entity.Id))
+            {
+              entity.Id = Guid.NewGuid().ToString();
+            }
             _entitites.Add(entity.Id, entity);
             
             var summary = new EntitySummary(entity);

@@ -19,6 +19,8 @@ import {
   ENTITY_UPDATE_RESET,
 } from './entityActionTypes';
 
+import { createEmptyEntity } from './entityUtils';
+
 export const initialState = {
   current: null,
   currentOriginal: null,
@@ -66,10 +68,7 @@ export default (state = initialState, action) => {
       };
 
     case ENTITY_CREATE_REQUEST:
-      return {
-        ...state,
-        messages: [...state.messages, `Creating ${action.entityCreationParams.name}...`],
-      };
+      return { ...state, messages: [...state.messages, `Creating ${action.entity.name}...`] };
 
     case ENTITY_CREATE_SUCCESS:
       return {
@@ -118,7 +117,11 @@ export default (state = initialState, action) => {
       };
 
     case ENTITY_MODE_CHANGE:
-      return { ...state, mode: action.mode };
+      return {
+        ...state,
+        mode: action.mode,
+        ...({ NEW: { current: createEmptyEntity() } })[action.mode],
+      };
 
     case ENTITY_PROPERTY_CHANGE:
       return { ...state, current: { ...state.current, [action.propName]: action.propValue } };
