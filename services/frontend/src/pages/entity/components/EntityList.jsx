@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, lifecycle } from 'recompose';
 import styled from 'react-emotion';
-import { Button } from 'material-ui';
+import { Button, List } from 'material-ui';
 import { Add, Refresh } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
@@ -11,8 +11,10 @@ import { EntitySummaryPropType } from './EntityPropTypes';
 import EntityListItem from './EntityListItem';
 import { entityListRequest, entityLoadRequest, entityDeleteRequest, entityModeChange } from '../state/entityActionCreators';
 
-const List = styled('ul')`
-  list-style: none;
+const MainElement = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 `;
 
 const ButtonRow = styled('div')`
@@ -25,7 +27,7 @@ const ButtonRow = styled('div')`
 const EntityList = ({
   entities, onSelect, onEdit, onDelete, onCreate, onRefresh,
 }) => (
-  <div>
+  <MainElement>
     <List>
       {
         entities.map(entity =>
@@ -47,7 +49,7 @@ const EntityList = ({
         <Refresh />
       </Button>
     </ButtonRow>
-  </div>
+  </MainElement>
 );
 
 EntityList.propTypes = {

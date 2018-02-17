@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Button } from 'material-ui';
+import { Button, TextField } from 'material-ui';
 import { Save, Cancel, Delete } from 'material-ui-icons';
 
 
@@ -25,9 +25,9 @@ const EntityEditElement = ({
 }) => (
   <MainElement>
     <h4>Entity Edit</h4>
-    <input type="text" placeholder="Name" name="name" value={entity.name} onChange={onChange} />
-    <input type="text" placeholder="Summary" name="summary" value={entity.summary} onChange={onChange} />
-    <input type="text" placeholder="Description" name="description" value={entity.description} onChange={onChange} />
+    <TextField label="Name" name="name" value={entity.name} onChange={onChange} />
+    <TextField label="Summary" name="summary" value={entity.summary} onChange={onChange} />
+    <TextField label="Description" name="description" value={entity.description} onChange={onChange} />
     <ButtonRow>
       <Button onClick={onSave}>
         <Save />
