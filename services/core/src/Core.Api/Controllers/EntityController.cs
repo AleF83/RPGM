@@ -16,22 +16,14 @@ namespace RPGM.Core.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Entity> GetAll() => _repository.GetAll();
+        public IEnumerable<EntitySummary> GetAll() => _repository.GetAll();
 
         [HttpGet]
         [Route("{entityId}")]
         public Entity Get([FromRoute]string entityId) => _repository.GetEntity(entityId);
 
-        [HttpPost]        
-        public Entity Create([FromBody]Dictionary<string, string> properties){
-            Entity entity = new Entity{
-                Id = Guid.NewGuid().ToString(),
-                Name = properties.ContainsKey("name") ? properties["name"] : "Unnamed Entity",
-                Description = properties.ContainsKey("description") ? properties["description"] : "No description",
-            };
-            _repository.AddEntity(entity);
-            return entity;
-        }
+        [HttpPost]
+        public Entity Create([FromBody]Entity entity) => _repository.AddEntity(entity);
 
         [HttpPut]
         [Route("{entityId}")]
