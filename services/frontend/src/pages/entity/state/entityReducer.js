@@ -87,9 +87,11 @@ export default (state = initialState, action) => {
     case ENTITY_UPDATE_REQUEST:
       return { ...state, messages: [...state.messages, `Updating ${action.entity.name}...`] };
 
+    // TODO: take care to EditorState copy
     case ENTITY_UPDATE_RESET:
       return { ...state, current: state.currentOriginal };
 
+    // TODO: take care to EditorState copy
     case ENTITY_UPDATE_SUCCESS:
       return {
         ...state,

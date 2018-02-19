@@ -10,5 +10,5 @@ export const EntityPropType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   summary: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.object,
 });

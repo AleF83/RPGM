@@ -7,6 +7,8 @@ import { Save, Cancel, Delete } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+
 const MainElement = styled('div')`
   display: flex;
   flex: 1;
@@ -27,7 +29,7 @@ const EntityEditElement = ({
     <h4>Entity Edit</h4>
     <TextField label="Name" name="name" value={entity.name} onChange={onChange} />
     <TextField label="Summary" name="summary" value={entity.summary} onChange={onChange} />
-    <TextField label="Description" name="description" value={entity.description} onChange={onChange} />
+    <EntityDescriptionEditor />
     <ButtonRow>
       <Button onClick={onSave}>
         <Save />
