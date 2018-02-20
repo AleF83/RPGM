@@ -19,11 +19,11 @@ import {
   ENTITY_UPDATE_RESET,
 } from './entityActionTypes';
 
-import { createEmptyEntity } from './entityUtils';
+import { createEmptyEntity, backupEntity, restoreEntity } from './entityUtils';
 
 export const initialState = {
   current: null,
-  currentOriginal: null,
+  currentBackup: null,
   list: [],
   mode: 'VIEW',
   messages: [],
@@ -55,7 +55,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: action.entity,
-        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
+        currentBackup: backupEntity(action.entity),
         messages: [...state.messages, `Entity loaded: ${action.entity.name}`],
       };
 
@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: null,
-        currentOriginal: null,
+        currentBackup: null,
         messages: [...state.messages, `Failed to load entity: ${action.message}`],
       };
 
@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: action.entity,
-        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
+        currentBackup: backupEntity(action.entity),
         messages: [...state.messages, `New entity created: ${action.entity.name}`],
       };
 
@@ -89,14 +89,14 @@ export default (state = initialState, action) => {
 
     // TODO: take care to EditorState copy
     case ENTITY_UPDATE_RESET:
-      return { ...state, current: state.currentOriginal };
+      return { ...state, current: restoreEntity(state.currentBackup) };
 
     // TODO: take care to EditorState copy
     case ENTITY_UPDATE_SUCCESS:
       return {
         ...state,
         current: action.entity,
-        currentOriginal: JSON.parse(JSON.stringify(action.entity)),
+        currentBackup: backupEntity(action.entity),
         messages: [...state.messages, `The entity was updated: ${action.entity.name}`],
       };
 
