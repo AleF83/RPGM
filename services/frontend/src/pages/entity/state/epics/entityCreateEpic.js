@@ -13,7 +13,7 @@ import {
   entityModeChange,
 } from '../entityActionCreators';
 
-const entityCreateEpic = actions$ => actions$
+export default actions$ => actions$
   .ofType(ENTITY_CREATE_REQUEST)
   .map(({ entity }) => ({
     ...entity,
@@ -39,5 +39,3 @@ const entityCreateEpic = actions$ => actions$
         entityListRequest(),
       ])
       .catch(err => Observable.of(entityCreateFailure(err.xhr.response))));
-
-export default entityCreateEpic;

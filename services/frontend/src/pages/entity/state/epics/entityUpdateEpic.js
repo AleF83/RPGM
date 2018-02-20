@@ -13,7 +13,7 @@ import {
   entityModeChange,
 } from '../entityActionCreators';
 
-const entityUpdateEpic = actions$ => actions$
+export default actions$ => actions$
   .ofType(ENTITY_UPDATE_REQUEST)
   .map(({ entity }) => ({
     ...entity,
@@ -39,5 +39,3 @@ const entityUpdateEpic = actions$ => actions$
         entityListRequest(),
       ])
       .catch(err => Observable.of(entityUpdateFailure(err.xhr.response))));
-
-export default entityUpdateEpic;
