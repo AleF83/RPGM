@@ -7,6 +7,8 @@ import { Save, Cancel } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+
 import { entityCreateRequest, entityPropertyChange, entityModeChange } from '../state/entityActionCreators';
 
 const MainElement = styled('div')`
@@ -28,7 +30,7 @@ const EntityCreate = ({
     <span>Create Entity</span>
     <TextField data-id="txtName" name="name" label="Name" value={entity.name} onChange={onChange} />
     <TextField data-id="txtSummary" name="summary" label="Summary" value={entity.summary} onChange={onChange} />
-    <TextField data-id="txtDescription" name="description" label="Description" value={entity.description} onChange={onChange} />
+    <EntityDescriptionEditor />
     <ButtonsRow>
       <Button data-id="btnSave" onClick={onSave}>
         <Save />

@@ -37,9 +37,8 @@ describe('Entity CRUD flows', () => {
     const summarySelector = '[data-id=txtSummary]';
     await page.type(summarySelector, testData.create.summary);
 
-    const descriptionSelector = '[data-id=txtDescription]';
-    await page.type(descriptionSelector, testData.create.description);
-
+    // const descriptionSelector = '[data-id=txtDescription]';
+    // await page.type(descriptionSelector, testData.create.description);
     const saveButtonSelector = '[data-id=btnSave]';
     await page.click(saveButtonSelector);
 

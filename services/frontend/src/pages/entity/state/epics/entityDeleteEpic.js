@@ -9,7 +9,7 @@ import {
   entityListRequest,
 } from '../entityActionCreators';
 
-const entityDeleteEpic = actions$ => actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ entityId }) =>
+export default actions$ => actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ entityId }) =>
   ajax({
     url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entityId}`,
     method: 'DELETE',
@@ -19,5 +19,3 @@ const entityDeleteEpic = actions$ => actions$.ofType(ENTITY_DELETE_REQUEST).swit
   })
     .mergeMap(() => [entityDeleteSuccess(entityId), entityListRequest()])
     .catch(err => Observable.of(entityDeleteFailure(err.xhr.response))));
-
-export default entityDeleteEpic;

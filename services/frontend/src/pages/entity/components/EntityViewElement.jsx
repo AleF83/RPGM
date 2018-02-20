@@ -6,6 +6,8 @@ import { Delete, Edit } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+
 const MainElement = styled('div')`
   display: flex;
   flex: 1;
@@ -26,7 +28,7 @@ const EntityViewElement = ({
     Entity View<br />
     Name: {entity.name} <br />
     Summary: {entity.summary} <br />
-    Description: {entity.description}
+    <EntityDescriptionEditor readOnly />
     <ButtonRow>
       <Button onClick={onEdit}>
         <Edit />
