@@ -31,15 +31,11 @@ namespace RPGM.Core.Api.Controllers
         [Route("{entityId}")]
         public async Task<bool> Replace([FromRoute]string entityId, [FromBody]Entity entity) => await _repository.ReplaceEntityAsync(entity);
 
-        [HttpPatch]
-        [Route("{entityId}")]
-        public Entity Update([FromBody]Dictionary<string, object> propertiesToUpdate) => new Entity();
-
-        // [HttpDelete]
-        // public void DeleteAll() => _repository.DeleteAll();
+        [HttpDelete]
+        public async Task<long> DeleteAll() => await _repository.DeleteAllAsync();
 
         [HttpDelete]
         [Route("{entityId}")]
-        public bool Delete([FromRoute]string entityId) => _repository.DeleteEntity(entityId);
+        public async Task<bool> Delete([FromRoute]string entityId) => await _repository.DeleteEntityAsync(entityId);
     }
 }

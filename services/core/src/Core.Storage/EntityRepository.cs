@@ -33,6 +33,16 @@ namespace RPGM.Core.Storage
 			return await _entityCollection.InsertOneAsync(entity).ContinueWith(task => entity);
 		}
 
+		public long DeleteAll()
+		{
+			return _entityCollection.DeleteMany(Builders<Entity>.Filter.Empty).DeletedCount;
+		}
+
+		public Task<long> DeleteAllAsync()
+		{
+			return _entityCollection.DeleteManyAsync(Builders<Entity>.Filter.Empty).ContinueWith(task => task.Result.DeletedCount);
+		}
+
 		public bool DeleteEntity(string entityId)
 		{
 			var filter = Builders<Entity>.Filter.Eq("_id", ObjectId.Parse(entityId));
@@ -42,7 +52,7 @@ namespace RPGM.Core.Storage
 		public async Task<bool> DeleteEntityAsync(string entityId)
 		{
 			var filter = Builders<Entity>.Filter.Eq("_id", ObjectId.Parse(entityId));
-			return await _entityCollection.DeleteOneAsync(filter).ContinueWith(result => result.Result.DeletedCount == 1);
+			return await _entityCollection.DeleteOneAsync(filter).ContinueWith(task => task.Result.DeletedCount == 1);
 		}
 
 		public IEnumerable<Entity> GetAll()
@@ -76,7 +86,7 @@ namespace RPGM.Core.Storage
 		public async Task<bool> ReplaceEntityAsync(Entity entity)
 		{
 			var filter = Builders<Entity>.Filter.Eq("_id", ObjectId.Parse(entity.Id));
-			return await _entityCollection.ReplaceOneAsync(filter, entity).ContinueWith(result => result.Result.ModifiedCount == 1);
+			return await _entityCollection.ReplaceOneAsync(filter, entity).ContinueWith(task => task.Result.ModifiedCount == 1);
 		}
 	}
 }
