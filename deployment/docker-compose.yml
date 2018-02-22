@@ -29,7 +29,24 @@ services:
     container_name: rpgm-core
     build: ../services/core
     image: alef83/rpgm-core
+    depends_on:
+      - mongodb
     ports:
       - "8081:80"
     environment:
       - PORT=80
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:3.6.2-jessie
+    volumes:
+      - ../tmp/storage/mongodb:/data/db
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_USERNAME=game_master
+      - MONGODB_PASSWORD=natural20
+      - MONGODB_DATABASE=rpgm

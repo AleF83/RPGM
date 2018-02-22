@@ -2,6 +2,8 @@ using System;
 using RPGM.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using RPGM.Core.Storage;
+using System.Threading.Tasks;
 
 namespace RPGM.Core.Api.Controllers
 {
@@ -16,28 +18,24 @@ namespace RPGM.Core.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<EntitySummary> GetAll() => _repository.GetAll();
+        public async Task<IEnumerable<Entity>> GetAll() => await _repository.GetAllAsync();
 
         [HttpGet]
         [Route("{entityId}")]
-        public Entity Get([FromRoute]string entityId) => _repository.GetEntity(entityId);
+        public async Task<Entity> Get([FromRoute]string entityId) => await _repository.GetEntityAsync(entityId);
 
         [HttpPost]
-        public Entity Create([FromBody]Entity entity) => _repository.AddEntity(entity);
+        public async Task<Entity> Create([FromBody]Entity entity) => await _repository.AddEntityAsync(entity);
 
         [HttpPut]
         [Route("{entityId}")]
-        public Entity Replace([FromRoute]string entityId, [FromBody]Entity entity) => _repository.UpdateEntity(entity);
-
-        [HttpPatch]
-        [Route("{entityId}")]
-        public Entity Update([FromBody]Dictionary<string, object> propertiesToUpdate) => new Entity();
+        public async Task<bool> Replace([FromRoute]string entityId, [FromBody]Entity entity) => await _repository.ReplaceEntityAsync(entity);
 
         [HttpDelete]
-        public void DeleteAll() => _repository.RemoveAll();
+        public async Task<long> DeleteAll() => await _repository.DeleteAllAsync();
 
         [HttpDelete]
         [Route("{entityId}")]
-        public bool Delete([FromRoute]string entityId) => _repository.RemoveEntity(entityId);
+        public async Task<bool> Delete([FromRoute]string entityId) => await _repository.DeleteEntityAsync(entityId);
     }
 }

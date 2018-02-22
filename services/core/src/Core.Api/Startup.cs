@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using RPGM.Core.Storage;
 
 namespace RPGM.Core.Api
 {
@@ -24,7 +26,7 @@ namespace RPGM.Core.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IEntityRepository>(EntityRepository.Instance);
+            services.AddSingleton<IEntityRepository, EntityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
