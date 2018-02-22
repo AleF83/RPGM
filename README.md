@@ -8,11 +8,16 @@
 
 ## Purpose
 
-RPGM (Role Playing Game Mastery) is a tool for GM/DM (Game/Dangeon Master) in D&D-like games.
+RPGM (Role Playing Game Mastery) is a tool for GM/DM (Game/Dungeon Master) in D&D-like games.
 Now it's at its very beginning level and it supposed to grow.
 
 ## Installation
 
+### Prerequisites
+- [Git](https://git-scm.com)
+- [Docker](https://www.docker.com/get-docker)
+
+### Linux/macOS
 ```bash
 # Clone repo
 git clone https://github.com/AleF83/RPGM
