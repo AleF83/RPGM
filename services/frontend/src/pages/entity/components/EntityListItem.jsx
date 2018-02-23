@@ -23,7 +23,7 @@ const EntityListItem = ({
         <AccountCircle />
       </Avatar>
     </ListItemAvatar>
-    <ListItemText primary={entity.name} secondary={entity.summary} onClick={onSelect(entity.id)} />
+    <ListItemText id={`lstItem-${entity.name}`} primary={entity.name} secondary={entity.summary} onClick={onSelect(entity.id)} />
     <ListItemSecondaryAction>
       <Toolbar>
         <IconButton onClick={onEdit(entity.id)}>

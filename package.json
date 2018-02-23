@@ -20,6 +20,7 @@
     "test:core": "yarn dc:test up --exit-code-from test_core test_core",
     "test:stop": "yarn dc:test down",
     "test": "yarn test:frontend && yarn test:core",
+    "test:all": "yarn test:build && yarn test",
 
 
     "precommit": "lint-staged",

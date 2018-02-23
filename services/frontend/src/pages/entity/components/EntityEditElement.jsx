@@ -27,11 +27,11 @@ const EntityEditElement = ({
 }) => (
   <MainElement>
     <h4>Entity Edit</h4>
-    <TextField label="Name" name="name" value={entity.name} onChange={onChange} />
-    <TextField label="Summary" name="summary" value={entity.summary} onChange={onChange} />
+    <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
+    <TextField id="txtSummary" label="Summary" name="summary" value={entity.summary} onChange={onChange} />
     <EntityDescriptionEditor />
     <ButtonRow>
-      <Button onClick={onSave}>
+      <Button id="btnSave" onClick={onSave}>
         <Save />
       </Button>
       <Button onClick={onCancel}>

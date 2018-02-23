@@ -26,9 +26,9 @@ namespace RPGM.Core.Storage
 
 		Task<long> DeleteAllAsync();
 
-		bool ReplaceEntity(Entity entity);
+		Entity ReplaceEntity(Entity entity);
 
-		Task<bool> ReplaceEntityAsync(Entity entity);
+		Task<Entity> ReplaceEntityAsync(Entity entity);
 
 
     }

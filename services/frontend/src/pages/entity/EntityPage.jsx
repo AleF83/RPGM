@@ -14,6 +14,7 @@ const MainElement = styled('div')`
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: #eeeeee;
 `;
 
 const EntitiesPane = styled('div')`

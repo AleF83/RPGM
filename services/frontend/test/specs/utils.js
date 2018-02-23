@@ -1,3 +1,5 @@
+const { expect } = require('chai');
+
 const setPageListeners = (page) => {
   page.on('console', msg => console.log('PAGE LOG:', msg.text));
   page.on('pageerror', (error) => {
@@ -24,4 +26,18 @@ const setPageListeners = (page) => {
   });
 };
 
-module.exports = { setPageListeners };
+const assertLabelValue = async (page, selector, expectedValue) => {
+  await page.waitForSelector(selector);
+
+  const name = await page.$eval(selector, lbl => lbl.innerHTML);
+  expect(name).to.equal(expectedValue);
+};
+
+const assertTextFieldValue = async (page, selector, expectedValue) => {
+  await page.waitForSelector(selector);
+
+  const name = await page.$eval(selector, lbl => lbl.value);
+  expect(name).to.equal(expectedValue);
+};
+
+module.exports = { setPageListeners, assertLabelValue, assertTextFieldValue };

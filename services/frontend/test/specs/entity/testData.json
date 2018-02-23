@@ -3,5 +3,12 @@
     "name": "Aragorn",
     "summary": "Chieftain of the Dúnedain, King of the Reunited Kingdom",
     "description": "Aragorn II was the son of Arathorn II and Gilraen. He was the last Chieftain of the Dúnedain and a direct descendant through many generations of Isildur, the last High King of both Arnor and Gondor. Aragorn would become the greatest Man of his time, leading the Men of the West against Sauron's forces, helping to destroy the One Ring, and reuniting the Kingdoms of Arnor and Gondor."
+  },
+  "edit": {
+    "name": "Aragorn",
+    "summaryOld": "Chieftain of the Dúnedain, King of the Reunited Kingdom",
+    "summaryAddition": "Fighter Lvl 6, ",
+    "summaryNew": "Fighter Lvl 6, Chieftain of the Dúnedain, King of the Reunited Kingdom",
+    "description": "Aragorn II was the son of Arathorn II and Gilraen. He was the last Chieftain of the Dúnedain and a direct descendant through many generations of Isildur, the last High King of both Arnor and Gondor. Aragorn would become the greatest Man of his time, leading the Men of the West against Sauron's forces, helping to destroy the One Ring, and reuniting the Kingdoms of Arnor and Gondor."
   }
 }
