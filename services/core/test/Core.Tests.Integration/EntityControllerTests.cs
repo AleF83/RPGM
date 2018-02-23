@@ -35,11 +35,11 @@ namespace RPGM.Core.Tests.Integration
         }
 
         [Theory]
-        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
-        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
-        public async Task CreateEntity(string name, string description)
+        [InlineData("Aragorn", "Fighter Lvl 6", "Character", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Fighter Lvl 6", "Character", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
+        public async Task CreateEntity(string name, string summary, string type, string description)
         {
-            var newEntity  = await CreateNewEntity(name, description);
+            var newEntity  = await CreateNewEntity(name, summary, type, description);
             Assert.NotNull(newEntity);
             Assert.False(string.IsNullOrEmpty(newEntity.Id));
             Assert.Equal(name, newEntity.Name);
@@ -49,12 +49,12 @@ namespace RPGM.Core.Tests.Integration
         }
 
         [Theory]
-        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
-        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
+        [InlineData("Aragorn", "Fighter Lvl 6", "Character", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Fighter Lvl 6", "Character", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
 
-        public async Task GetEntity(string name, string description)
+        public async Task GetEntity(string name, string summary, string type, string description)
         {
-            var newEntity  = await CreateNewEntity(name, description);
+            var newEntity  = await CreateNewEntity(name, summary, type, description);
             using (var response = await _client.GetAsync($"{BASE_URL}/{newEntity.Id}"))
             {
                 response.EnsureSuccessStatusCode();
@@ -71,11 +71,11 @@ namespace RPGM.Core.Tests.Integration
         [Fact]        
         public async Task GetAllEntities()
         {
-            var data = new List<Tuple<string, string>> {
-                new Tuple<string, string>("Frodo", "Frodo Baggins is a fictional character in J. R. R. Tolkien's legendarium, and one of the main protagonists of The Lord of the Rings."),
-                new Tuple<string,string>("Sam", "Samwise is one of the main characters of The Lord of the Rings, in which he fills an archetypal role as the sidekick of the primary protagonist, Frodo Baggins.")
+            var data = new List<Tuple<string, string, string, string>> {
+                new Tuple<string, string, string, string>("Frodo", "Rogue Lvl 4", "Character", "Frodo Baggins is a fictional character in J. R. R. Tolkien's legendarium, and one of the main protagonists of The Lord of the Rings."),
+                new Tuple<string, string, string, string>("Sam", "Rogue Lvl 4", "Character", "Samwise is one of the main characters of The Lord of the Rings, in which he fills an archetypal role as the sidekick of the primary protagonist, Frodo Baggins.")
             };
-            await Task.WhenAll(data.Select(async d => await CreateNewEntity(d.Item1, d.Item2)));
+            await Task.WhenAll(data.Select(async d => await CreateNewEntity(d.Item1, d.Item2, d.Item3, d.Item4)));
             using (var response = await _client.GetAsync(BASE_URL))
             {
                 response.EnsureSuccessStatusCode();
@@ -88,12 +88,12 @@ namespace RPGM.Core.Tests.Integration
         }
 
         [Theory]
-        [InlineData("Aragorn", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
-        [InlineData("Boromir", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
+        [InlineData("Aragorn", "Fighter Lvl 6", "Character", "Aragorn II, son of Arathorn is a fictional character from J. R. R. Tolkien's legendarium")]
+        [InlineData("Boromir", "Fighter Lvl 6", "Character", "Boromir is a fictional character in J. R. R. Tolkien's legendarium")]
 
-        public async Task DeleteEntity(string name, string description)
+        public async Task DeleteEntity(string name, string summary, string type, string description)
         {
-            var newEntity  = await CreateNewEntity(name, description);
+            var newEntity  = await CreateNewEntity(name, summary, type, description);
             using (var response = await _client.DeleteAsync($"{BASE_URL}/{newEntity.Id}"))
             {
                 response.EnsureSuccessStatusCode();
@@ -104,11 +104,13 @@ namespace RPGM.Core.Tests.Integration
         }
 
 
-        private async Task<Entity> CreateNewEntity(string name, string description)
+        private async Task<Entity> CreateNewEntity(string name, string summary, string type, string description)
         {
             var entity = new Entity
             {
                 Name = name,
+                Summary = summary,
+                Type = type,
                 Description = description
             };
 

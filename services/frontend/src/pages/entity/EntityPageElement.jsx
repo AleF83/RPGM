@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled, { css } from 'react-emotion';
 
 import PropTypes from 'prop-types';
@@ -32,7 +31,7 @@ const EntityStyle = css`
   flex: 2;
 `;
 
-const EntityPage = ({ mode, messages }) => (
+const EntityPageElement = ({ mode, messages }) => (
   <MainElement>
     <span>This is Entity Page</span>
     <EntitiesPane>
@@ -47,16 +46,9 @@ const EntityPage = ({ mode, messages }) => (
   </MainElement>
 );
 
-EntityPage.propTypes = {
+EntityPageElement.propTypes = {
   mode: PropTypes.string.isRequired,
   messages: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-const mapStateToProps = state => ({
-  mode: state.entity.mode,
-  messages: state.entity.messages,
-});
-
-const enhance = connect(mapStateToProps);
-
-export default enhance(EntityPage);
+export default EntityPageElement;

@@ -34,6 +34,7 @@ const EntityViewElement = ({
     <Paper className={paperStyle} elevation={4}>
       <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>
       <Typography id="lblSummary" variant="body1" gutterBottom>{entity.summary}</Typography>
+      <Typography id="lblType" variant="subheading" gutterBottom>{entity.type}</Typography>
       <EntityDescriptionEditor readOnly />
     </Paper>
     <ButtonRow>

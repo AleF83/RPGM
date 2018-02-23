@@ -9,6 +9,7 @@ export const EntitySummaryPropType = PropTypes.shape({
 export const EntityPropType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   summary: PropTypes.string,
   description: PropTypes.object,
 });

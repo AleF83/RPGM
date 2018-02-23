@@ -1,15 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+
 import styled from 'react-emotion';
-import { Button, TextField } from 'material-ui';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
 import { Save, Cancel } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
-
-import { entityCreateRequest, entityPropertyChange, entityModeChange } from '../state/entityActionCreators';
 
 const MainElement = styled('div')`
   display: flex;
@@ -23,13 +21,27 @@ const ButtonsRow = styled('div')`
   flex-direction: row;
 `;
 
-const EntityCreate = ({
-  entity, onSave, onCancel, onChange,
+const EntityCreateElement = ({
+  entity, onSave, onCancel, onChange, entityTypes,
 }) => (
   <MainElement>
     <span>Create Entity</span>
     <TextField id="txtName" name="name" label="Name" required value={entity.name} onChange={onChange} />
     <TextField id="txtSummary" name="summary" label="Summary" value={entity.summary} onChange={onChange} />
+    <FormControl>
+      <InputLabel htmlFor="slctType">Type</InputLabel>
+      <Select
+        value={entity.type}
+        onChange={onChange}
+        inputProps={{
+       id: 'slctType', name: 'type',
+    }}>
+        {
+          entityTypes.map(opt =>
+            (<MenuItem key={opt} value={opt}>{opt}</MenuItem>))
+        }
+      </Select>
+    </FormControl>
     <EntityDescriptionEditor />
     <ButtonsRow>
       <Button id="btnSave" onClick={onSave}>
@@ -42,29 +54,16 @@ const EntityCreate = ({
   </MainElement>
 );
 
-EntityCreate.propTypes = {
+EntityCreateElement.propTypes = {
   entity: EntityPropType.isRequired,
+  entityTypes: PropTypes.arrayOf(PropTypes.string),
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  entity: state.entity.current,
-});
+EntityCreateElement.defaultProps = {
+  entityTypes: [],
+};
 
-const mapDispatchToProps = dispatch => ({
-  onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
-  onSave: entity => () => dispatch(entityCreateRequest(entity)),
-  onCancel: () => dispatch(entityModeChange('LIST')),
-});
-
-const mergeProps = (stateProps, dispatchProps) => ({
-  ...stateProps,
-  ...dispatchProps,
-  onSave: dispatchProps.onSave(stateProps.entity),
-});
-
-const enhance = connect(mapStateToProps, mapDispatchToProps, mergeProps);
-
-export default enhance(EntityCreate);
+export default EntityCreateElement;
