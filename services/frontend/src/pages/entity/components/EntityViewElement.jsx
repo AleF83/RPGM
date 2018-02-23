@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'react-emotion';
-import { Button } from 'material-ui';
+import styled, { css } from 'react-emotion';
+import { Paper, Button, Typography } from 'material-ui';
 import { Delete, Edit } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
@@ -21,19 +21,26 @@ const ButtonRow = styled('div')`
   flex-direction: row;
 `;
 
+const paperStyle = css`
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+`;
+
 const EntityViewElement = ({
   entity, onEdit, onDelete,
 }) => (
   <MainElement>
-    Entity View<br />
-    Name: {entity.name} <br />
-    Summary: {entity.summary} <br />
-    <EntityDescriptionEditor readOnly />
+    <Paper className={paperStyle} elevation={4}>
+      <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>
+      <Typography id="lblSummary" variant="body1" gutterBottom>{entity.summary}</Typography>
+      <EntityDescriptionEditor readOnly />
+    </Paper>
     <ButtonRow>
-      <Button onClick={onEdit}>
+      <Button id="btnEdit" onClick={onEdit}>
         <Edit />
       </Button>
-      <Button onClick={onDelete(entity.id)}>
+      <Button id="btnDelete" onClick={onDelete(entity.id)}>
         <Delete />
       </Button>
     </ButtonRow>

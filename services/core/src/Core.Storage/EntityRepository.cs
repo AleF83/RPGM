@@ -77,16 +77,16 @@ namespace RPGM.Core.Storage
 			return await _entityCollection.Find(filter).SingleAsync();
 		}
 
-		public bool ReplaceEntity(Entity entity)
+		public Entity ReplaceEntity(Entity entity)
 		{
 			var filter = Builders<Entity>.Filter.Eq("_id", ObjectId.Parse(entity.Id));
-			return _entityCollection.ReplaceOne(filter, entity).ModifiedCount == 1;
+			return _entityCollection.ReplaceOne(filter, entity).ModifiedCount == 1 ? entity : null;
 		}
 
-		public async Task<bool> ReplaceEntityAsync(Entity entity)
+		public async Task<Entity> ReplaceEntityAsync(Entity entity)
 		{
 			var filter = Builders<Entity>.Filter.Eq("_id", ObjectId.Parse(entity.Id));
-			return await _entityCollection.ReplaceOneAsync(filter, entity).ContinueWith(task => task.Result.ModifiedCount == 1);
+			return await _entityCollection.ReplaceOneAsync(filter, entity).ContinueWith(task => task.Result.ModifiedCount == 1 ? entity : null);
 		}
 	}
 }

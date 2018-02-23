@@ -39,8 +39,6 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:3.6.2-jessie
-    volumes:
-      - ../tmp/storage/mongodb:/data/db
     ports:
       - "27017:27017"
     command: mongod --smallfiles --logpath=/dev/null # --quiet

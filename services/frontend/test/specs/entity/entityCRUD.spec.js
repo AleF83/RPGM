@@ -1,12 +1,35 @@
 /* global describe before after it browser */
 const puppeteer = require('puppeteer');
-// const { expect } = require('chai');
 const nconf = require('nconf');
-const { setPageListeners } = require('../utils');
+const { setPageListeners, assertLabelValue, assertTextFieldValue } = require('../utils');
 
 const testData = require('./testData.json');
 
 nconf.argv().env().defaults({ FRONTEND_URL: 'http://localhost' });
+
+const createEntity = async (page, entity) => {
+  const createButtonSelector = '#btnNew';
+  await page.waitForSelector(createButtonSelector);
+  await page.click(createButtonSelector);
+
+  const nameSelector = '#txtName';
+  await page.waitForSelector(nameSelector);
+  await page.type(nameSelector, entity.name);
+
+  const summarySelector = '#txtSummary';
+  await page.type(summarySelector, entity.summary);
+
+  // const descriptionSelector = '[data-text=true]';
+  // await page.type(descriptionSelector, entity.description);
+  const saveButtonSelector = '#btnSave';
+  await page.click(saveButtonSelector);
+};
+
+const deleteEntity = async (page) => {
+  const deleteButtonSelector = '#btnDelete';
+  await page.waitForSelector(deleteButtonSelector);
+  await page.click(deleteButtonSelector);
+};
 
 describe('Entity CRUD flows', () => {
   before(async () => {
@@ -18,7 +41,11 @@ describe('Entity CRUD flows', () => {
   });
 
   after(async () => {
-    await browser.close();
+    try {
+      await browser.close();
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   it('Create new entity', async () => {
@@ -26,33 +53,39 @@ describe('Entity CRUD flows', () => {
     setPageListeners(page);
     await page.goto(`${nconf.get('FRONTEND_URL')}/entity`);
 
-    const createButtonSelector = '[data-id=btnNew]';
-    await page.waitForSelector(createButtonSelector);
-    await page.click(createButtonSelector);
+    await createEntity(page, testData.create);
 
-    const nameSelector = '[data-id=txtName]';
-    await page.waitForSelector(nameSelector);
-    await page.type(nameSelector, testData.create.name);
+    await assertLabelValue(page, '#lblName', testData.create.name);
+    await assertLabelValue(page, '#lblSummary', testData.create.summary);
+    // await assertLabelValue(page, '[data-text=true]', testData.create.description);
+    await deleteEntity(page, testData.create.name);
 
-    const summarySelector = '[data-id=txtSummary]';
-    await page.type(summarySelector, testData.create.summary);
-
-    // const descriptionSelector = '[data-id=txtDescription]';
-    // await page.type(descriptionSelector, testData.create.description);
-    const saveButtonSelector = '[data-id=btnSave]';
-    await page.click(saveButtonSelector);
-
-    //     const message = await page.$eval(messageSelector, element => element.innerHTML);
-    await page.waitFor(3000);
     await page.close();
   });
 
-  it('Show entity', () => {
-  });
+  it('Edit entity', async () => {
+    const page = await browser.newPage();
+    setPageListeners(page);
+    await page.goto(`${nconf.get('FRONTEND_URL')}/entity`);
 
-  it('Edit entity', () => {
-  });
+    await createEntity(page, testData.create);
 
-  it('Delete entity', () => {
+    const editButtonSelector = '#btnEdit';
+    await page.waitForSelector(editButtonSelector);
+    await page.click(editButtonSelector);
+
+    await assertTextFieldValue(page, '#txtName', testData.edit.name);
+    await assertTextFieldValue(page, '#txtSummary', testData.edit.summaryOld);
+    // await assertLabelValue(page, '[data-text=true]', testData.edit.description);
+    await page.type('#txtSummary', testData.edit.summaryAddition);
+
+    const saveButtonSelector = '#btnSave';
+    await page.waitForSelector(saveButtonSelector);
+    await page.click(saveButtonSelector);
+
+    await assertLabelValue(page, '#lblName', testData.edit.name);
+    await assertLabelValue(page, '#lblSummary', testData.edit.summaryNew);
+    // await assertLabelValue(page, '[data-text=true]', testData.edit.description);
+    await page.close();
   });
 });

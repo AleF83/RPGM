@@ -42,7 +42,7 @@ const EntityList = ({
       }
     </List>
     <ButtonRow>
-      <Button onClick={onCreate} data-id="btnNew">
+      <Button onClick={onCreate} id="btnNew">
         <Add />
       </Button>
       <Button onClick={onRefresh}>
