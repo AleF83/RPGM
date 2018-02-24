@@ -61,4 +61,5 @@ typings/
 .vs
 .vscode
 
-tmp/
+# mongodb
+db/mongodb

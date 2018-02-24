@@ -7,8 +7,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dc": "docker-compose -f deployment/docker-compose.yml",
-    "dc:test": "yarn dc -f deployment/docker-compose.test.yml",
+    "dc": "docker-compose -f deployment/docker-compose.yml -f deployment/docker-compose.override.yml",
+    "dc:test": "docker-compose -f deployment/docker-compose.yml -f deployment/docker-compose.test.yml",
 
     "build": "yarn dc build",
     "start": "yarn dc up -d",

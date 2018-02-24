@@ -2,8 +2,8 @@ using System;
 using RPGM.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using RPGM.Core.Storage;
 using System.Threading.Tasks;
+using RPGM.Core.Api.Storage;
 
 namespace RPGM.Core.Api.Controllers
 {

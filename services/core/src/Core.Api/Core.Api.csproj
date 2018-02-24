@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Model\Core.Model.csproj" />
-    <ProjectReference Include="..\Core.Storage\Core.Storage.csproj" />
   </ItemGroup>
 
   <ItemGroup>

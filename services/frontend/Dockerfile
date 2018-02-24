@@ -11,7 +11,7 @@ ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL:-http://backend.localtest.me:8
 RUN yarn build
 
 # Stage 2: Release
-FROM nginx:alpine AS releaseImage
+FROM nginx:1.12.2-alpine AS releaseImage
 COPY --from=buildImage /src/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
