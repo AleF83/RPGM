@@ -6,6 +6,7 @@ const editorStateToRaw = state => convertToRaw(state.getCurrentContent());
 export const createEmptyEntity = () => ({
   id: '',
   name: '',
+  type: 'Information',
   summary: '',
   description: EditorState.createEmpty(),
 });

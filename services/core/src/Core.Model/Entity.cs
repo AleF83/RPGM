@@ -19,6 +19,12 @@ namespace RPGM.Core.Model
         [BsonRequired]
         public string Name { get; set; }
 
+        [JsonRequired]
+        [JsonProperty("type")]
+        [BsonElement("type")]
+        [BsonRequired]
+        public string Type { get; set; }
+
         [JsonProperty("summary")]
 		[BsonElement("summary")]
         public string Summary { get; set; }

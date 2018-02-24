@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Button, TextField } from 'material-ui';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
 import { Save, Cancel, Delete } from 'material-ui-icons';
 
 
@@ -23,12 +23,26 @@ const ButtonRow = styled('div')`
 `;
 
 const EntityEditElement = ({
-  entity, onChange, onSave, onCancel, onDelete,
+  entity, onChange, onSave, onCancel, onDelete, entityTypes,
 }) => (
   <MainElement>
     <h4>Entity Edit</h4>
     <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
     <TextField id="txtSummary" label="Summary" name="summary" value={entity.summary} onChange={onChange} />
+    <FormControl>
+      <InputLabel htmlFor="slctType">Type</InputLabel>
+      <Select
+        value={entity.type}
+        onChange={onChange}
+        inputProps={{
+       id: 'slctType', name: 'type',
+    }}>
+        {
+          entityTypes.map(opt =>
+            (<MenuItem key={opt} value={opt}>{opt}</MenuItem>))
+        }
+      </Select>
+    </FormControl>
     <EntityDescriptionEditor />
     <ButtonRow>
       <Button id="btnSave" onClick={onSave}>
@@ -46,10 +60,15 @@ const EntityEditElement = ({
 
 EntityEditElement.propTypes = {
   entity: EntityPropType.isRequired,
+  entityTypes: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+};
+
+EntityEditElement.defaultProps = {
+  entityTypes: [],
 };
 
 export default EntityEditElement;

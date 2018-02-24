@@ -9,6 +9,8 @@ import {
   entityListRequest,
 } from '../entityActionCreators';
 
+const printError = err => err.xhr && err.xhr.response || err.stack;
+
 export default actions$ => actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ entityId }) =>
   ajax({
     url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entityId}`,
@@ -18,4 +20,4 @@ export default actions$ => actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ e
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   })
     .mergeMap(() => [entityDeleteSuccess(entityId), entityListRequest()])
-    .catch(err => Observable.of(entityDeleteFailure(err.xhr.response))));
+    .catch(err => Observable.of(entityDeleteFailure(printError(err)))));

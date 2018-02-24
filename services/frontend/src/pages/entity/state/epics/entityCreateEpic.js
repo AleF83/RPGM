@@ -13,6 +13,8 @@ import {
   entityModeChange,
 } from '../entityActionCreators';
 
+const printError = err => err.xhr && err.xhr.response || err.stack;
+
 export default actions$ => actions$
   .ofType(ENTITY_CREATE_REQUEST)
   .map(({ entity }) => ({
@@ -38,4 +40,4 @@ export default actions$ => actions$
         entityModeChange('VIEW'),
         entityListRequest(),
       ])
-      .catch(err => Observable.of(entityCreateFailure(err.xhr.response))));
+      .catch(err => Observable.of(entityCreateFailure(printError(err)))));
