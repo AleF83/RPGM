@@ -39,7 +39,6 @@ namespace RPGM.Core.Tests.Integration
                 var json = await response.Content.ReadAsStringAsync();
                 var entityTypes = JsonConvert.DeserializeObject<IEnumerable<string>>(json);
                 Assert.NotNull(entityTypes);
-                Assert.Equal(3, entityTypes.Count());
             }
         }
 	}

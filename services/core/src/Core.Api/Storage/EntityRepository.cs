@@ -4,22 +4,20 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RPGM.Core.Model;
+using RPGM.Core.Api.Configuration;
+using Microsoft.Extensions.Options;
 
-namespace RPGM.Core.Storage
+namespace RPGM.Core.Api.Storage
 {
 	public class EntityRepository : IEntityRepository
 	{
-		const string connectionString = "mongodb://mongodb:27017";
-
-		private IMongoClient _client;
-		private IMongoDatabase _database;
 		private IMongoCollection<Entity> _entityCollection;
 
-		public EntityRepository()
+		public EntityRepository(IOptions<MongoDBConfiguration> configuration)
 		{
-			_client = new MongoClient(connectionString);
-			_database = _client.GetDatabase("rpgm");
-			_entityCollection = _database.GetCollection<Entity>("entities");
+			var client = new MongoClient(configuration.Value.ConnectionString);
+			var database = client.GetDatabase(configuration.Value.Database);
+			_entityCollection = database.GetCollection<Entity>("entities");
 		}
 
 		public Entity AddEntity(Entity entity)

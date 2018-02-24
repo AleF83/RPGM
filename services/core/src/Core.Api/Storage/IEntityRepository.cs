@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RPGM.Core.Model;
 
-namespace RPGM.Core.Storage
+namespace RPGM.Core.Api.Storage
 {
 	public interface IEntityRepository
     {

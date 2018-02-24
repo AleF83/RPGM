@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  mongodb:
+    volumes:
+      - ../db/mongodb:/data/db
+  
+  redis:
+    volumes:
+      - ../db/redis:/data
+
+  mongoExpress:
+    container_name: mongo-express
+    image: mongo-express
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:mongo
+    ports:
+      - "8102:8081"
+
+  redisCommander:
+    container_name: redis-commander
+    image: tenstartups/redis-commander
+    depends_on:
+      - redis
+    command: --redis-host redis
+    links:
+      - redis:redis
+    ports:
+      - "8101:8081"
