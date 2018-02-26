@@ -25,6 +25,11 @@ namespace RPGM.Core.Model
         [BsonRequired]
         public string Type { get; set; }
 
+        [JsonProperty("hasAvatar")]
+        [BsonElement("hasAvatar")]
+        [BsonDefaultValue(false)]
+        public bool HasAvatar { get; set; }
+
         [JsonProperty("summary")]
 		[BsonElement("summary")]
         public string Summary { get; set; }

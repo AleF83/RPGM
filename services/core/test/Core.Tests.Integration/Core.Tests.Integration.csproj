@@ -17,4 +17,12 @@
     <ProjectReference Include="..\..\src\Core.Model\Core.Model.csproj" />
   </ItemGroup>
 
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="./test_data/OrcAvatar.jpg" DestinationFolder="$(OutDir)" />
+  </Target>
+  
+  <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
+    <Copy SourceFiles="./test_data/OrcAvatar.jpg" DestinationFolder="$(PublishDir)" />
+  </Target>
+
 </Project>

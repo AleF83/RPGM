@@ -9,6 +9,7 @@ import {
   entityDeleteRequest,
   entityPropertyChange,
 } from '../state/entityActionCreators';
+import { imageUploadRequest } from '../state/imageActionCreators';
 
 const mapStateToProps = state => ({
   entity: state.entity.current,
@@ -18,8 +19,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onSave: entity => () => dispatch(entityUpdateRequest(entity)),
   onCancel: () => dispatch(entityUpdateReset()),
-  onDelete: id => () => dispatch(entityDeleteRequest(id)),
+  onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
   onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
+  onAvatarChange: entityId => ({ target }) =>
+    dispatch(imageUploadRequest('avatars', entityId, target.files[0])),
 });
 
 const mergeProps = (stateProps, dispatchProps) => ({
@@ -27,6 +30,7 @@ const mergeProps = (stateProps, dispatchProps) => ({
   ...dispatchProps,
   onSave: dispatchProps.onSave(stateProps.entity),
   onDelete: dispatchProps.onDelete(stateProps.entity.id),
+  onAvatarChange: dispatchProps.onAvatarChange(stateProps.entity.id),
 });
 
 const enhance = (Component, EmptyComponent) =>

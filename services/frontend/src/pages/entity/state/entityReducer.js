@@ -19,7 +19,7 @@ import {
   ENTITY_UPDATE_RESET,
 } from './entityActionTypes';
 
-import { createEmptyEntity, backupEntity, restoreEntity } from './entityUtils';
+import { createEmptyEntity, backupEntity, restoreEntity } from '../entityUtils';
 
 export const initialState = {
   current: null,
@@ -122,7 +122,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mode: action.mode,
-        ...({ NEW: { current: createEmptyEntity() }, LIST: { current: null } })[action.mode],
+        ...{ NEW: { current: createEmptyEntity() }, LIST: { current: null } }[action.mode],
       };
 
     case ENTITY_PROPERTY_CHANGE:

@@ -19,6 +19,7 @@ services:
     image: alef83/rpgm-backend
     depends_on:
       - core
+      - minioInit
     ports:
       - "8080:80"
     environment:
@@ -32,6 +33,7 @@ services:
     depends_on:
       - mongodb
       - redis
+      - minio
     ports:
       - "8081:80"
     environment:
@@ -52,3 +54,28 @@ services:
     image: redis:4.0.8-alpine
     ports:
       - "6379:6379"
+
+  minio:
+    container_name: minio
+    image: minio/minio
+    command: server /data
+    ports:
+      - "9000:9000"
+    environment:
+      - MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
+      - MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+  minioInit:
+    container_name: minio-init
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add rpgm-minio http://minio:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY;
+      /usr/bin/mc rm -r --force rpgm-minio/rpgm;
+      /usr/bin/mc mb rpgm-minio/rpgm;
+      /usr/bin/mc policy download rpgm-minio/rpgm;
+      exit 0;
+      "
+    

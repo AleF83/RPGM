@@ -7,12 +7,29 @@ import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+import { getAvatar } from '../entityUtils';
 
 const MainElement = styled('div')`
   display: flex;
   flex: 1;
   flex-direction: column;
   margin: 5px;
+`;
+
+const SummaryRow = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  margin: 5px;
+`;
+
+const SummaryFields = styled('div')`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`;
+
+const EntityAvatar = styled('img')`
 `;
 
 const ButtonRow = styled('div')`
@@ -32,9 +49,14 @@ const EntityViewElement = ({
 }) => (
   <MainElement>
     <Paper className={paperStyle} elevation={4}>
-      <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>
-      <Typography id="lblSummary" variant="body1" gutterBottom>{entity.summary}</Typography>
-      <Typography id="lblType" variant="subheading" gutterBottom>{entity.type}</Typography>
+      <SummaryRow>
+        <EntityAvatar src={getAvatar(entity.id)} width={100} height={100} />
+        <SummaryFields>
+          <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>
+          <Typography id="lblSummary" variant="body1" gutterBottom>{entity.summary}</Typography>
+          <Typography id="lblType" variant="subheading" gutterBottom>{entity.type}</Typography>
+        </SummaryFields>
+      </SummaryRow>
       <EntityDescriptionEditor readOnly />
     </Paper>
     <ButtonRow>
