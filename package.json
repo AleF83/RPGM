@@ -24,12 +24,12 @@
 
 
     "precommit": "lint-staged",
-    "format:js": "prettier-eslint --trailing-comma all --print-width 100 --single-quote --write",
+    "format:js": "prettier-eslint  --write",
     "format:go": "gofmt -l -w"
   },
   "devDependencies": {
     "husky": "0.14.3",
-    "lint-staged": "6.1.1",
+    "lint-staged": "7.0.0",
     "prettier": "1.10.2",
     "prettier-eslint-cli": "4.7.1"
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'react-emotion';
 
 import {
   Avatar,
@@ -14,13 +15,25 @@ import { Edit, Delete, AccountCircle } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { EntitySummaryPropType } from './EntityPropTypes';
 
+import { getAvatar } from '../entityUtils';
+
+const CustomAvatar = styled('img')`
+
+`;
+
 const EntityListItem = ({
   entity, onSelect, onEdit, onDelete,
 }) => (
   <ListItem button>
     <ListItemAvatar>
       <Avatar>
-        <AccountCircle />
+        {
+          entity.hasAvatar
+          ?
+            <CustomAvatar src={getAvatar(entity.id)} alt="avatar" width={40} height={40} />
+          :
+            <AccountCircle />
+        }
       </Avatar>
     </ListItemAvatar>
     <ListItemText id={`lstItem-${entity.name}`} primary={entity.name} secondary={entity.summary} onClick={onSelect(entity.id)} />

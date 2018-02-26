@@ -9,7 +9,9 @@ import entityReducer, { initialState as entityInitialState } from '../pages/enti
 import metadataEpic from '../pages/entity/state/epics/metadataEpic';
 import metadataReducer, { initialState as metadataInitialState } from '../pages/entity/state/metadataReducer';
 
-const rootEpic = combineEpics(entityEpic, metadataEpic);
+import imageUploadEpic from '../pages/entity/state/epics/imageUploadEpic';
+
+const rootEpic = combineEpics(entityEpic, metadataEpic, imageUploadEpic);
 
 const rootReducer = combineReducers({
   router: routerReducer,

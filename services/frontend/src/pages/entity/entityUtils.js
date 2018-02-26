@@ -8,6 +8,7 @@ export const createEmptyEntity = () => ({
   name: '',
   type: 'Information',
   summary: '',
+  hasAvatar: false,
   description: EditorState.createEmpty(),
 });
 
@@ -20,3 +21,6 @@ export const restoreEntity = entityBackup => ({
   ...entityBackup,
   description: rawToEditorState(entityBackup.rawDescription),
 });
+
+export const getAvatar = entityId =>
+  `${process.env.REACT_APP_BACKEND_URL}/api/images/avatars/${entityId}`;

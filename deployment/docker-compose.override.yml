@@ -8,6 +8,10 @@ services:
   redis:
     volumes:
       - ../db/redis:/data
+  
+  minio:
+    volumes:
+      - ../db/minio:/export
 
   mongoExpress:
     container_name: mongo-express

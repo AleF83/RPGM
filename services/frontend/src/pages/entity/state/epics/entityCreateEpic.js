@@ -13,31 +13,28 @@ import {
   entityModeChange,
 } from '../entityActionCreators';
 
-const printError = err => err.xhr && err.xhr.response || err.stack;
+import { printError } from '../../../../common/utils';
 
-export default actions$ => actions$
-  .ofType(ENTITY_CREATE_REQUEST)
-  .map(({ entity }) => ({
-    ...entity,
-    description: stateToMarkdown(entity.description.getCurrentContent()),
-  }))
-  .switchMap(entity =>
-    ajax({
-      url: `${process.env.REACT_APP_BACKEND_URL}/api/entities`,
-      method: 'POST',
-      crossDomain: true,
-      createXHR: () => new XMLHttpRequest(),
-      body: entity,
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-    })
-      .map(e => e.response)
-      .map(ent => ({
-        ...ent,
-        description: EditorState.createWithContent(stateFromMarkdown(ent.description)),
-      }))
-      .mergeMap(ent => [
-        entityCreateSuccess(ent),
-        entityModeChange('VIEW'),
-        entityListRequest(),
-      ])
-      .catch(err => Observable.of(entityCreateFailure(printError(err)))));
+export default actions$ =>
+  actions$
+    .ofType(ENTITY_CREATE_REQUEST)
+    .map(({ entity }) => ({
+      ...entity,
+      description: stateToMarkdown(entity.description.getCurrentContent()),
+    }))
+    .switchMap(entity =>
+      ajax({
+        url: `${process.env.REACT_APP_BACKEND_URL}/api/entities`,
+        method: 'POST',
+        crossDomain: true,
+        createXHR: () => new XMLHttpRequest(),
+        body: entity,
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      })
+        .map(e => e.response)
+        .map(ent => ({
+          ...ent,
+          description: EditorState.createWithContent(stateFromMarkdown(ent.description)),
+        }))
+        .mergeMap(ent => [entityCreateSuccess(ent), entityModeChange('VIEW'), entityListRequest()])
+        .catch(err => Observable.of(entityCreateFailure(printError(err)))));
