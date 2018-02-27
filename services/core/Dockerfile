@@ -4,7 +4,7 @@ COPY . ./
 RUN mkdir csproj && cp --parent ./src/**/*.csproj /csproj
 
 # Stage 1: Build
-FROM microsoft/aspnetcore-build:2.0.4-2.1.3 AS buildImage
+FROM microsoft/aspnetcore-build:2.0.5-2.1.4 AS buildImage
 
 COPY  --from=csprojImage /csproj /build
 COPY . /build
@@ -13,7 +13,7 @@ RUN dotnet restore
 RUN dotnet publish --output /dist/ --configuration Release
 
 # Stage 2: Release
-FROM microsoft/aspnetcore:2.0.4 AS releaseImage
+FROM microsoft/aspnetcore:2.0.5 AS releaseImage
 
 WORKDIR /app
 COPY --from=buildImage /dist .

@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.0.4-sdk-2.1.3-stretch
+FROM microsoft/dotnet:2.0.5-sdk-2.1.4-stretch
 
 COPY . ./
 RUN dotnet restore core.sln
