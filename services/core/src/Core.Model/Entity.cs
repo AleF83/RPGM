@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace RPGM.Core.Model
 {
@@ -25,10 +26,12 @@ namespace RPGM.Core.Model
         [BsonRequired]
         public string Type { get; set; }
 
-        [JsonProperty("hasAvatar")]
-        [BsonElement("hasAvatar")]
-        [BsonDefaultValue(false)]
-        public bool HasAvatar { get; set; }
+        [JsonProperty("avatarType")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [BsonElement("avatarType")]
+        [BsonDefaultValue(EntityAvatarType.None)]
+        [BsonRepresentation(BsonType.String)]
+        public EntityAvatarType AvatarType { get; set; }
 
         [JsonProperty("summary")]
 		[BsonElement("summary")]

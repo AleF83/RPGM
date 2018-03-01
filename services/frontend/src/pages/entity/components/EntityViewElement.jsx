@@ -6,8 +6,8 @@ import { Delete, Edit } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import EntityAvatar from './avatar/EntityAvatar';
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
-import { getAvatar } from '../entityUtils';
 
 const MainElement = styled('div')`
   display: flex;
@@ -29,9 +29,6 @@ const SummaryFields = styled('div')`
   flex-direction: column;
 `;
 
-const EntityAvatar = styled('img')`
-`;
-
 const ButtonRow = styled('div')`
   display: flex;
   flex: 1;
@@ -50,7 +47,12 @@ const EntityViewElement = ({
   <MainElement>
     <Paper className={paperStyle} elevation={4}>
       <SummaryRow>
-        <EntityAvatar src={getAvatar(entity.id)} width={100} height={100} />
+        <EntityAvatar
+          entityId={entity.id}
+          avatarType={entity.avatarType}
+          width={100}
+          height={100}
+        />
         <SummaryFields>
           <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>
           <Typography id="lblSummary" variant="body1" gutterBottom>{entity.summary}</Typography>

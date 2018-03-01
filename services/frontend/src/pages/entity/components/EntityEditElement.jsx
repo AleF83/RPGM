@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Button, IconButton, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
-import { Save, Edit, Cancel, Delete } from 'material-ui-icons';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
+import { Save, Cancel, Delete } from 'material-ui-icons';
 
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import EntityAvatar from './avatar/EntityAvatar';
+import editable from './avatar/editable';
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
-import { getAvatar } from '../entityUtils';
 
 const MainElement = styled('div')`
   display: flex;
@@ -30,51 +31,26 @@ const SummaryFields = styled('div')`
   flex-direction: column;
 `;
 
-const EntityAvatarDiv = styled('div')`
-
-`;
-
-const EntityAvatar = styled('img')`
-`;
-
-const AvatarButton = styled('label')`
-  position: relative;
-  bottom: 15px;
-  right: 40px;
-  z-index: 99;
-`;
-
 const ButtonRow = styled('div')`
   display: flex;
   flex: 1;
   flex-direction: row;
 `;
 
-const HidenInput = styled('input')`
-  display: none;
-`;
-
+const EditableAvatar = editable(EntityAvatar);
 
 const EntityEditElement = ({
   entity, onChange, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
 }) => (
   <MainElement>
     <SummaryRow>
-      <EntityAvatarDiv>
-        <EntityAvatar src={getAvatar(entity.id)} width={100} height={100} />
-        <HidenInput
-          name="avatar"
-          accept="image/*"
-          id="raised-button-file"
-          type="file"
-          onChange={onAvatarChange}
-        />
-        <AvatarButton htmlFor="raised-button-file">
-          <IconButton component="span">
-            <Edit />
-          </IconButton>
-        </AvatarButton>
-      </EntityAvatarDiv>
+      <EditableAvatar
+        entityId={entity.id}
+        avatarType={entity.avatarType}
+        onAvatarChange={onAvatarChange}
+        width={100}
+        height={100}
+      />
       <SummaryFields>
         <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
         <TextField id="txtSummary" label="Summary" name="summary" value={entity.summary} onChange={onChange} />

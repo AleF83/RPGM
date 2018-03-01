@@ -19,5 +19,5 @@ export default actions$ =>
       headers: { Accept: 'application/json', 'Content-Type': imageFile.type },
     })
       .map(e => e.response)
-      .mergeMap(() => [imageUploadSuccess(), entityPropertyChange('hasAvatar', true)])
+      .mergeMap(() => [imageUploadSuccess(), entityPropertyChange('avatarType', 'custom')])
       .catch(err => Observable.from(imageUploadFailure(printError(err)))));
