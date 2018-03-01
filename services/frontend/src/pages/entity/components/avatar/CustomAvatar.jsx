@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 
 import PropTypes from 'prop-types';
 
-const Image = styled('img')`
+const Image = styled.img`
 `;
 
 const CustomAvatar = ({ imageUrl, width, height }) =>

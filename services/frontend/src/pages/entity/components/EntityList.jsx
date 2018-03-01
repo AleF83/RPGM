@@ -11,13 +11,13 @@ import { EntitySummaryPropType } from './EntityPropTypes';
 import EntityListItem from './EntityListItem';
 import { entityListRequest, entityLoadRequest, entityDeleteRequest, entityModeChange } from '../state/entityActionCreators';
 
-const MainElement = styled('div')`
+const MainElement = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
 `;
 
-const ButtonRow = styled('div')`
+const ButtonRow = styled.div`
   display: flex;
   flex: 1;
   flex-direaction: row;

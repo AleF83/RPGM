@@ -9,13 +9,13 @@ import { EntityPropType } from './EntityPropTypes';
 
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
 
-const MainElement = styled('div')`
+const MainElement = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
 `;
 
-const ButtonsRow = styled('div')`
+const ButtonsRow = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;

@@ -5,12 +5,12 @@
   "scripts": {
     "start": "concurrently \"yarn start:server\" \"yarn start:client\"",
     "start:release": "node ./dist/index.js",
-    "start:client": "REACT_APP_BACKEND_URL=http://localhost:8080 react-scripts start",
+    "start:client": "REACT_APP_BACKEND_URL=http://localhost:8080 react-app-rewired start",
     "start:server": "nodemon --exec babel-node -- server/index.js",
     "build": "concurrently \"yarn build:client\" \"yarn build:server\"",
-    "build:client": "react-scripts build",
+    "build:client": "react-app-rewired build",
     "build:server": "babel server -d dist",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "docker:build": "docker build -t alef83/rpgm-frontend .",
     "docker:start": "docker run --rm -p 80:3000 rpgm-frontend",
@@ -37,6 +37,7 @@
     "material-ui-icons": "1.0.0-beta.35",
     "prop-types": "15.6.0",
     "react": "16.2.0",
+    "react-app-rewired": "1.4.1",
     "react-dom": "16.2.0",
     "react-emotion": "9.0.2",
     "react-redux": "5.0.7",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-plugin-emotion": "9.0.1",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
@@ -59,7 +61,7 @@
     "eslint-plugin-import": "2.9.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.7.0",
-    "nodemon": "1.15.1",
+    "nodemon": "1.17.1",
     "react-test-renderer": "16.2.0"
   }
 }

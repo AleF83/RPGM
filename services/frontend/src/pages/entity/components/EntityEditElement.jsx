@@ -11,27 +11,27 @@ import EntityAvatar from './avatar/EntityAvatar';
 import editable from './avatar/editable';
 import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
 
-const MainElement = styled('div')`
+const MainElement = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   margin: 5px;
 `;
 
-const SummaryRow = styled('div')`
+const SummaryRow = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
   margin: 5px;
 `;
 
-const SummaryFields = styled('div')`
+const SummaryFields = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
 `;
 
-const ButtonRow = styled('div')`
+const ButtonRow = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;

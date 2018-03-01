@@ -5,21 +5,21 @@ import { Edit, Delete } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 
-const Wrapper = styled('div')`
+const Wrapper = styled.div`
   position: relative;
 `;
 
-const ButtonsDiv = styled('div')`
+const ButtonsDiv = styled.div`
   position: absolute;
   bottom: 0px;
   z-index: 2;
   min-width: 150px;
 `;
 
-const EditButton = styled('label')`
+const EditButton = styled.label`
 `;
 
-const HidenInput = styled('input')`
+const HidenInput = styled.input`
   display: none;
 `;
 

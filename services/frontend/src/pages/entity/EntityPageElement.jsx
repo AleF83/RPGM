@@ -9,14 +9,14 @@ import EntityEdit from './components/EntityEdit';
 import EntityCreate from './components/EntityCreate';
 import Messages from './components/Messages';
 
-const MainElement = styled('div')`
+const MainElement = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   background-color: #eeeeee;
 `;
 
-const EntitiesPane = styled('div')`
+const EntitiesPane = styled.div`
   display: flex;
   flex: 1;
   flex-direction: row;
