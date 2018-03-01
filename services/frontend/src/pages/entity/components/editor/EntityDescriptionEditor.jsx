@@ -10,7 +10,7 @@ import './Editor.css';
 
 const { Toolbar } = toolbarPlugin;
 
-const MainElement = styled('div')`
+const MainElement = styled.div`
   box-sizing: border-box;
   border: 1px solid #ddd;
   cursor: text;

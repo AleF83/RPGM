@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 import PropTypes from 'prop-types';
 
-const EmptyImage = styled('div')`
+const EmptyImage = styled.div`
   display: inline;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
