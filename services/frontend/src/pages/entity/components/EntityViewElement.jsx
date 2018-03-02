@@ -1,13 +1,12 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import { Paper, Button, Typography } from 'material-ui';
+import { AppBar, Toolbar, Paper, IconButton, Typography } from 'material-ui';
 import { Delete, Edit } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
 import EntityAvatar from './avatar/EntityAvatar';
-import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
 
 const MainElement = styled.div`
   display: flex;
@@ -29,12 +28,6 @@ const SummaryFields = styled.div`
   flex-direction: column;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
-
 const paperStyle = css`
   padding-top: 12px;
   padding-bottom: 12px;
@@ -45,6 +38,16 @@ const EntityViewElement = ({
   entity, onEdit, onDelete,
 }) => (
   <MainElement>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <IconButton id="btnEdit" onClick={onEdit}>
+          <Edit />
+        </IconButton>
+        <IconButton id="btnDelete" onClick={onDelete(entity.id)}>
+          <Delete />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
     <Paper className={paperStyle} elevation={4}>
       <SummaryRow>
         <EntityAvatar
@@ -59,16 +62,7 @@ const EntityViewElement = ({
           <Typography id="lblType" variant="subheading" gutterBottom>{entity.type}</Typography>
         </SummaryFields>
       </SummaryRow>
-      <EntityDescriptionEditor readOnly />
     </Paper>
-    <ButtonRow>
-      <Button id="btnEdit" onClick={onEdit}>
-        <Edit />
-      </Button>
-      <Button id="btnDelete" onClick={onDelete(entity.id)}>
-        <Delete />
-      </Button>
-    </ButtonRow>
   </MainElement>
 );
 

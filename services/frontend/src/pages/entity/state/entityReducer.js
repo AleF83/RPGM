@@ -25,7 +25,7 @@ export const initialState = {
   current: null,
   currentBackup: null,
   list: [],
-  mode: 'VIEW',
+  mode: 'LIST',
   messages: [],
 };
 

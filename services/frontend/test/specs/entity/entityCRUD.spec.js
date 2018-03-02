@@ -5,10 +5,13 @@ const { setPageListeners, assertLabelValue, assertTextFieldValue } = require('..
 
 const testData = require('./testData.json');
 
-nconf.argv().env().defaults({ FRONTEND_URL: 'http://localhost' });
+nconf
+  .argv()
+  .env()
+  .defaults({ FRONTEND_URL: 'http://localhost' });
 
 const createEntity = async (page, entity) => {
-  const createButtonSelector = '#btnNew';
+  const createButtonSelector = '#btnSave';
   await page.waitForSelector(createButtonSelector);
   await page.click(createButtonSelector);
 

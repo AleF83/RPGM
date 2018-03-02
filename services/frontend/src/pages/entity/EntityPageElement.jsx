@@ -1,47 +1,36 @@
 import React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import PropTypes from 'prop-types';
 
 import EntityList from './components/EntityList';
 import EntityView from './components/EntityView';
 import EntityEdit from './components/EntityEdit';
-import EntityCreate from './components/EntityCreate';
 import Messages from './components/Messages';
 
 const MainElement = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
   display: flex;
   flex: 1;
   flex-direction: column;
   background-color: #eeeeee;
 `;
 
-const EntitiesPane = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-const EntityListStyle = css({
-  flex: 1,
-});
-
-const EntityStyle = css`
-  flex: 2;
-`;
-
 const EntityPageElement = ({ mode, messages }) => (
   <MainElement>
-    <span>This is Entity Page</span>
-    <EntitiesPane>
-      <EntityList className={EntityListStyle} />
-      {{
-        VIEW: (<EntityView className={EntityStyle} />),
-        EDIT: (<EntityEdit className={EntityStyle} />),
-        NEW: (<EntityCreate className={EntityStyle} />),
+
+    {{
+        LIST: (<EntityList />),
+        VIEW: (<EntityView />),
+        EDIT: (<EntityEdit />),
+        NEW: (<EntityEdit />),
       }[mode]}
-    </EntitiesPane>
+
     <Messages messages={messages} />
   </MainElement>
 );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
+import { IconButton, TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar } from 'material-ui';
 import { Save, Cancel, Delete } from 'material-ui-icons';
 
 
@@ -9,7 +9,7 @@ import { EntityPropType } from './EntityPropTypes';
 
 import EntityAvatar from './avatar/EntityAvatar';
 import editable from './avatar/editable';
-import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+import EditTabs from './tabs/EditTabs';
 
 const MainElement = styled.div`
   display: flex;
@@ -31,25 +31,32 @@ const SummaryFields = styled.div`
   flex-direction: column;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
-
 const EditableAvatar = editable(EntityAvatar);
 
 const EntityEditElement = ({
   entity, onChange, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
 }) => (
   <MainElement>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <IconButton id="btnSave" onClick={onSave}>
+          <Save />
+        </IconButton>
+        <IconButton id="btnCancel" onClick={onCancel}>
+          <Cancel />
+        </IconButton>
+        <IconButton id="btnDelete" onClick={onDelete}>
+          <Delete />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
     <SummaryRow>
       <EditableAvatar
         entityId={entity.id}
         avatarType={entity.avatarType}
         onAvatarChange={onAvatarChange}
-        width={100}
-        height={100}
+        width={200}
+        height={200}
       />
       <SummaryFields>
         <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
@@ -70,18 +77,7 @@ const EntityEditElement = ({
         </FormControl>
       </SummaryFields>
     </SummaryRow>
-    <EntityDescriptionEditor />
-    <ButtonRow>
-      <Button id="btnSave" onClick={onSave}>
-        <Save />
-      </Button>
-      <Button onClick={onCancel}>
-        <Cancel />
-      </Button>
-      <Button onClick={onDelete}>
-        <Delete />
-      </Button>
-    </ButtonRow>
+    <EditTabs />
   </MainElement>
 );
 

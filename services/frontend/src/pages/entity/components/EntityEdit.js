@@ -5,6 +5,7 @@ import EntityEditElement from './EntityEditElement';
 import EmptyEntityView from './EmptyEntityView';
 import {
   entityUpdateReset,
+  entityCreateRequest,
   entityUpdateRequest,
   entityDeleteRequest,
   entityPropertyChange,
@@ -14,10 +15,12 @@ import { imageUploadRequest } from '../state/imageActionCreators';
 const mapStateToProps = state => ({
   entity: state.entity.current,
   entityTypes: state.metadata.entityTypes,
+  mode: state.entity.mode,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSave: entity => () => dispatch(entityUpdateRequest(entity)),
+  onCreate: entity => () => dispatch(entityCreateRequest(entity)),
+  onUpdate: entity => () => dispatch(entityUpdateRequest(entity)),
   onCancel: () => dispatch(entityUpdateReset()),
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
   onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
@@ -28,7 +31,10 @@ const mapDispatchToProps = dispatch => ({
 const mergeProps = (stateProps, dispatchProps) => ({
   ...stateProps,
   ...dispatchProps,
-  onSave: dispatchProps.onSave(stateProps.entity),
+  onSave:
+    stateProps.mode === 'NEW'
+      ? dispatchProps.onCreate(stateProps.entity)
+      : dispatchProps.onUpdate(stateProps.entity),
   onDelete: dispatchProps.onDelete(stateProps.entity.id),
   onAvatarChange: dispatchProps.onAvatarChange(stateProps.entity.id),
 });
