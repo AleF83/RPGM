@@ -43,7 +43,7 @@ const editable = (Component) => {
           </IconButton>
         </EditButton>
 
-        <DeleteButton onClick={props.onAvatarDelete} />
+        <DeleteButton id="btnDeleteAvatar" onClick={props.onAvatarDelete} />
       </ButtonsDiv>
     </Wrapper>);
 

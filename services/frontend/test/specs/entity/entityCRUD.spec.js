@@ -11,7 +11,7 @@ nconf
   .defaults({ FRONTEND_URL: 'http://localhost' });
 
 const createEntity = async (page, entity) => {
-  const createButtonSelector = '#btnSave';
+  const createButtonSelector = '#btnAdd';
   await page.waitForSelector(createButtonSelector);
   await page.click(createButtonSelector);
 
