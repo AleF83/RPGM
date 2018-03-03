@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { IconButton, TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar } from 'material-ui';
-import { Save, Cancel, Delete, ArrowBack } from 'material-ui-icons';
-
+import { TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar } from 'material-ui';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
@@ -10,6 +8,7 @@ import { EntityPropType } from './EntityPropTypes';
 import EntityAvatar from './avatar/EntityAvatar';
 import editable from './avatar/editable';
 import EditTabs from './tabs/EditTabs';
+import { SaveButton, DeleteButton, BackButton, CancelButton } from '../../../components/ActionButtons';
 
 const MainElement = styled.div`
   display: flex;
@@ -34,23 +33,17 @@ const SummaryFields = styled.div`
 const EditableAvatar = editable(EntityAvatar);
 
 const EntityEditElement = ({
-  entity, mode, onChange, onBack, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
+  entity, mode, onChange, onBack,
+  onSave, onCancel, onDelete, onAvatarChange,
+  onAvatarDelete, entityTypes,
 }) => (
   <MainElement>
     <AppBar position="static" color="default">
       <Toolbar>
-        <IconButton id="btnBackToList" onClick={onBack}>
-          <ArrowBack />
-        </IconButton>
-        <IconButton id="btnSave" onClick={onSave}>
-          <Save />
-        </IconButton>
-        <IconButton id="btnCancel" onClick={onCancel}>
-          <Cancel />
-        </IconButton>
-        <IconButton id="btnDelete" onClick={onDelete}>
-          <Delete />
-        </IconButton>
+        <BackButton onClick={onBack} />
+        <SaveButton onClick={onSave} />
+        <CancelButton onClick={onCancel} />
+        <DeleteButton onClick={onDelete} />
       </Toolbar>
     </AppBar>
     <SummaryRow>
@@ -60,6 +53,7 @@ const EntityEditElement = ({
           entityId={entity.id}
           avatarType={entity.avatarType}
           onAvatarChange={onAvatarChange}
+          onAvatarDelete={onAvatarDelete}
           width={200}
           height={200}
         />
@@ -68,6 +62,7 @@ const EntityEditElement = ({
           entityId={entity.id}
           avatarType={entity.avatarType}
           onAvatarChange={onAvatarChange}
+          onAvatarDelete={onAvatarDelete}
           width={200}
           height={200}
         />
@@ -101,6 +96,7 @@ EntityEditElement.propTypes = {
   entityTypes: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onAvatarChange: PropTypes.func.isRequired,
+  onAvatarDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,

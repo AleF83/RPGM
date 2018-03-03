@@ -11,7 +11,7 @@ import {
   entityPropertyChange,
   entityModeChange,
 } from '../state/entityActionCreators';
-import { imageUploadRequest } from '../state/imageActionCreators';
+import { imageUploadRequest, imageDeleteRequest } from '../state/imageActionCreators';
 
 const mapStateToProps = state => ({
   entity: state.entity.current,
@@ -28,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   onChange: ({ target }) => dispatch(entityPropertyChange(target.name, target.value)),
   onAvatarChange: entityId => ({ target }) =>
     dispatch(imageUploadRequest('avatars', entityId, target.files[0])),
+  onAvatarDelete: entityId => () => dispatch(imageDeleteRequest('avatars', entityId)),
 });
 
 const mergeProps = (stateProps, dispatchProps) => ({
@@ -39,6 +40,7 @@ const mergeProps = (stateProps, dispatchProps) => ({
       : dispatchProps.onUpdate(stateProps.entity),
   onDelete: dispatchProps.onDelete(stateProps.entity.id),
   onAvatarChange: dispatchProps.onAvatarChange(stateProps.entity.id),
+  onAvatarDelete: dispatchProps.onAvatarDelete(stateProps.entity.id),
 });
 
 const enhance = (Component, EmptyComponent) =>

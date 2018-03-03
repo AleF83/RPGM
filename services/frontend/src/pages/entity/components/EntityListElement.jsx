@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { AppBar, Toolbar, IconButton, List } from 'material-ui';
-import { Add, Refresh } from 'material-ui-icons';
+import { AppBar, Toolbar, List } from 'material-ui';
 
 import PropTypes from 'prop-types';
 import { EntitySummaryPropType } from './EntityPropTypes';
 
 import EntityListItem from './EntityListItem';
+import { RefreshButton, AddButton } from '../../../components/ActionButtons';
 
 const MainElement = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: white;
+`;
+
+const StyledList = styled(List)`
+  margin: 5px;
 `;
 
 
@@ -21,15 +26,11 @@ const EntityListElement = ({
   <MainElement>
     <AppBar position="static" color="default">
       <Toolbar>
-        <IconButton onClick={onCreate} id="btnNew">
-          <Add />
-        </IconButton>
-        <IconButton onClick={onRefresh}>
-          <Refresh />
-        </IconButton>
+        <AddButton onClick={onCreate} />
+        <RefreshButton onClick={onRefresh} />
       </Toolbar>
     </AppBar>
-    <List>
+    <StyledList>
       {
         entities.map(entity =>
           (<EntityListItem
@@ -41,7 +42,7 @@ const EntityListElement = ({
             onDelete={onDelete}
           />))
       }
-    </List>
+    </StyledList>
   </MainElement>
 );
 

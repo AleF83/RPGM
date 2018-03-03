@@ -1,11 +1,11 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import { AppBar, Toolbar, Paper, IconButton, Typography } from 'material-ui';
-import { Delete, Edit, ArrowBack } from 'material-ui-icons';
+import { AppBar, Toolbar, Paper, Typography } from 'material-ui';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import { BackButton, EditButton, DeleteButton } from '../../../components/ActionButtons';
 import EntityAvatar from './avatar/EntityAvatar';
 
 const MainElement = styled.div`
@@ -40,15 +40,10 @@ const EntityViewElement = ({
   <MainElement>
     <AppBar position="static" color="default">
       <Toolbar>
-        <IconButton id="btnBackToList" onClick={onBack}>
-          <ArrowBack />
-        </IconButton>
-        <IconButton id="btnEdit" onClick={onEdit}>
-          <Edit />
-        </IconButton>
-        <IconButton id="btnDelete" onClick={onDelete(entity.id)}>
-          <Delete />
-        </IconButton>
+        <BackButton onClick={onBack} />
+        <EditButton onClick={onEdit} />
+        <DeleteButton onClick={onDelete(entity.id)} />
+
       </Toolbar>
     </AppBar>
     <Paper className={paperStyle} elevation={4}>

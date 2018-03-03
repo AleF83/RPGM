@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'react-emotion';
 import { IconButton } from 'material-ui';
-import { Edit, Delete } from 'material-ui-icons';
+import { Edit } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
+import { DeleteButton } from '../../../../components/ActionButtons';
 
 const Wrapper = styled.div`
   position: relative;
@@ -41,14 +42,13 @@ const editable = (Component) => {
           </IconButton>
         </EditButton>
 
-        <IconButton>
-          <Delete />
-        </IconButton>
+        <DeleteButton onDelete={props.onAvatarDelete} />
       </ButtonsDiv>
     </Wrapper>);
 
   wrapper.propTypes = {
     onAvatarChange: PropTypes.func.isRequired,
+    onAvatarDelete: PropTypes.func.isRequired,
   };
 
   return wrapper;

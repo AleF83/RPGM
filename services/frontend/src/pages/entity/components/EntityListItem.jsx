@@ -7,13 +7,12 @@ import {
   ListItemSecondaryAction,
   ListItemAvatar,
   Toolbar,
-  IconButton,
 } from 'material-ui';
-import { Edit, Delete } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntitySummaryPropType } from './EntityPropTypes';
 
+import { EditButton, DeleteButton } from '../../../components/ActionButtons';
 import EntityAvatar from './avatar/EntityAvatar';
 
 const EntityListItem = ({
@@ -28,12 +27,8 @@ const EntityListItem = ({
     <ListItemText id={`lstItem-${entity.name}`} primary={entity.name} secondary={entity.summary} onClick={onSelect(entity.id)} />
     <ListItemSecondaryAction>
       <Toolbar>
-        <IconButton onClick={onEdit(entity.id)}>
-          <Edit />
-        </IconButton>
-        <IconButton onClick={onDelete(entity.id)}>
-          <Delete />
-        </IconButton>
+        <EditButton onClick={onEdit(entity.id)} />
+        <DeleteButton onDelete={onDelete(entity.id)} />
       </Toolbar>
     </ListItemSecondaryAction>
   </ListItem>
