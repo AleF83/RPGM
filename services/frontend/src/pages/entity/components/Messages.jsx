@@ -1,13 +1,22 @@
 import React from 'react';
+import { Paper, List, ListItem } from 'material-ui';
+import styled from 'react-emotion';
 import PropTypes from 'prop-types';
 
+const MainElement = styled(Paper)`
+  max-height: 150px;
+  overflow: auto;
+`;
+
 const Messages = ({ messages }) => (
-  <ul>
-    {
+  <MainElement>
+    <List>
+      {
       messages.map((msg, id) =>
-        <li key={id}>{msg}</li>) // eslint-disable-line react/no-array-index-key
+        <ListItem key={id}>{msg}</ListItem>) // eslint-disable-line react/no-array-index-key
     }
-  </ul>
+    </List>
+  </MainElement>
 );
 
 Messages.propTypes = {

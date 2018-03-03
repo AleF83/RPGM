@@ -9,6 +9,7 @@ import { entityModeChange, entityDeleteRequest } from '../state/entityActionCrea
 const mapStateToProps = state => ({ entity: state.entity.current });
 
 const mapDispatchToProps = dispatch => ({
+  onBack: () => dispatch(entityModeChange('LIST')),
   onEdit: () => dispatch(entityModeChange('EDIT')),
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });

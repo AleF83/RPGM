@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
 import { AppBar, Toolbar, Paper, IconButton, Typography } from 'material-ui';
-import { Delete, Edit } from 'material-ui-icons';
+import { Delete, Edit, ArrowBack } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
@@ -35,11 +35,14 @@ const paperStyle = css`
 `;
 
 const EntityViewElement = ({
-  entity, onEdit, onDelete,
+  entity, onBack, onEdit, onDelete,
 }) => (
   <MainElement>
     <AppBar position="static" color="default">
       <Toolbar>
+        <IconButton id="btnBackToList" onClick={onBack}>
+          <ArrowBack />
+        </IconButton>
         <IconButton id="btnEdit" onClick={onEdit}>
           <Edit />
         </IconButton>
@@ -68,6 +71,7 @@ const EntityViewElement = ({
 
 EntityViewElement.propTypes = {
   entity: EntityPropType.isRequired,
+  onBack: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

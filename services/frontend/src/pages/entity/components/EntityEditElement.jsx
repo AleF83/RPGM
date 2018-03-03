@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 import { IconButton, TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar } from 'material-ui';
-import { Save, Cancel, Delete } from 'material-ui-icons';
+import { Save, Cancel, Delete, ArrowBack } from 'material-ui-icons';
 
 
 import PropTypes from 'prop-types';
@@ -34,11 +34,14 @@ const SummaryFields = styled.div`
 const EditableAvatar = editable(EntityAvatar);
 
 const EntityEditElement = ({
-  entity, onChange, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
+  entity, mode, onChange, onBack, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
 }) => (
   <MainElement>
     <AppBar position="static" color="default">
       <Toolbar>
+        <IconButton id="btnBackToList" onClick={onBack}>
+          <ArrowBack />
+        </IconButton>
         <IconButton id="btnSave" onClick={onSave}>
           <Save />
         </IconButton>
@@ -51,13 +54,24 @@ const EntityEditElement = ({
       </Toolbar>
     </AppBar>
     <SummaryRow>
-      <EditableAvatar
-        entityId={entity.id}
-        avatarType={entity.avatarType}
-        onAvatarChange={onAvatarChange}
-        width={200}
-        height={200}
-      />
+      { mode === 'NEW'
+      ?
+        <EntityAvatar
+          entityId={entity.id}
+          avatarType={entity.avatarType}
+          onAvatarChange={onAvatarChange}
+          width={200}
+          height={200}
+        />
+      :
+        <EditableAvatar
+          entityId={entity.id}
+          avatarType={entity.avatarType}
+          onAvatarChange={onAvatarChange}
+          width={200}
+          height={200}
+        />
+      }
       <SummaryFields>
         <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
         <TextField id="txtSummary" label="Summary" name="summary" value={entity.summary} onChange={onChange} />
@@ -83,9 +97,11 @@ const EntityEditElement = ({
 
 EntityEditElement.propTypes = {
   entity: EntityPropType.isRequired,
+  mode: PropTypes.string.isRequired,
   entityTypes: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onAvatarChange: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

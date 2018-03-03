@@ -9,6 +9,7 @@ import {
   entityUpdateRequest,
   entityDeleteRequest,
   entityPropertyChange,
+  entityModeChange,
 } from '../state/entityActionCreators';
 import { imageUploadRequest } from '../state/imageActionCreators';
 
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  onBack: () => dispatch(entityModeChange('LIST')),
   onCreate: entity => () => dispatch(entityCreateRequest(entity)),
   onUpdate: entity => () => dispatch(entityUpdateRequest(entity)),
   onCancel: () => dispatch(entityUpdateReset()),
