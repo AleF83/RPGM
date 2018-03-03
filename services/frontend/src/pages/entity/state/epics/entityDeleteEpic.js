@@ -7,6 +7,7 @@ import {
   entityDeleteSuccess,
   entityDeleteFailure,
   entityListRequest,
+  entityModeChange,
 } from '../entityActionCreators';
 
 import { printError } from '../../../../common/utils';
@@ -20,5 +21,9 @@ export default actions$ =>
       createXHR: () => new XMLHttpRequest(),
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     })
-      .mergeMap(() => [entityDeleteSuccess(entityId), entityListRequest()])
+      .mergeMap(() => [
+        entityDeleteSuccess(entityId),
+        entityListRequest(),
+        entityModeChange('LIST'),
+      ])
       .catch(err => Observable.of(entityDeleteFailure(printError(err)))));

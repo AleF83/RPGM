@@ -9,14 +9,14 @@ import { entityModeChange, entityDeleteRequest } from '../state/entityActionCrea
 const mapStateToProps = state => ({ entity: state.entity.current });
 
 const mapDispatchToProps = dispatch => ({
+  onBack: () => dispatch(entityModeChange('LIST')),
   onEdit: () => dispatch(entityModeChange('EDIT')),
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });
 
-const enhance = (Component, EmptyComponent) =>
-  compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    branch(({ entity }) => entity, renderComponent(Component), renderComponent(EmptyComponent)),
-  )(Component);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  branch(({ entity }) => !entity, renderComponent(EmptyEntityView)),
+);
 
-export default enhance(EntityViewElement, EmptyEntityView);
+export default enhance(EntityViewElement);

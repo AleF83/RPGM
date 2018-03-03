@@ -20,4 +20,4 @@ export default actions$ =>
     })
       .map(e => e.response)
       .mergeMap(() => [imageUploadSuccess(), entityPropertyChange('avatarType', 'custom')])
-      .catch(err => Observable.from(imageUploadFailure(printError(err)))));
+      .catch(err => Observable.of(imageUploadFailure(printError(err)))));

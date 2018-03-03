@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from 'material-ui';
-import { Save, Cancel, Delete } from 'material-ui-icons';
-
+import { TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar } from 'material-ui';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
 import EntityAvatar from './avatar/EntityAvatar';
 import editable from './avatar/editable';
-import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
+import EditTabs from './tabs/EditTabs';
+import { SaveButton, DeleteButton, BackButton, CancelButton } from '../../../components/ActionButtons';
 
 const MainElement = styled.div`
   display: flex;
@@ -21,8 +20,12 @@ const MainElement = styled.div`
 const SummaryRow = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: column;
   margin: 5px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const SummaryFields = styled.div`
@@ -31,26 +34,43 @@ const SummaryFields = styled.div`
   flex-direction: column;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-`;
-
 const EditableAvatar = editable(EntityAvatar);
 
 const EntityEditElement = ({
-  entity, onChange, onSave, onCancel, onDelete, onAvatarChange, entityTypes,
+  entity, mode, onChange, onBack,
+  onSave, onCancel, onDelete, onAvatarChange,
+  onAvatarDelete, entityTypes,
 }) => (
   <MainElement>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <BackButton onClick={onBack} />
+        <SaveButton onClick={onSave} />
+        <CancelButton onClick={onCancel} />
+        <DeleteButton onClick={onDelete} />
+      </Toolbar>
+    </AppBar>
     <SummaryRow>
-      <EditableAvatar
-        entityId={entity.id}
-        avatarType={entity.avatarType}
-        onAvatarChange={onAvatarChange}
-        width={100}
-        height={100}
-      />
+      { mode === 'NEW'
+      ?
+        <EntityAvatar
+          entityId={entity.id}
+          avatarType={entity.avatarType}
+          onAvatarChange={onAvatarChange}
+          onAvatarDelete={onAvatarDelete}
+          width={200}
+          height={200}
+        />
+      :
+        <EditableAvatar
+          entityId={entity.id}
+          avatarType={entity.avatarType}
+          onAvatarChange={onAvatarChange}
+          onAvatarDelete={onAvatarDelete}
+          width={200}
+          height={200}
+        />
+      }
       <SummaryFields>
         <TextField id="txtName" label="Name" name="name" required value={entity.name} onChange={onChange} />
         <TextField id="txtSummary" label="Summary" name="summary" value={entity.summary} onChange={onChange} />
@@ -70,26 +90,18 @@ const EntityEditElement = ({
         </FormControl>
       </SummaryFields>
     </SummaryRow>
-    <EntityDescriptionEditor />
-    <ButtonRow>
-      <Button id="btnSave" onClick={onSave}>
-        <Save />
-      </Button>
-      <Button onClick={onCancel}>
-        <Cancel />
-      </Button>
-      <Button onClick={onDelete}>
-        <Delete />
-      </Button>
-    </ButtonRow>
+    <EditTabs />
   </MainElement>
 );
 
 EntityEditElement.propTypes = {
   entity: EntityPropType.isRequired,
+  mode: PropTypes.string.isRequired,
   entityTypes: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onAvatarChange: PropTypes.func.isRequired,
+  onAvatarDelete: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

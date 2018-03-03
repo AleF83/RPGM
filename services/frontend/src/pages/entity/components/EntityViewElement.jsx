@@ -1,13 +1,12 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
-import { Paper, Button, Typography } from 'material-ui';
-import { Delete, Edit } from 'material-ui-icons';
+import { AppBar, Toolbar, Paper, Typography } from 'material-ui';
 
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import { BackButton, EditButton, DeleteButton } from '../../../components/ActionButtons';
 import EntityAvatar from './avatar/EntityAvatar';
-import EntityDescriptionEditor from './editor/EntityDescriptionEditor';
 
 const MainElement = styled.div`
   display: flex;
@@ -19,20 +18,18 @@ const MainElement = styled.div`
 const SummaryRow = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: column;
   margin: 5px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const SummaryFields = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
 `;
 
 const paperStyle = css`
@@ -42,9 +39,17 @@ const paperStyle = css`
 `;
 
 const EntityViewElement = ({
-  entity, onEdit, onDelete,
+  entity, onBack, onEdit, onDelete,
 }) => (
   <MainElement>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <BackButton onClick={onBack} />
+        <EditButton onClick={onEdit} />
+        <DeleteButton onClick={onDelete(entity.id)} />
+
+      </Toolbar>
+    </AppBar>
     <Paper className={paperStyle} elevation={4}>
       <SummaryRow>
         <EntityAvatar
@@ -59,21 +64,13 @@ const EntityViewElement = ({
           <Typography id="lblType" variant="subheading" gutterBottom>{entity.type}</Typography>
         </SummaryFields>
       </SummaryRow>
-      <EntityDescriptionEditor readOnly />
     </Paper>
-    <ButtonRow>
-      <Button id="btnEdit" onClick={onEdit}>
-        <Edit />
-      </Button>
-      <Button id="btnDelete" onClick={onDelete(entity.id)}>
-        <Delete />
-      </Button>
-    </ButtonRow>
   </MainElement>
 );
 
 EntityViewElement.propTypes = {
   entity: EntityPropType.isRequired,
+  onBack: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
