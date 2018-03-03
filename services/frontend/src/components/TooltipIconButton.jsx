@@ -14,7 +14,7 @@ const TooltipIconButton = ({
 
 TooltipIconButton.propTypes = {
   id: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.element,
   tooltip: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

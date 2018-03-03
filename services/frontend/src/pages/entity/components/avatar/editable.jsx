@@ -8,6 +8,7 @@ import { DeleteButton } from '../../../../components/ActionButtons';
 
 const Wrapper = styled.div`
   position: relative;
+  min-height: 100px;
 `;
 
 const ButtonsDiv = styled.div`
@@ -42,7 +43,7 @@ const editable = (Component) => {
           </IconButton>
         </EditButton>
 
-        <DeleteButton onDelete={props.onAvatarDelete} />
+        <DeleteButton onClick={props.onAvatarDelete} />
       </ButtonsDiv>
     </Wrapper>);
 

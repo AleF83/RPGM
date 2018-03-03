@@ -14,10 +14,9 @@ const mapDispatchToProps = dispatch => ({
   onDelete: entityId => () => dispatch(entityDeleteRequest(entityId)),
 });
 
-const enhance = (Component, EmptyComponent) =>
-  compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    branch(({ entity }) => entity, renderComponent(Component), renderComponent(EmptyComponent)),
-  )(Component);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  branch(({ entity }) => !entity, renderComponent(EmptyEntityView)),
+);
 
-export default enhance(EntityViewElement, EmptyEntityView);
+export default enhance(EntityViewElement);

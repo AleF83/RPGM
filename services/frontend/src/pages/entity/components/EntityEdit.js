@@ -43,10 +43,9 @@ const mergeProps = (stateProps, dispatchProps) => ({
   onAvatarDelete: dispatchProps.onAvatarDelete(stateProps.entity.id),
 });
 
-const enhance = (Component, EmptyComponent) =>
-  compose(
-    connect(mapStateToProps, mapDispatchToProps, mergeProps),
-    branch(({ entity }) => entity, renderComponent(Component), renderComponent(EmptyComponent)),
-  )(Component);
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps, mergeProps),
+  branch(({ entity }) => !entity, renderComponent(EmptyEntityView)),
+);
 
-export default enhance(EntityEditElement, EmptyEntityView);
+export default enhance(EntityEditElement);

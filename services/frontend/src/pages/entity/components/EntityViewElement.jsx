@@ -18,8 +18,12 @@ const MainElement = styled.div`
 const SummaryRow = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: column;
   margin: 5px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 const SummaryFields = styled.div`

@@ -28,7 +28,7 @@ const EntityListItem = ({
     <ListItemSecondaryAction>
       <Toolbar>
         <EditButton onClick={onEdit(entity.id)} />
-        <DeleteButton onDelete={onDelete(entity.id)} />
+        <DeleteButton onClick={onDelete(entity.id)} />
       </Toolbar>
     </ListItemSecondaryAction>
   </ListItem>
