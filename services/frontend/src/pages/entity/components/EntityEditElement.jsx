@@ -5,6 +5,7 @@ import { TextField, Select, MenuItem, FormControl, InputLabel, Toolbar, AppBar }
 import PropTypes from 'prop-types';
 import { EntityPropType } from './EntityPropTypes';
 
+import Progress from './Progress';
 import EntityAvatar from './avatar/EntityAvatar';
 import editable from './avatar/editable';
 import EditTabs from './tabs/EditTabs';
@@ -50,6 +51,7 @@ const EntityEditElement = ({
         <DeleteButton onClick={onDelete} />
       </Toolbar>
     </AppBar>
+    <Progress />
     <SummaryRow>
       { mode === 'NEW'
       ?

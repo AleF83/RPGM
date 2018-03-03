@@ -26,37 +26,37 @@ export const initialState = {
   currentBackup: null,
   list: [],
   mode: 'LIST',
-  messages: [],
+  inProgress: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case ENTITY_LIST_REQUEST:
-      return { ...state, messages: [...state.messages, 'Loading entities...'] };
+      return { ...state, inProgress: true };
 
     case ENTITY_LIST_SUCCESS:
       return {
         ...state,
         list: action.entities,
-        messages: [...state.messages, `${action.entities.length} entities loaded.`],
+        inProgress: false,
       };
 
     case ENTITY_LIST_FAILURE:
       return {
         ...state,
         list: [],
-        messages: [...state.messages, `Failed to load entity list: ${action.message}`],
+        inProgress: false,
       };
 
     case ENTITY_LOAD_REQUEST:
-      return { ...state, messages: [...state.messages, `Loading ${action.entityId}`] };
+      return { ...state, inProgress: true };
 
     case ENTITY_LOAD_SUCCESS:
       return {
         ...state,
         current: action.entity,
         currentBackup: backupEntity(action.entity),
-        messages: [...state.messages, `Entity loaded: ${action.entity.name}`],
+        inProgress: false,
       };
 
     case ENTITY_LOAD_FAILURE:
@@ -64,28 +64,28 @@ export default (state = initialState, action) => {
         ...state,
         current: null,
         currentBackup: null,
-        messages: [...state.messages, `Failed to load entity: ${action.message}`],
+        inProgress: false,
       };
 
     case ENTITY_CREATE_REQUEST:
-      return { ...state, messages: [...state.messages, `Creating ${action.entity.name}...`] };
+      return { ...state, inProgress: true };
 
     case ENTITY_CREATE_SUCCESS:
       return {
         ...state,
         current: action.entity,
         currentBackup: backupEntity(action.entity),
-        messages: [...state.messages, `New entity created: ${action.entity.name}`],
+        inProgress: false,
       };
 
     case ENTITY_CREATE_FAILURE:
       return {
         ...state,
-        messages: [...state.messages, `Failed to create new entity: ${action.message}`],
+        inProgress: false,
       };
 
     case ENTITY_UPDATE_REQUEST:
-      return { ...state, messages: [...state.messages, `Updating ${action.entity.name}...`] };
+      return { ...state, inProgress: true };
 
     // TODO: take care to EditorState copy
     case ENTITY_UPDATE_RESET:
@@ -97,25 +97,25 @@ export default (state = initialState, action) => {
         ...state,
         current: action.entity,
         currentBackup: backupEntity(action.entity),
-        messages: [...state.messages, `The entity was updated: ${action.entity.name}`],
+        inProgress: false,
       };
 
     case ENTITY_UPDATE_FAILURE:
       return {
         ...state,
-        messages: [...state.messages, `Failed to update entity: ${action.message}`],
+        inProgress: false,
       };
 
     case ENTITY_DELETE_REQUEST:
-      return { ...state, messages: [...state.messages, `Deleting ${action.entityId}...`] };
+      return { ...state, inProgress: true };
 
     case ENTITY_DELETE_SUCCESS:
-      return { ...state, messages: [...state.messages, 'The entity was deleted.'] };
+      return { ...state, inProgress: false };
 
     case ENTITY_DELETE_FAILURE:
       return {
         ...state,
-        messages: [...state.messages, `Failed to delete entity: ${action.message}`],
+        inProgress: false,
       };
 
     case ENTITY_MODE_CHANGE:

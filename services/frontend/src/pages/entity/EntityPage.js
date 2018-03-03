@@ -5,7 +5,7 @@ import { metadataRequest } from './state/metadataActionCreators';
 
 import EntityPageElement from './EntityPageElement';
 
-const mapStateToProps = state => ({ mode: state.entity.mode, messages: state.entity.messages });
+const mapStateToProps = state => ({ mode: state.entity.mode });
 
 const mapDispatchToProps = dispatch => ({
   metadataRequest: metadataType => dispatch(metadataRequest(metadataType)),
