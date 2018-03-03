@@ -7,6 +7,7 @@ import { EntityPropType } from './EntityPropTypes';
 
 import { BackButton, EditButton, DeleteButton } from '../../../components/ActionButtons';
 import EntityAvatar from './avatar/EntityAvatar';
+import Progress from './Progress';
 
 const MainElement = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ const EntityViewElement = ({
 
       </Toolbar>
     </AppBar>
+    <Progress />
     <Paper className={paperStyle} elevation={4}>
       <SummaryRow>
         <EntityAvatar

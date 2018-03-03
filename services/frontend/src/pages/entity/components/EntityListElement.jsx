@@ -5,6 +5,7 @@ import { AppBar, Toolbar, List } from 'material-ui';
 import PropTypes from 'prop-types';
 import { EntitySummaryPropType } from './EntityPropTypes';
 
+import Progress from './Progress';
 import EntityListItem from './EntityListItem';
 import { RefreshButton, AddButton } from '../../../components/ActionButtons';
 
@@ -30,6 +31,7 @@ const EntityListElement = ({
         <RefreshButton onClick={onRefresh} />
       </Toolbar>
     </AppBar>
+    <Progress />
     <StyledList>
       {
         entities.map(entity =>
