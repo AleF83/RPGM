@@ -8,7 +8,6 @@ import (
 
 // AuthProvider - struct for store OpenId connect provider configuration
 type AuthProvider struct {
-	ID        string `json:"id"`
 	Name      string `json:"name"`
 	Authority string `json:"authority"`
 	ClientID  string `json:"clientId"`
@@ -17,7 +16,7 @@ type AuthProvider struct {
 
 // Auth stores configuration about OpenId Connect Providers and etc.
 type Auth struct {
-	Providers []AuthProvider
+	Providers map[string]AuthProvider
 }
 
 // Security - stores security configuration
@@ -35,7 +34,7 @@ type Configuration struct {
 // LoadConfiguration loads configuration from config files and env variables
 func LoadConfiguration() (*Configuration, error) {
 	config := &Configuration{}
-	configManager := configor.New(&configor.Config{ENVPrefix: "RPGM"})
+	configManager := configor.New(&configor.Config{ENVPrefix: "RPGM", Debug: true})
 
 	if configPath, exists := os.LookupEnv("CONFIG_FILE_PATH"); exists {
 		if err := configManager.Load(config, configPath); err != nil {

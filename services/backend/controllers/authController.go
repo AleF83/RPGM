@@ -9,13 +9,13 @@ import (
 )
 
 // NewAuthRouter creates AuthController
-func NewAuthRouter(authProviders []appConfig.AuthProvider) http.Handler {
+func NewAuthRouter(authProviders map[string]appConfig.AuthProvider) http.Handler {
 	authRouter := chi.NewRouter()
 	authRouter.Get("/providers", getAuthProviders(authProviders))
 	return authRouter
 }
 
-func getAuthProviders(authProviders []appConfig.AuthProvider) http.HandlerFunc {
+func getAuthProviders(authProviders map[string]appConfig.AuthProvider) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		js, err := json.Marshal(authProviders)
 		if err != nil {
