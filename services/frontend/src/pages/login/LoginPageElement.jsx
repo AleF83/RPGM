@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LoginButton from './LoginButton';
+import LoginButton from './components/LoginButton';
+import { signinRedirect } from './authUtils';
 
 const LoginPageElement = ({ authProviders }) => (
   <div>
@@ -10,8 +11,8 @@ const LoginPageElement = ({ authProviders }) => (
       Object.values(authProviders).map(ap =>
         (<LoginButton
           key={ap.id}
-          provider={ap}
-          url={ap.url}
+          id={ap.id}
+          onClick={() => signinRedirect(ap.oidcSettings)}
         />))
     }
   </div>
