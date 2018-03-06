@@ -12,14 +12,18 @@ import {
 
 import { printError } from '../../../../common/utils';
 
-export default actions$ =>
+export default (actions$, store) =>
   actions$.ofType(ENTITY_DELETE_REQUEST).switchMap(({ entityId }) =>
     ajax({
       url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entityId}`,
       method: 'DELETE',
       crossDomain: true,
       createXHR: () => new XMLHttpRequest(),
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${store.getState().auth.idToken}`,
+      },
     })
       .mergeMap(() => [
         entityDeleteSuccess(entityId),

@@ -8,11 +8,11 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/jwtauth"
 	"github.com/rs/cors"
 
 	"github.com/AleF83/RPGM/services/backend/appConfig"
 	"github.com/AleF83/RPGM/services/backend/controllers"
+	"github.com/AleF83/RPGM/services/backend/security"
 )
 
 func main() {
@@ -33,14 +33,7 @@ func main() {
 	rootRouter.HandleFunc("/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
 
 	rootRouter.Group(func(r chi.Router) {
-		// Seek, verify and validate JWT tokens
-		//r.Use(jwtauth.Verifier(tokenAuth))
-
-		// Handle valid / invalid tokens. In this example, we use
-		// the provided authenticator middleware, but you can write your
-		// own very easily, look at the Authenticator method in jwtauth.go
-		// and tweak it, its not scary.
-		r.Use(jwtauth.Authenticator)
+		r.Use(security.NewAuthenticationMiddleware(config.Security.Auth.Providers))
 
 		proxyController := controllers.NewProxyController(config)
 		r.Mount("/api/*", proxyController)

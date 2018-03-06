@@ -5,7 +5,6 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { AUTH_PROVIDERS_REQUEST } from '../authActionTypes';
 import { authProvidersFailure, authProvidersSuccess } from '../authActionCreators';
 
-import { createAuthClient } from '../../authUtils';
 import { printError } from '../../../../common/utils';
 
 export default actions$ =>
@@ -17,6 +16,5 @@ export default actions$ =>
       createXHR: () => new XMLHttpRequest(),
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     })
-      .map(e => e.response.map(ap => createAuthClient(ap)))
-      .map(res => authProvidersSuccess(res))
+      .map(e => authProvidersSuccess(e.response))
       .catch(err => Observable.of(authProvidersFailure(printError(err)))));

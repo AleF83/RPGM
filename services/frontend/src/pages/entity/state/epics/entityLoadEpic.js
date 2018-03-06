@@ -9,14 +9,18 @@ import { entityLoadSuccess, entityLoadFailure, entityModeChange } from '../entit
 
 import { printError } from '../../../../common/utils';
 
-export default actions$ =>
+export default (actions$, store) =>
   actions$.ofType(ENTITY_LOAD_REQUEST).switchMap(({ entityId, mode }) =>
     ajax({
       url: `${process.env.REACT_APP_BACKEND_URL}/api/entities/${entityId}`,
       method: 'GET',
       crossDomain: true,
       createXHR: () => new XMLHttpRequest(),
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${store.getState().auth.idToken}`,
+      },
     })
       .map(e => e.response)
       .map(entity => ({

@@ -11,6 +11,7 @@ type AuthProvider struct {
 	Name      string `json:"name"`
 	Authority string `json:"authority"`
 	ClientID  string `json:"clientId"`
+	JWKsURL   string `json:"jwksUrl"`
 	Scope     string `json:"scope"`
 }
 

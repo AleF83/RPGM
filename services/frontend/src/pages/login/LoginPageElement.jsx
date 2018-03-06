@@ -8,11 +8,12 @@ const LoginPageElement = ({ authProviders }) => (
   <div>
     This is Login Page
     {
-      Object.values(authProviders).map(ap =>
+      Object.keys(authProviders).map(key =>
         (<LoginButton
-          key={ap.id}
-          id={ap.id}
-          onClick={() => signinRedirect(ap.oidcSettings)}
+          key={key}
+          id={key}
+          onClick={() =>
+            signinRedirect(key, authProviders[key].authority, authProviders[key].clientId)}
         />))
     }
   </div>

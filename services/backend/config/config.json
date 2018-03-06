@@ -2,11 +2,12 @@
     "security": {
         "auth": {
             "providers": {
-                "google": {                
+                "https://accounts.google.com": {                
                     "name": "Sign in with Google",
                     "authority": "https://accounts.google.com",
                     "clientId": "603495721979-p8qcajfppc9ohe1nh05qnson6bt2p8n4.apps.googleusercontent.com",
-                    "scope": "profile email"
+                    "scope": "profile email",
+                    "jwksUrl": "https://www.googleapis.com/oauth2/v3/certs"
                 }
             }            
         }
