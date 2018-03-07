@@ -15,7 +15,7 @@ import {
 
 import { printError } from '../../../../common/utils';
 
-export default actions$ =>
+export default (actions$, store) =>
   actions$
     .ofType(ENTITY_CREATE_REQUEST)
     .map(({ entity }) => ({
@@ -29,7 +29,11 @@ export default actions$ =>
         crossDomain: true,
         createXHR: () => new XMLHttpRequest(),
         body: entity,
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${store.getState().auth.idToken}`,
+        },
       })
         .map(e => e.response)
         .map(ent => ({

@@ -8,7 +8,7 @@ import { entityPropertyChange } from '../entityActionCreators';
 
 import { printError } from '../../../../common/utils';
 
-export default actions$ =>
+export default (actions$, store) =>
   actions$.ofType(IMAGE_UPLOAD_REQUEST).switchMap(({ category, entityId, imageFile }) =>
     ajax({
       url: `${process.env.REACT_APP_BACKEND_URL}/api/images/${category}/${entityId}`,
@@ -16,7 +16,11 @@ export default actions$ =>
       crossDomain: true,
       createXHR: () => new XMLHttpRequest(),
       body: imageFile,
-      headers: { Accept: 'application/json', 'Content-Type': imageFile.type },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${store.getState().auth.idToken}`,
+      },
     })
       .map(e => e.response)
       .mergeMap(() => [imageUploadSuccess(), entityPropertyChange('avatarType', 'custom')])
