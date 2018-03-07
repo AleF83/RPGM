@@ -10,7 +10,7 @@ import LoggedInPage from '../pages/login/LoggedInPage';
 import EntityPage from '../pages/entity/EntityPage';
 import UserProfilePage from '../pages/userProfile/UserProfilePage';
 
-const AppRouter = () => (
+const AppRouterElement = () => (
   <ConnectedRouter history={browserHistory}>
     <Switch>
       <Route
@@ -45,4 +45,4 @@ const AppRouter = () => (
   </ConnectedRouter>
 );
 
-export default AppRouter;
+export default AppRouterElement;

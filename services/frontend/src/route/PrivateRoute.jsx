@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 
 
 const PrivateRoute = ({
-  component: Component, isAuthenticated, location, ...rest
+  component: Component, isAuthenticated, isAuthEnabled, location, ...rest
 }) => (
   <Route
     {...rest}
     render={props =>
-        (isAuthenticated ? (
+        (isAuthenticated || !isAuthEnabled ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -28,10 +28,12 @@ PrivateRoute.propTypes = {
   component: PropTypes.any.isRequired, // eslint-disable-line
   location: PropTypes.object.isRequired, // eslint-disable-line
   isAuthenticated: PropTypes.bool.isRequired,
+  isAuthEnabled: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: !!state.auth.idToken,
+  isAuthEnabled: state.auth.isEnabled,
 });
 
 const enhance = connect(mapStateToProps);

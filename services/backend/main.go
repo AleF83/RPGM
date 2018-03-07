@@ -33,7 +33,9 @@ func main() {
 	rootRouter.HandleFunc("/health", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "I'm healthy") })
 
 	rootRouter.Group(func(r chi.Router) {
-		r.Use(security.NewAuthenticationMiddleware(config.Security.Auth.Providers))
+		if config.Security.Auth.Enabled {
+			r.Use(security.NewAuthenticationMiddleware(config.Security.Auth.Providers))
+		}
 
 		proxyController := controllers.NewProxyController(config)
 		r.Mount("/api/*", proxyController)

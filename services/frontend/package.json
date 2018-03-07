@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"yarn start:server\" \"yarn start:client\"",
     "start:release": "node ./dist/index.js",
-    "start:client": "REACT_APP_BACKEND_URL=http://localhost:8080 react-app-rewired start",
+    "start:client": "REACT_APP_AUTH_ENABLED=true REACT_APP_BACKEND_URL=http://localhost:8080 react-app-rewired start",
     "start:server": "nodemon --exec babel-node -- server/index.js",
     "build": "concurrently \"yarn build:client\" \"yarn build:server\"",
     "build:client": "react-app-rewired build",

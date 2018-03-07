@@ -3,6 +3,7 @@ import {
   AUTH_PROVIDERS_SUCCESS,
   AUTH_PROVIDERS_FAILURE,
   AUTH_TOKEN_RECEIVED,
+  AUTH_ENABLED,
 } from './authActionTypes';
 
 export const authProvidersRequest = () => ({
@@ -22,4 +23,9 @@ export const authProvidersFailure = message => ({
 export const authTokenReceived = idToken => ({
   type: AUTH_TOKEN_RECEIVED,
   idToken,
+});
+
+export const authEnabled = isAuthEnabled => ({
+  type: AUTH_ENABLED,
+  isAuthEnabled,
 });

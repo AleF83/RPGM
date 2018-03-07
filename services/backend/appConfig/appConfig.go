@@ -17,6 +17,7 @@ type AuthProvider struct {
 
 // Auth stores configuration about OpenId Connect Providers and etc.
 type Auth struct {
+	Enabled   bool
 	Providers map[string]AuthProvider
 }
 

@@ -3,10 +3,13 @@ import {
   AUTH_PROVIDERS_SUCCESS,
   AUTH_PROVIDERS_FAILURE,
   AUTH_TOKEN_RECEIVED,
+  AUTH_ENABLED,
 } from './authActionTypes';
 
 export const initialState = {
   authProviders: {},
+  idToken: undefined,
+  isAuthEnabled: false,
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +28,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         idToken: action.idToken,
+      };
+
+    case AUTH_ENABLED:
+      return {
+        ...state,
+        isAuthEnabled: action.isAuthEnabled,
       };
 
     default:
