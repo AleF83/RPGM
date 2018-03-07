@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 
 const PrivateRoute = ({
-  component: Component, isAuthenticated, path, ...rest
+  component: Component, isAuthenticated, location, ...rest
 }) => (
   <Route
     {...rest}
@@ -16,7 +16,7 @@ const PrivateRoute = ({
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: path },
+              state: { origin: location },
             }}
           />
         ))
@@ -26,7 +26,7 @@ const PrivateRoute = ({
 
 PrivateRoute.propTypes = {
   component: PropTypes.any.isRequired, // eslint-disable-line
-  path: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired, // eslint-disable-line
   isAuthenticated: PropTypes.bool.isRequired,
 };
 

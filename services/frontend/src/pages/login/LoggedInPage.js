@@ -14,9 +14,9 @@ const enhance = compose(
   connect(null, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      handleSigninRedirectCallback().then((idToken) => {
+      handleSigninRedirectCallback().then(({ id_token: idToken, state: { origin } }) => {
         this.props.authTokenReceived(idToken);
-        this.props.redirect('/entity');
+        this.props.redirect(`${origin.pathname}${origin.hash || origin.search}`);
       });
     },
   }),

@@ -13,15 +13,15 @@ const createOidcClientConfiguration = (id, authority, clientId) => ({
   loadUserInfo: true,
 });
 
-export const signinRedirect = (id, issuer, clientId) => {
+export const signinRedirect = (id, issuer, clientId, state = {}) => {
   const oidcSettings = createOidcClientConfiguration(id, issuer, clientId);
   const oidcClient = new Oidc.UserManager(oidcSettings);
-  return oidcClient.signinRedirect();
+  return oidcClient.signinRedirect(state);
 };
 
 export const handleSigninRedirectCallback = async () => {
   const oidcClient = new Oidc.UserManager();
   const user = await oidcClient.signinRedirectCallback();
   localStorage.setItem('id_token', user.id_token);
-  return user.id_token;
+  return user;
 };

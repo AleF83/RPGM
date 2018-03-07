@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LoginButton from './components/LoginButton';
 import { signinRedirect } from './authUtils';
 
-const LoginPageElement = ({ authProviders }) => (
+const LoginPageElement = ({ authProviders, location: { state } }) => (
   <div>
     This is Login Page
     {
@@ -13,7 +13,12 @@ const LoginPageElement = ({ authProviders }) => (
           key={key}
           id={key}
           onClick={() =>
-            signinRedirect(key, authProviders[key].issuer, authProviders[key].clientId)}
+            signinRedirect(
+              key,
+              authProviders[key].issuer,
+              authProviders[key].clientId,
+              { state },
+            )}
         />))
     }
   </div>
@@ -21,6 +26,7 @@ const LoginPageElement = ({ authProviders }) => (
 
 LoginPageElement.propTypes = {
   authProviders: PropTypes.object.isRequired, // eslint-disable-line
+  location: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default LoginPageElement;
