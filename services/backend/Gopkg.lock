@@ -8,6 +8,12 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = [".","request"]
   revision = "dbeaa9332f19a944acb5736b4456cfcc02140e29"
@@ -26,20 +32,38 @@
   revision = "6ecfe629230f24c2e92c7894c6ab21b83b757a39"
 
 [[projects]]
-  name = "github.com/rs/cors"
-  packages = ["."]
-  revision = "7af7a1e09ba336d2ea14b1ce73bf693c6837dbf6"
-  version = "v1.2"
+  branch = "master"
+  name = "github.com/lestrrat/go-jwx"
+  packages = ["internal/base64","jwa","jwk"]
+  revision = "b7d4802280aef47b8786da314e8675d41d980b04"
 
 [[projects]]
-  branch = "v2"
+  branch = "master"
+  name = "github.com/lestrrat/go-pdebug"
+  packages = ["."]
+  revision = "569c97477ae8837e053e5a50bc739e15172b8ebe"
+
+[[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
+  name = "github.com/rs/cors"
+  packages = ["."]
+  revision = "feef513b9575b32f84bafa580aad89b011259019"
+  version = "v1.3.0"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "d670f9405373e636a5a2765eea47fac0c9bc91a4"
+  revision = "7f97868eec74b32b0982dd158a51a446d1da7eb5"
+  version = "v2.1.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ee67d5ab958e5628d98a66633d96d187eb7a8a6fbd7c089a6859169b419edee0"
+  inputs-digest = "f15b71f7ac4a9e6a71bfe9b1e32662bdf69dea3840e308ebaa1fb3072b927358"
   solver-name = "gps-cdcl"
   solver-version = 1

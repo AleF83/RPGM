@@ -13,4 +13,10 @@ const providerStyles = {
   },
 };
 
-export default providerId => providerStyles[providerId];
+const getDefaultStyle = providerId => ({
+  text: `Login with ${providerId}`,
+  style: { background: '#3b5998' },
+  activeStyle: { background: '#293e69' },
+});
+
+export default providerId => providerStyles[providerId] || getDefaultStyle(providerId);

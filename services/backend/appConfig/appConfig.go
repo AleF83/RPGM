@@ -8,11 +8,11 @@ import (
 
 // AuthProvider - struct for store OpenId connect provider configuration
 type AuthProvider struct {
-	Name      string `json:"name"`
-	Authority string `json:"authority"`
-	ClientID  string `json:"clientId"`
-	JWKsURL   string `json:"jwksUrl"`
-	Scope     string `json:"scope"`
+	Name     string `json:"name"`
+	Issuer   string `json:"issuer"`
+	ClientID string `json:"clientId"`
+	JWKsURL  string `json:"jwksUrl"`
+	Scope    string `json:"scope"`
 }
 
 // Auth stores configuration about OpenId Connect Providers and etc.

@@ -17,9 +17,9 @@ func NewAuthenticationMiddleware(providers map[string]appConfig.AuthProvider) fu
 	keyFunc := func(t *jwt.Token) (interface{}, error) {
 		claims := t.Claims.(jwt.MapClaims)
 		if issuer, ok := claims["iss"].(string); ok {
-			if provider, exists := providers[issuer]; exists {
+			if provider, exists := getProviderByIssuer(providers, issuer); exists {
 				if keyID, keyExists := t.Header["kid"].(string); keyExists {
-					key, err := getKeyByProvider(&provider, keyID)
+					key, err := getKeyByProvider(provider, keyID)
 					if err != nil {
 						return nil, err
 					}
@@ -46,6 +46,15 @@ func NewAuthenticationMiddleware(providers map[string]appConfig.AuthProvider) fu
 		}
 		return http.HandlerFunc(fn)
 	}
+}
+
+func getProviderByIssuer(providers map[string]appConfig.AuthProvider, issuer string) (*appConfig.AuthProvider, bool) {
+	for _, provider := range providers {
+		if provider.Issuer == issuer {
+			return &provider, true
+		}
+	}
+	return nil, false
 }
 
 func getKeyByProvider(provider *appConfig.AuthProvider, keyID string) (interface{}, error) {

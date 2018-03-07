@@ -13,7 +13,7 @@ const LoginPageElement = ({ authProviders }) => (
           key={key}
           id={key}
           onClick={() =>
-            signinRedirect(key, authProviders[key].authority, authProviders[key].clientId)}
+            signinRedirect(key, authProviders[key].issuer, authProviders[key].clientId)}
         />))
     }
   </div>
