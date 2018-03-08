@@ -17,6 +17,7 @@ const LoginPageElement = ({ authProviders, location: { state } }) => (
               key,
               authProviders[key].issuer,
               authProviders[key].clientId,
+              authProviders[key].scope,
               { state },
             )}
         />))
