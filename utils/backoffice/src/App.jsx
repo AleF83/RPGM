@@ -1,15 +1,17 @@
-import React from "react";
-import { withStateHandlers } from "recompose";
-import { AppBar, Tabs, Tab } from "material-ui";
-import styled from "react-emotion";
+import React from 'react';
+import { withStateHandlers } from 'recompose';
+import { AppBar, Tabs, Tab } from 'material-ui';
+import styled from 'react-emotion';
+
+import PropTypes from 'prop-types';
 
 const tools = [
   process.env.REACT_APP_REDIS_URL,
   process.env.REACT_APP_MINIO_URL,
-  process.env.REACT_APP_MONGODB_URL
+  process.env.REACT_APP_MONGODB_URL,
 ];
 
-const MainElement = styled("div")`
+const MainElement = styled('div')`
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -22,7 +24,7 @@ const MainElement = styled("div")`
   background-color: #eeeeee;
 `;
 
-const IFrame = styled("iframe")`
+const IFrame = styled('iframe')`
   position: absolute;
   top: 50px;
   bottom: 0px;
@@ -46,11 +48,16 @@ const App = ({ tabIndex, handleChange }) => (
   </MainElement>
 );
 
+App.propTypes = {
+  tabIndex: PropTypes.number.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
 const enhance = withStateHandlers(
   { tabIndex: 0 },
   {
-    handleChange: () => (event, tabIndex) => ({ tabIndex })
-  }
+    handleChange: () => (event, tabIndex) => ({ tabIndex }),
+  },
 );
 
 export default enhance(App);
