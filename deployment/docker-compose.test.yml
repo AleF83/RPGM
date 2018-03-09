@@ -4,6 +4,11 @@ services:
     build:
       args:
         - REACT_APP_BACKEND_URL=http://backend
+        - REACT_APP_AUTH_ENABLED=false
+
+  backend:
+    environment:
+      - RPGM_SECURITY_AUTH_ENABLED=false
 
   test_frontend:
     container_name: test_frontend

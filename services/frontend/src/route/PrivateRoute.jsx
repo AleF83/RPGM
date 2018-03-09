@@ -10,16 +10,16 @@ const PrivateRoute = ({
   <Route
     {...rest}
     render={props =>
-        (isAuthenticated || !isAuthEnabled ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
+        ((isAuthenticated || !isAuthEnabled)
+        ?
+        (<Component {...props} />)
+        :
+        (<Redirect
+          to={{
               pathname: '/login',
               state: { origin: location },
             }}
-          />
-        ))
+        />))
       }
   />
 );
@@ -33,7 +33,7 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticated: !!state.auth.idToken,
-  isAuthEnabled: state.auth.isEnabled,
+  isAuthEnabled: state.auth.isAuthEnabled,
 });
 
 const enhance = connect(mapStateToProps);
