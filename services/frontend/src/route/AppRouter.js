@@ -14,7 +14,7 @@ const enhance = compose(
   connect(null, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
-      const idToken = localStorage.getItem('idToken');
+      const idToken = localStorage.getItem('id_token');
       if (idToken) {
         this.props.authTokenReceived(idToken);
       }

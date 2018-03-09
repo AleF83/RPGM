@@ -33,7 +33,7 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticated: !!state.auth.idToken,
-  isAuthEnabled: state.auth.isEnabled,
+  isAuthEnabled: state.auth.isAuthEnabled,
 });
 
 const enhance = connect(mapStateToProps);
