@@ -9,7 +9,7 @@ import EntityDescriptionEditor from '../editor/EntityDescriptionEditor';
 
 const MainElement = styled.div`
   display: flex;
-  flex: 1;
+  flex: 3;
   flex-direction: column;
 `;
 
@@ -23,6 +23,7 @@ const EditTabs = ({ activeTab, onTabChange }) => (
         textColor="primary"
       >
         <Tab label="Description" />
+        <Tab label="Connected entities" />
       </Tabs>
     </AppBar>
     {activeTab === 0 && <EntityDescriptionEditor />}
@@ -39,7 +40,7 @@ const enhance = withStateHandlers(
     activeTab,
   }),
   {
-    onTabChange: () => index => ({ activeTab: index }),
+    onTabChange: () => (event, index) => ({ activeTab: index }),
   },
 );
 

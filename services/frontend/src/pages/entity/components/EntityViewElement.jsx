@@ -57,8 +57,8 @@ const EntityViewElement = ({
         <EntityAvatar
           entityId={entity.id}
           avatarType={entity.avatarType}
-          width={100}
-          height={100}
+          width={200}
+          height={200}
         />
         <SummaryFields>
           <Typography id="lblName" variant="title" gutterBottom>{entity.name}</Typography>

@@ -1,4 +1,7 @@
 .DraftEditor-root {
+  display: flex;
+  flex: 1;
+  
   background-color: beige;
   min-height: 150px;
 }

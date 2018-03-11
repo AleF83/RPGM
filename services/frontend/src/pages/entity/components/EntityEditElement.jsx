@@ -60,7 +60,7 @@ const EntityEditElement = ({
           avatarType={entity.avatarType}
           onAvatarChange={onAvatarChange}
           onAvatarDelete={onAvatarDelete}
-          width={200}
+          width={500}
           height={200}
         />
       :

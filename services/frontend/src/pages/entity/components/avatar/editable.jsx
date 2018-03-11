@@ -1,21 +1,26 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { IconButton } from 'material-ui';
+import { IconButton, Toolbar } from 'material-ui';
 import { Edit } from 'material-ui-icons';
 
 import PropTypes from 'prop-types';
 import { DeleteButton } from '../../../../components/ActionButtons';
 
 const Wrapper = styled.div`
+  display: flex;
+  flex: 1;
   position: relative;
   min-height: 100px;
 `;
 
-const ButtonsDiv = styled.div`
+const ImageToolbar = styled(Toolbar)`
   position: absolute;
   bottom: 0px;
   z-index: 2;
   min-width: 150px;
+
+  background-color: lightgray;
+  opacity: 0.6;
 `;
 
 const EditButton = styled.label`
@@ -29,7 +34,7 @@ const editable = (Component) => {
   const wrapper = props => (
     <Wrapper>
       <Component {...props} />
-      <ButtonsDiv>
+      <ImageToolbar>
         <HidenInput
           name="avatar"
           accept="image/*"
@@ -44,7 +49,7 @@ const editable = (Component) => {
         </EditButton>
 
         <DeleteButton id="btnDeleteAvatar" onClick={props.onAvatarDelete} />
-      </ButtonsDiv>
+      </ImageToolbar>
     </Wrapper>);
 
   wrapper.propTypes = {
