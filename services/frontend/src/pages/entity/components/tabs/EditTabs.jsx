@@ -9,7 +9,7 @@ import EntityDescriptionEditor from '../editor/EntityDescriptionEditor';
 
 const MainElement = styled.div`
   display: flex;
-  flex: 1;
+  flex: 3;
   flex-direction: column;
 `;
 

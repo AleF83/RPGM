@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { DeleteButton } from '../../../../components/ActionButtons';
 
 const Wrapper = styled.div`
+  display: flex;
   position: relative;
   min-height: 100px;
 `;
