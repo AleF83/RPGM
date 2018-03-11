@@ -24,8 +24,9 @@ RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o server
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o health-check "github.com/AleF83/RPGM/services/backend/healthcheck"
 
 # Stage 3: Create release image
-FROM scratch AS releaseImage
+FROM scratch
 
+COPY --from=buildImage /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=buildImage /go/src/github.com/AleF83/RPGM/services/backend/server /server
 COPY --from=buildImage /go/src/github.com/AleF83/RPGM/services/backend/config /config
 COPY --from=buildImage /go/src/github.com/AleF83/RPGM/services/backend/health-check /healthcheck
@@ -33,6 +34,6 @@ COPY --from=buildImage /go/src/github.com/AleF83/RPGM/services/backend/health-ch
 ENV PORT=80
 EXPOSE ${PORT}
 
-HEALTHCHECK --interval=10s --timeout=1s --start-period=5s --retries=3 CMD [ "/healthcheck" ]
+HEALTHCHECK --interval=60s --timeout=1s --start-period=5s --retries=3 CMD [ "/healthcheck" ]
 
 ENTRYPOINT [ "/server" ]
