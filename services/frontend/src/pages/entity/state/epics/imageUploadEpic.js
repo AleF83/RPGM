@@ -18,7 +18,7 @@ export default (actions$, store) =>
       body: imageFile,
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': imageFile.type,
         Authorization: `Bearer ${store.getState().auth.idToken}`,
       },
     })
