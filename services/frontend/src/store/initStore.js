@@ -1,6 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+/* global window */
+/* eslint-disable no-underscore-dangle */
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+
 import browserHistory from './initHistory';
 
 import authEpic from '../pages/login/state/epics/authEpic';
@@ -29,11 +32,13 @@ const initialState = {
   auth: authInitialState,
 };
 
+const composeEnhancer =
+  (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
 const initStore = () =>
   createStore(
     rootReducer,
     initialState,
-    applyMiddleware(routerMiddleware(browserHistory), createEpicMiddleware(rootEpic)),
+    composeEnhancer(applyMiddleware(routerMiddleware(browserHistory), createEpicMiddleware(rootEpic))),
   );
-
 export default initStore;
