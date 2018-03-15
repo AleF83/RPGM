@@ -34,7 +34,7 @@ const AppRouterElement = () => (
         component={UserProfilePage}
       />
       <PrivateRoute
-        path="/entity"
+        path="/entity/:entityId?/:mode?"
         component={EntityPage}
       />
 
