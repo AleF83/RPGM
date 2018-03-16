@@ -1,0 +1,19 @@
+appVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: rpgm-frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rpgm-frontend
+    spec:
+      containers:
+        - name: rpgm-frontend
+          image: alef83/rpgm-frontend
+          ports:
+          - containerPort: 80
+

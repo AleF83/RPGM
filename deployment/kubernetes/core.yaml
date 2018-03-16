@@ -1,0 +1,19 @@
+appVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: core-deployment
+  labels:
+    app: rpgm-core
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rpgm-core
+    spec:
+      containers:
+        - name: rpgm-core
+          image: alef83/rpgm-core
+          ports:
+          - containerPort: 80
+

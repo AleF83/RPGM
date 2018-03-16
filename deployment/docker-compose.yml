@@ -3,6 +3,7 @@ version: '3.4'
 services:
   frontend:
     container_name: rpgm-frontend
+    image: alef83/rpgm-frontend
     build:
       context: ../services/frontend
       args:
@@ -16,6 +17,7 @@ services:
   
   backend:
     container_name: rpgm-backend
+    image: alef83/rpgm-backend
     build: ../services/backend
     image: alef83/rpgm-backend
     depends_on:
@@ -31,6 +33,7 @@ services:
   
   core:
     container_name: rpgm-core
+    image: alef83/rpgm-core
     build: ../services/core
     image: alef83/rpgm-core
     depends_on:

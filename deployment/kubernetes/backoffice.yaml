@@ -1,0 +1,19 @@
+appVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backoffice-deployment
+  labels:
+    app: rpgm-backoffice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rpgm-backoffice
+    spec:
+      containers:
+        - name: rpgm-backoffice
+          image: alef83/rpgm-backoffice
+          ports:
+          - containerPort: 80
+

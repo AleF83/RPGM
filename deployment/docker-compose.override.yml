@@ -15,6 +15,7 @@ services:
 
   backoffice:
     container_name: rpgm-backoffice
+    image: alef83/rpgm-backoffice
     build:
       context: ../utils/backoffice
       args:
