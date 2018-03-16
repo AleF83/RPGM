@@ -18,9 +18,6 @@ const enhance = compose(
       if (idToken) {
         this.props.authTokenReceived(idToken);
       }
-
-      const isAuthEnabled = process.env.REACT_APP_AUTH_ENABLED === 'true' || false;
-      this.props.authEnabled(isAuthEnabled);
     },
   }),
 );

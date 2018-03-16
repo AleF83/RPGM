@@ -9,7 +9,7 @@ import {
 export const initialState = {
   authProviders: {},
   idToken: undefined,
-  isAuthEnabled: false,
+  isAuthEnabled: process.env.REACT_APP_AUTH_ENABLED,
 };
 
 export default (state = initialState, action) => {
