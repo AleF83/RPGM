@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import { compose, withProps } from 'recompose';
 import PropTypes from 'prop-types';
 
 
@@ -33,9 +34,13 @@ PrivateRoute.propTypes = {
 
 const mapStateToProps = state => ({
   isAuthenticated: !!state.auth.idToken,
-  isAuthEnabled: state.auth.isAuthEnabled,
 });
 
-const enhance = connect(mapStateToProps);
+const enhance = compose(
+  connect(mapStateToProps),
+  withProps(() => ({
+    isAuthEnabled: process.env.REACT_APP_AUTH_ENABLED === 'true',
+  })),
+);
 
 export default enhance(PrivateRoute);
