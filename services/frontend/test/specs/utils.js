@@ -1,26 +1,49 @@
+/* eslint-disable no-console */
 const { expect } = require('chai');
 
 const setPageListeners = (page) => {
   page.on('console', msg => console.log('PAGE LOG:', msg.text));
+
   page.on('pageerror', (error) => {
     console.log('pageerror:', error.message);
   });
+
   page.on('request', (request) => {
-    console.log('request:', request.url, request.method, request.headers, request.postData);
-    console.log('============================================');
+    if (!request.url.includes('backend')) {
+      return;
+    }
+    const {
+      url, method, headers, postData,
+    } = request;
+    console.log('================ REQUEST ============================');
+    console.log('URL:', url);
+    console.log('METHOD:', method);
+    console.log('HEADERS:', headers);
+    if (postData) {
+      console.log('POST DATA:', postData);
+    }
+    console.log('============== END REQUEST ==========================');
   });
+
   page.on('response', async (response) => {
     try {
-      if (response.url !== 'http://backend/api/entities') {
+      if (!response.url.includes('backend')) {
         return;
       }
+
       const resText = await response.text();
-      console.log('response:', response.status, response.url, response.headers, resText);
-      console.log('============================================');
+      const { url, headers, status } = response;
+      console.log('================ RESPONSE ============================');
+      console.log('URL:', url);
+      console.log('STATUS:', status);
+      console.log('HEADERS:', headers);
+      console.log('TEXT:', resText);
+      console.log('============== END RESPONSE ==========================');
     } catch (e) {
       console.log('EX', e);
     }
   });
+
   page.on('requestfailed', (request) => {
     console.log('REQUEST FAILED:', request.url, request);
   });
