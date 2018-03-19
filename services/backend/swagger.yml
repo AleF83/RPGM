@@ -1,0 +1,45 @@
+swagger: "2.0"
+info:
+  title: RPGM
+  license:
+    name: MIT
+    url: https://github.com/AleF83/RPGM/blob/master/LICENSE
+  version: 0.0.1
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+  - https
+basePath: /api/v1
+paths:
+  /users:
+    get:
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Invalid Request"
+        403:
+          description: "Unauthorized"
+  /users:
+    get:
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Invalid Request"
+        403:
+          description: "Unauthorized"
+  /user:
+    get:
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Invalid Request"
+        403:
+          description: "Unauthorized"
+        404:
+          description: "User not found"
