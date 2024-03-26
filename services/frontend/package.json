@@ -24,7 +24,7 @@
     "draft-js-plugins-editor": "2.0.4",
     "draft-js-static-toolbar-plugin": "2.0.1",
     "emotion": "9.0.2",
-    "express": "4.16.3",
+    "express": "4.19.2",
     "history": "4.7.2",
     "immutable": "3.8.2",
     "material-ui": "next",
